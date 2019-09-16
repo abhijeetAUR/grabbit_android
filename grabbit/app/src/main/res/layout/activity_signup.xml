@@ -30,7 +30,7 @@
             android:drawableLeft="@drawable/user"
             android:hint="Username"
             android:layout_marginTop="50dp"
-            android:textColor="#FFF"
+            android:textColor="#000"
             android:paddingLeft="0dp"
             android:drawablePadding="5dp"
             android:textColorHint="#999"/>
@@ -44,7 +44,7 @@
             android:drawableLeft="@drawable/lock"
             android:hint="Email"
             android:layout_marginTop="10dp"
-            android:textColor="#FFF"
+            android:textColor="#000"
             android:paddingLeft="0dp"
             android:drawablePadding="5dp"
             android:textColorHint="#999"/>
@@ -58,7 +58,7 @@
             android:drawableLeft="@drawable/lock"
             android:hint="Password"
             android:layout_marginTop="10dp"
-            android:textColor="#FFF"
+            android:textColor="#000"
             android:paddingLeft="0dp"
             android:drawablePadding="5dp"
             android:textColorHint="#999"/>
@@ -72,7 +72,7 @@
             android:drawableLeft="@drawable/lock"
             android:hint="Confirm Password"
             android:layout_marginTop="10dp"
-            android:textColor="#FFF"
+            android:textColor="#000"
             android:paddingLeft="0dp"
             android:drawablePadding="5dp"
             android:textColorHint="#999"/>

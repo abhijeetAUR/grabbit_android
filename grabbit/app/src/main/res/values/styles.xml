@@ -24,7 +24,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
