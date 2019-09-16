@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">grabbit</string>
+    <string name="app_name">Grabbit</string>
+    //Menu items
+    <string name="navigationAccount">Account</string>
+    <string name="navigationHome">Home</string>
+    <string name="navigationCart">Cart</string>
 </resources>
