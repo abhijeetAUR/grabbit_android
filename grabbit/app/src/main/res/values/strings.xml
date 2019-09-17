@@ -4,4 +4,6 @@
     <string name="navigationAccount">Account</string>
     <string name="navigationHome">Home</string>
     <string name="navigationCart">Cart</string>
+    <string name="checkout">Checkout</string>
+
 </resources>

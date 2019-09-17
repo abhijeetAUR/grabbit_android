@@ -11,8 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
-        <activity android:name=".home.HomeActivity"></activity>
-        <activity android:name=".SignupActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".CartActivity" />
+        <activity android:name=".home.HomeActivity" />
+        <activity android:name=".SignupActivity" />
         <activity android:name=".SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,14 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".scanner.QrScannerActivity">
-
-        </activity>
+        <activity android:name=".scanner.QrScannerActivity" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme">
-        </activity>
+            android:theme="@style/SplashTheme" />
     </application>
 
 </manifest>
