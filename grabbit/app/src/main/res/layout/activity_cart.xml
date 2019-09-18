@@ -2,145 +2,67 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        app:layout_constraintTop_toTopOf="parent"
-        android:orientation="vertical"
+    <LinearLayout
+        android:id="@+id/ToplayoutDiscriptionCart"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="#FFA500">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="20dp">
 
-            <RelativeLayout
-                android:layout_marginTop="32dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+            <TextView
+                android:id="@+id/txtcart"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_width="match_parent">
+                android:text="My Cart"
+                android:textColor="#000000"
+                android:textSize="25sp" />
 
-                <TextView
-                    android:id="@+id/txtcart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:textSize="25sp"
-                    android:text="My Cart"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:layout_below="@id/txtcart"
-                    android:text="5 items"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtcart"
+                android:layout_marginTop="6dp"
+                android:text="5 items"
+                android:textColor="#000000"
+                android:textSize="14sp"
 
-                    />
+                />
 
 
-                <ImageView
-                    android:layout_alignParentRight="true"
-                    android:src="@drawable/logo"
-                    android:layout_width="62dp"
-                    android:layout_height="62dp" />
+            <ImageView
+                android:layout_width="62dp"
+                android:layout_height="62dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/logo" />
 
-            </RelativeLayout>
+        </RelativeLayout>
 
-            <GridLayout
-                android:columnCount="2"
-                android:rowCount="3"
-                android:alignmentMode="alignMargins"
-                android:layout_width="match_parent"
-                android:paddingTop="30dp"
-                android:columnOrderPreserved="false"
-                android:layout_height="wrap_content">
+    </LinearLayout>
 
-                <androidx.cardview.widget.CardView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="12dp"
-                    android:layout_margin="12dp"
-                    >
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/logo"
-
-                            ></ImageView>
-                        <TextView
-                            android:layout_marginTop="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Coke"
-                            android:textSize="18sp"
-                            android:textColor="#000000"
-
-                            ></TextView>
-
-
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="12dp"
-                    android:layout_margin="12dp"
-                    >
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:src="@drawable/logo"
-
-                            ></ImageView>
-                        <TextView
-                            android:layout_marginTop="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Coke"
-                            android:textSize="18sp"
-                            android:textColor="#000000"
-
-                            ></TextView>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-            </GridLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/CartItemlistRv"
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/materialButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ToplayoutDiscriptionCart" />
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/materialButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -150,5 +72,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
