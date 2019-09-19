@@ -7,11 +7,12 @@
     tools:context=".SplashscreenActivity"
     android:background="#000000">
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/logo"
         android:scaleType="centerInside"
+        android:foregroundGravity="center"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

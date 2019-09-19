@@ -18,7 +18,9 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_width="180dp"
                 android:layout_height="180dp"
-                android:src="@drawable/userprofile"/>
+                android:src="@drawable/coke"/>-->
+<!--                android:src="@drawable/userprofile"/>-->
+
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center_horizontal"
