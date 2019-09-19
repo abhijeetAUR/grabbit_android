@@ -3,10 +3,8 @@ package com.example.grabbit
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.grabbit.home.HomeActivity
-import kotlinx.android.synthetic.main.activity_login.*
+import com.example.grabbit.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_login.button
-import kotlinx.android.synthetic.main.activity_signup.*
 
 class SignupActivity : AppCompatActivity() {
 

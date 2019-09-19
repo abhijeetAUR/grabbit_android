@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".scanner.QrScannerActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".login.LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/SplashTheme" />

@@ -1,11 +1,11 @@
-package com.example.grabbit
+package com.example.grabbit.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import com.example.grabbit.R
+import com.example.grabbit.SignupActivity
 import com.example.grabbit.home.HomeActivity
-import com.example.grabbit.login.LoginFactory
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
