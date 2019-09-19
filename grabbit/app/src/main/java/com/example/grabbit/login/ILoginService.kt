@@ -1,17 +1,20 @@
 package com.example.grabbit.login
 
+import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ILoginService {
-        @POST("/Userdetails.asmx/USER_LOGIN?mobileno=9890698284&password=grabbit123")
-        suspend fun getLoginResponse(): Response<List<LoginResponse>>
+        @POST("/Userdetails.asmx/USER_LOGIN")
+        suspend fun getLoginResponse(@Query("mobileNo") mobileNo: String,
+                                     @Query("password") password: String): Response<List<LoginResponse>>
 }
 
 object LoginFactory {
-    const val BASE_URL = "http://grabbit.myvend.in"
+    private const val BASE_URL = "http://grabbit.myvend.in"
 
     fun makeLoginService(): ILoginService {
         return Retrofit.Builder()

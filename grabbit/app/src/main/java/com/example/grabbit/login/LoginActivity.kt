@@ -18,30 +18,38 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+//        9890698284
+//        grabbit123
         val service = LoginFactory.makeLoginService()
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getLoginResponse()
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.isSuccessful) {
-                        //TODO: Update ui on response
-                        //Do something with response e.g show to the UI.
-                    } else {
-                        print("Error: ${response.code()}")
+
+
+        btn_sign_in.setOnClickListener {
+            // Handler code here.
+            if (validateTextBox()){
+                CoroutineScope(Dispatchers.IO).launch {
+//                    val response = service.getLoginResponse(edit_text_username.text.toString(),edit_text_password.text.toString() )
+                    val response = service.getLoginResponse("9890698284","grabbit123")
+                    withContext(Dispatchers.Main) {
+                        try {
+                            if (response.isSuccessful) {
+                                //TODO: Update ui on response
+                                print(response.body())
+                                if(response.body()!!.first().Result.contentEquals("SUCCESS")){
+                                    val intent = Intent(applicationContext, HomeActivity::class.java)
+                                    startActivity(intent)
+                                }
+                                //Do something with response e.g show to the UI.
+                            } else {
+                                print("Error: ${response.code()}")
+                            }
+                        } catch (e: HttpException) {
+                            e.printStackTrace()
+                        } catch (e: Throwable) {
+                            e.printStackTrace()
+                        }
                     }
-                } catch (e: HttpException) {
-                    e.printStackTrace()
-                } catch (e: Throwable) {
-                    e.printStackTrace()
                 }
             }
-        }
-
-        button.setOnClickListener {
-            // Handler code here.
-            val intent = Intent(applicationContext, HomeActivity::class.java)
-            startActivity(intent)
         }
 
         textView3.setOnClickListener {
@@ -49,5 +57,11 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    private fun validateTextBox(): Boolean{
+        if (edit_text_password.text.isNotEmpty() && edit_text_username.text.isNotEmpty())
+            return true
+        return false
     }
 }
