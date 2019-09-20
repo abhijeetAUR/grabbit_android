@@ -72,7 +72,7 @@
             android:drawablePadding="5dp"
             android:ems="10"
             android:hint="Contact No"
-            android:inputType="textPassword"
+            android:inputType="text"
             android:textColor="#000"
             android:textColorHint="#999" />
 

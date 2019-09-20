@@ -5,5 +5,9 @@
     <string name="navigationHome">Home</string>
     <string name="navigationCart">Cart</string>
     <string name="checkout">Checkout</string>
+    <string name="grabbitlogo">grabbitlogo</string>
+    <string name="signup">signup</string>
+    <string name="username">Username</string>
+    <string name="full_name">Full Name</string>
 
 </resources>

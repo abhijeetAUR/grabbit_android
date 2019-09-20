@@ -14,7 +14,7 @@
         <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".CartActivity" />
         <activity android:name=".home.HomeActivity" />
-        <activity android:name=".SignupActivity" />
+        <activity android:name=".Signup.SignupActivity" />
         <activity android:name=".SplashscreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
