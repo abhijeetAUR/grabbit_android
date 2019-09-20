@@ -15,14 +15,15 @@ import retrofit2.HttpException
 
 class LoginActivity : AppCompatActivity() {
 
+    companion object{
+        val service = LoginFactory.makeLoginService()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 //        9890698284
 //        grabbit123
-        val service = LoginFactory.makeLoginService()
-
-
         btn_sign_in.setOnClickListener {
             // Handler code here.
             if (validateTextBox()){
