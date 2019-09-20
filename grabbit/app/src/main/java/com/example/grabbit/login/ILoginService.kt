@@ -10,7 +10,7 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ILoginService {
-        @POST(UrlEndpoints.userDetails)
+        @POST(UrlEndpoints.userLogin)
         suspend fun getLoginResponse(@Query("mobileNo") mobileNo: String,
                                      @Query("password") password: String): Response<List<LoginResponse>>
 }
