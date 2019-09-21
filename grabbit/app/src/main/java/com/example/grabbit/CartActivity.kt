@@ -46,7 +46,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun callPaytm(){
-        val request = PaytmTransactionRequest(M_ID,"ORDER00001111212324", "CUST0001121234", CHANNEL_ID, "1.00",WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID)
+        val request = PaytmTransactionRequest(M_ID,"ORDER00100981", "CUST0010991", CHANNEL_ID, "110.00",WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID)
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.getChecksum(request.MID,request.ORDER_ID,request.CUST_ID , request.CHANNEL_ID, request.TXN_AMOUNT,request.WEBSITE, CALLBACK_URL, request.INDUSTRY_TYPE_ID)
             withContext(Dispatchers.Main) {
