@@ -21,10 +21,6 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
-
-
-//http://localhost:3000/api/v1/paytm/initiatePayment
-
 class CartActivity : AppCompatActivity() {
     companion object{
         private var paramMap: HashMap<String, String> = HashMap()
@@ -50,7 +46,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun callPaytm(){
-        val request = PaytmTransactionRequest(M_ID,"ORDER0000111324", "CUST00011234", CHANNEL_ID, "1.00",WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID)
+        val request = PaytmTransactionRequest(M_ID,"ORDER00001111212324", "CUST0001121234", CHANNEL_ID, "1.00",WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID)
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.getChecksum(request.MID,request.ORDER_ID,request.CUST_ID , request.CHANNEL_ID, request.TXN_AMOUNT,request.WEBSITE, CALLBACK_URL, request.INDUSTRY_TYPE_ID)
             withContext(Dispatchers.Main) {
@@ -112,17 +108,17 @@ class CartActivity : AppCompatActivity() {
         }
     }
     private fun createParams(checksum: String,request: PaytmTransactionRequest): PaytmOrder{
-        paramMap.put( "MID" , request.MID);
+        paramMap.put( "MID" , request.MID)
 // Key in your staging and production MID available in your dashboard
-        paramMap.put( "ORDER_ID" , request.ORDER_ID);
-        paramMap.put( "CUST_ID" , request.CUST_ID);
-        paramMap.put( "CHANNEL_ID" , request.CHANNEL_ID);
-        paramMap.put( "TXN_AMOUNT" , request.TXN_AMOUNT);
-        paramMap.put( "WEBSITE" , request.WEBSITE);
+        paramMap.put( "ORDER_ID" , request.ORDER_ID)
+        paramMap.put( "CUST_ID" , request.CUST_ID)
+        paramMap.put( "CHANNEL_ID" , request.CHANNEL_ID)
+        paramMap.put( "TXN_AMOUNT" , request.TXN_AMOUNT)
+        paramMap.put( "WEBSITE" , request.WEBSITE)
 // This is the staging value. Production value is available in your dashboard
-        paramMap.put( "INDUSTRY_TYPE_ID" , request.INDUSTRY_TYPE_ID);
+        paramMap.put( "INDUSTRY_TYPE_ID" , request.INDUSTRY_TYPE_ID)
 // This is the staging value. Production value is available in your dashboard
-        paramMap.put( "CALLBACK_URL", "https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=order1");
+        paramMap.put( "CALLBACK_URL", request.CALLBACK_URL)
         paramMap.put( "CHECKSUMHASH" , checksum)
         val order: PaytmOrder = PaytmOrder(paramMap)
         return order

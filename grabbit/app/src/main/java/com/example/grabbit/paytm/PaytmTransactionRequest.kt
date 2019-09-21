@@ -7,4 +7,4 @@ package com.example.grabbit.paytm
                                     val TXN_AMOUNT: String,
                                     val WEBSITE: String,
                                     val CALLBACK_URL: String,
-                                    val INDUSTRY_TYPE_ID: String){}
+                                    val INDUSTRY_TYPE_ID: String)
