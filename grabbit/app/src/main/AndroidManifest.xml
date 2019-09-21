@@ -4,6 +4,9 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,15 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
         <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".CartActivity" />
-        <activity android:name=".home.HomeActivity" />
-        <activity android:name=".Signup.SignupActivity" />
-        <activity android:name=".SplashscreenActivity">
+        <activity android:name=".CartActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>>
+        <activity android:name=".home.HomeActivity" />
+        <activity android:name=".Signup.SignupActivity" />
+        <activity android:name=".SplashscreenActivity">
+
         </activity>
         <activity android:name=".scanner.QrScannerActivity" />
         <activity android:name=".login.LoginActivity" />
