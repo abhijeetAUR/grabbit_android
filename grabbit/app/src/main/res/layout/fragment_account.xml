@@ -13,9 +13,9 @@
         <LinearLayout
             android:id="@+id/lin_lay_acc_1"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="280dp"
             android:background="@color/colorOrange"
-            android:paddingTop="50dp"
+            android:paddingTop="30dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
@@ -26,7 +26,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_gravity=""
                 android:src="@drawable/coke">
 
             </ImageView>
