@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.os.Handler
+import com.example.grabbit.bnhome.HomeBnActivity
 import com.example.grabbit.login.LoginActivity
 
 class SplashscreenActivity : AppCompatActivity() {
@@ -17,7 +18,7 @@ class SplashscreenActivity : AppCompatActivity() {
             // This method will be executed once the timer is over
             // Start your app main activity
 
-            startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, HomeBnActivity::class.java))
 
             // close this activity
             finish()
