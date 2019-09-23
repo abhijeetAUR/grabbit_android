@@ -14,6 +14,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        app:itemIconTint="@drawable/navigation_item_selected"
+        app:itemTextColor="@drawable/navigation_item_selected"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
