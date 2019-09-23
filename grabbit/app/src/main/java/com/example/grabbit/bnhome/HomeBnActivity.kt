@@ -2,6 +2,7 @@ package com.example.grabbit.bnhome
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentTransaction
 import com.example.grabbit.R
 import com.example.grabbit.bnhome.bnaccount.AccountFragment
