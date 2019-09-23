@@ -1,11 +1,10 @@
-package com.example.grabbit.home
+package com.example.grabbit.bnhome.bncart
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
-import kotlinx.android.synthetic.main.itemlist_view_onmain.view.*
 
 class CartItemList_Adapter: RecyclerView.Adapter<CustomViewHolderCart>() {
 

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.grabbit.R
 import com.example.grabbit.Signup.SignupActivity
-import com.example.grabbit.home.HomeActivity
+import com.example.grabbit.bnhome.HomeBnActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
                                 //TODO: Update ui on response
                                 print(response.body())
                                 if(response.body()!!.first().Result.contentEquals("SUCCESS")){
-                                    val intent = Intent(applicationContext, HomeActivity::class.java)
+                                    val intent = Intent(applicationContext, HomeBnActivity::class.java)
                                     startActivity(intent)
                                 }
                                 //Do something with response e.g show to the UI.

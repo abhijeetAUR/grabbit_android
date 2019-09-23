@@ -16,11 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
         <activity android:name=".bnhome.HomeBnActivity"></activity>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".CartActivity">
-
-        </activity>
-        <activity android:name=".home.HomeActivity" />
         <activity android:name=".Signup.SignupActivity" />
         <activity android:name=".SplashscreenActivity">
             <intent-filter>

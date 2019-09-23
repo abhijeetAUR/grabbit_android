@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.content.Intent
 import android.os.Handler
 import com.example.grabbit.bnhome.HomeBnActivity
-import com.example.grabbit.login.LoginActivity
 
 class SplashscreenActivity : AppCompatActivity() {
     val SPLASH_DELAY: Long = 3000 //3 seconds

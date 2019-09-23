@@ -1,4 +1,4 @@
-package com.example.grabbit.home
+package com.example.grabbit.bnhome.bnhome
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +11,9 @@ class MenuAdapter(private val categories : ArrayList<String>): RecyclerView.Adap
 
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.category_view, parent, false)
-        return  ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun getItemCount() = categories.size
