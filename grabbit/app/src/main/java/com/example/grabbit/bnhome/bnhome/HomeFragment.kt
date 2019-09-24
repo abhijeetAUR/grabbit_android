@@ -51,8 +51,33 @@ class HomeFragment : Fragment() {
         itemsAdapter = ItemsAdapter(items, activity!!.applicationContext)
         purchase_item_list.layoutManager = LinearLayoutManager(activity?.applicationContext)
         purchase_item_list.adapter = itemsAdapter
+        menuAdapter!!.onItemClick = { categoryName ->
+            print(categoryName).toString()
+            getProductListForSelectedCategory(categoryName)
+        }
+
 
         fetchProductListApi()
+    }
+
+    private fun getProductListForSelectedCategory(categoryName: String){
+        var lst: ArrayList<BtnNameAndStatus> = arrayListOf()
+        lst.clear()
+        for (btnNameAndStatus in singletonProductDataHolder.lstBtnNameAndStatus) {
+            if (btnNameAndStatus.name.contentEquals(categoryName))
+                lst.add(BtnNameAndStatus(name = btnNameAndStatus.name, status = true))
+            else
+                lst.add(BtnNameAndStatus(name = btnNameAndStatus.name, status = false))
+        }
+        singletonProductDataHolder.lstBtnNameAndStatus.clear()
+        singletonProductDataHolder.lstBtnNameAndStatus.addAll(lst)
+        items.clear()
+        items.addAll(getSelectedCategory())
+        itemsAdapter!!.notifyDataSetChanged()
+    }
+
+    private fun addItemToCart(item: HomeResponseList){
+        singletonProductDataHolder.lstProductsAddedToCart.add(item)
     }
 
     private fun fetchProductListApi() {

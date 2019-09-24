@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
 
 class MenuAdapter(private val categories : ArrayList<String>): RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
-
+    var onItemClick: ((String) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.category_view, parent, false)
         return ViewHolder(view)
@@ -19,7 +19,14 @@ class MenuAdapter(private val categories : ArrayList<String>): RecyclerView.Adap
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.categoryName.text = categories[position]
     }
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val categoryName : TextView = itemView.findViewById(R.id.category_name)
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(categories.elementAt(position))
+            }
+        }
+
+
     }
 }

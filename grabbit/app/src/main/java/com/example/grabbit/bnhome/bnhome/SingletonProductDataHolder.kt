@@ -4,7 +4,7 @@ class SingletonProductDataHolder{
     companion object{
         val instance = SingletonProductDataHolder()
     }
-    var lstProductsAddedToCart: List<HomeResponseList> = listOf()
+    var lstProductsAddedToCart: ArrayList<HomeResponseList> = arrayListOf()
     var homeProductDictionary: HashMap<String, ArrayList<HomeResponseList>> = hashMapOf()
     var lstBtnNameAndStatus: ArrayList<BtnNameAndStatus> = arrayListOf()
 }
