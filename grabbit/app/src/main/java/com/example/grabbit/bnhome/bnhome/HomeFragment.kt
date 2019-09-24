@@ -20,7 +20,12 @@ import retrofit2.HttpException
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener {
+    override fun onProductCategoryClick(position: Int) {
+        print(position)
+        getProductListForSelectedCategory(position)
+    }
+
     companion object{
         val service = HomeFactory.makeHomeService()
         val singletonProductDataHolder = SingletonProductDataHolder.instance
@@ -45,23 +50,18 @@ class HomeFragment : Fragment() {
         btnNameAndStatus.add("1")
         btnNameAndStatus.add("2")
         menuAdapter = MenuAdapter(categories = btnNameAndStatus)
-
         rv_product_list.adapter =  menuAdapter
 
         itemsAdapter = ItemsAdapter(items, activity!!.applicationContext)
         purchase_item_list.layoutManager = LinearLayoutManager(activity?.applicationContext)
         purchase_item_list.adapter = itemsAdapter
-        menuAdapter!!.onItemClick = { categoryName ->
-            print(categoryName).toString()
-            getProductListForSelectedCategory(categoryName)
-        }
-
-
+        menuAdapter!!.setOnItemClickListener(this)
         fetchProductListApi()
     }
 
-    private fun getProductListForSelectedCategory(categoryName: String){
+    private fun getProductListForSelectedCategory(position: Int){
         var lst: ArrayList<BtnNameAndStatus> = arrayListOf()
+        val categoryName = singletonProductDataHolder.lstBtnNameAndStatus.elementAt(position).name
         lst.clear()
         for (btnNameAndStatus in singletonProductDataHolder.lstBtnNameAndStatus) {
             if (btnNameAndStatus.name.contentEquals(categoryName))

@@ -11,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.example.grabbit.R
 
 class ItemsAdapter(private val items : ArrayList<HomeResponseList>,private val context: Context): RecyclerView.Adapter<ItemsAdapter.CustomViewHolder>() {
-    var onItemClickAddToCart: ((HomeResponseList) -> (Unit))? = null
     override fun getItemCount() = items.count()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
