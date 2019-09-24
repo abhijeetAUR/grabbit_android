@@ -10,7 +10,7 @@ import retrofit2.http.Query
 
 interface IHomeService {
     @POST(UrlEndpoints.productListHome)
-    suspend fun getProductListService(@Query("Kioskid") Kioskid: String): Response<List<HomeResponse>>
+    suspend fun getProductListService(@Query("Kioskid") Kioskid: String): Response<HomeResponse>
 }
 
 object HomeFactory {

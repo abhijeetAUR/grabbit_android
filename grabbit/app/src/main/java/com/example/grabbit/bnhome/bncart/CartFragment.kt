@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.grabbit.R
 import com.example.grabbit.bnhome.bnhome.HomeFragment
+import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
 import com.example.grabbit.constants.*
 import com.example.grabbit.paytm.PaytmFactory
 import com.example.grabbit.paytm.PaytmTransactionRequest
@@ -34,6 +35,7 @@ class CartFragment : Fragment() {
     companion object{
         private var paramMap: HashMap<String, String> = HashMap()
         val service = PaytmFactory.makePaytmService()
+        val singletonProductDataHolder = SingletonProductDataHolder.instance
     }
 
     override fun onCreateView(
@@ -55,6 +57,7 @@ class CartFragment : Fragment() {
         btnCheckout.setOnClickListener {
             callPaytm()
         }
+        print(singletonProductDataHolder)
     }
 
     private fun callPaytm(){

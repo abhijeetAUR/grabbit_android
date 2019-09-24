@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.grabbit.R
-import com.example.grabbit.bnhome.bncart.CartFragment.Companion.service
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,45 +22,48 @@ import retrofit2.HttpException
  */
 class HomeFragment : Fragment() {
     companion object{
-        val Service = HomeFactory.makeHomeService()
+        val service = HomeFactory.makeHomeService()
+        val singletonProductDataHolder = SingletonProductDataHolder.instance
+        var setFirstButtonSelected = true
+        var menuAdapter : MenuAdapter? = null
+        var itemsAdapter: ItemsAdapter? = null
+
+        val btnNameAndStatus : ArrayList<String> = ArrayList()
+        val items : ArrayList<HomeResponseList> = ArrayList()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
         rv_product_list.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.HORIZONTAL, false)
-        val categories : ArrayList<String> = ArrayList()
-        for(i in 1..20){
-            categories.add("Menu $i")
-        }
-        rv_product_list.adapter = MenuAdapter(categories)
+        btnNameAndStatus.add("1")
+        btnNameAndStatus.add("2")
+        menuAdapter = MenuAdapter(categories = btnNameAndStatus)
 
+        rv_product_list.adapter =  menuAdapter
+
+        itemsAdapter = ItemsAdapter(items, activity!!.applicationContext)
         purchase_item_list.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        purchase_item_list.adapter = Itemlist_Adapter()
+        purchase_item_list.adapter = itemsAdapter
 
-        //fetchProductListApi()
+        fetchProductListApi()
     }
 
     private fun fetchProductListApi() {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = Service.getProductListService("00001")
+            val response = service.getProductListService("00001")
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         //TODO: Update ui on response
-                        print(response.body())
-
+                        //Add to singleton class
+                        putDataInSingleton(response.body()!!.Table1)
                     } else {
                         print("Error: ${response.code()}")
                     }
@@ -73,4 +75,50 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
+    private fun putDataInSingleton(lstResponseProducts : List<HomeResponseList>){
+        addProductsToSingletonDictionary(lstResponseProducts)
+        createBtnNameAndStatus(lstResponseProducts)
+    }
+
+    private fun createBtnNameAndStatus(lstResponseProducts: List<HomeResponseList>) {
+        val categories = lstResponseProducts.map { it.TYPE }.toSet().toList()
+        if(singletonProductDataHolder.lstBtnNameAndStatus.isEmpty()){
+            for (category in categories) {
+                if (setFirstButtonSelected){
+                    setFirstButtonSelected = false
+                    singletonProductDataHolder.lstBtnNameAndStatus.add(BtnNameAndStatus(name = category, status = true))
+                } else{
+                    singletonProductDataHolder.lstBtnNameAndStatus.add(BtnNameAndStatus(name = category, status = false))
+                }
+            }
+        }
+        btnNameAndStatus.clear()
+        btnNameAndStatus.addAll(categories)
+        menuAdapter!!.notifyDataSetChanged()
+
+        items.clear()
+        items.addAll(getSelectedCategory())
+        itemsAdapter!!.notifyDataSetChanged()
+    }
+
+    private fun addProductsToSingletonDictionary(lstResponseProducts : List<HomeResponseList>) {
+        val categories = lstResponseProducts.map { it.TYPE }.toSet().toList()
+        for (category in categories) {
+            val lstHomeProducts: ArrayList<HomeResponseList> = arrayListOf()
+            for (product in lstResponseProducts) {
+                if (product.TYPE.contentEquals(category)){
+                    lstHomeProducts.add(product)
+                }
+            }
+            singletonProductDataHolder.homeProductDictionary[category] = lstHomeProducts
+        }
+    }
+
+    private fun getSelectedCategory(): ArrayList<HomeResponseList> {
+        val selectedCategory = singletonProductDataHolder.lstBtnNameAndStatus.filter { it.status }
+        val list = singletonProductDataHolder.homeProductDictionary[selectedCategory[0].name]
+        return list!!
+    }
+
 }

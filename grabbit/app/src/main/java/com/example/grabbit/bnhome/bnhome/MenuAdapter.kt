@@ -9,8 +9,6 @@ import com.example.grabbit.R
 
 class MenuAdapter(private val categories : ArrayList<String>): RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.category_view, parent, false)
         return ViewHolder(view)
