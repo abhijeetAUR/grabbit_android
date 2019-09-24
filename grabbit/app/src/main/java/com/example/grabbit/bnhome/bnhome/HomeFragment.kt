@@ -20,7 +20,12 @@ import retrofit2.HttpException
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener {
+class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
+    ItemsAdapter.OnProductListClickListener {
+    override fun onProductListClick(position: Int) {
+        addItemToCart(items.elementAt(position))
+    }
+
     override fun onProductCategoryClick(position: Int) {
         print(position)
         getProductListForSelectedCategory(position)
@@ -56,6 +61,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener {
         purchase_item_list.layoutManager = LinearLayoutManager(activity?.applicationContext)
         purchase_item_list.adapter = itemsAdapter
         menuAdapter!!.setOnItemClickListener(this)
+        itemsAdapter!!.setOnItemClickListener(this)
         fetchProductListApi()
     }
 
