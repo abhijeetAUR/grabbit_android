@@ -51,12 +51,10 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        progressBar.visibility = View.VISIBLE
         rv_product_list.layoutManager = LinearLayoutManager(activity?.applicationContext, RecyclerView.HORIZONTAL, false)
-        btnNameAndStatus.add("1")
-        btnNameAndStatus.add("2")
         menuAdapter = MenuAdapter(categories = btnNameAndStatus)
         rv_product_list.adapter =  menuAdapter
-
         itemsAdapter = ItemsAdapter(items, activity!!.applicationContext)
         purchase_item_list.layoutManager = LinearLayoutManager(activity?.applicationContext)
         purchase_item_list.adapter = itemsAdapter
@@ -95,6 +93,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
                         //TODO: Update ui on response
                         //Add to singleton class
                         putDataInSingleton(response.body()!!.Table1)
+                        progressBar.visibility = View.GONE
                     } else {
                         print("Error: ${response.code()}")
                     }
