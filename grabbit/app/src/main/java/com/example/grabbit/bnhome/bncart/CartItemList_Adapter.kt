@@ -9,7 +9,7 @@ import com.example.grabbit.R
 class CartItemList_Adapter: RecyclerView.Adapter<CustomViewHolderCart>() {
 
     override fun getItemCount(): Int {
-        return 6
+        return 5
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolderCart {
