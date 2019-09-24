@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.grabbit.R
-import com.example.grabbit.bnhome.bnhome.HomeFragment
 import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
 import com.example.grabbit.constants.*
 import com.example.grabbit.paytm.PaytmFactory
@@ -31,18 +30,22 @@ import kotlin.collections.HashMap
 /**
  * A simple [Fragment] subclass.
  */
-class CartFragment : Fragment() {
+class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
+    override fun onBtnRemoveClick(position: Int) {
+        removeItemFromListOfCart(index = position)
+    }
+
     companion object{
         private var paramMap: HashMap<String, String> = HashMap()
         val service = PaytmFactory.makePaytmService()
         val singletonProductDataHolder = SingletonProductDataHolder.instance
+        var adapter : CartItemListAdapter? = null
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cart, container, false)
     }
 
@@ -53,11 +56,12 @@ class CartFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         cart_item_listrv.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        cart_item_listrv.adapter = CartItemList_Adapter()
+        adapter = CartItemListAdapter(singletonProductDataHolder.lstProductsAddedToCart, activity!!.applicationContext)
+        cart_item_listrv.adapter = adapter
+        adapter!!.setOnClickListener(this)
         btnCheckout.setOnClickListener {
-            callPaytm()
+//            callPaytm()
         }
-        print(singletonProductDataHolder)
     }
 
     private fun callPaytm(){
@@ -146,6 +150,11 @@ class CartFragment : Fragment() {
         var str = ""
         str = UUID.randomUUID().toString().replace("-", "")
         return str
+    }
+
+    private fun removeItemFromListOfCart(index: Int){
+        singletonProductDataHolder.lstProductsAddedToCart.removeAt(index)
+        adapter!!.notifyDataSetChanged()
     }
 
 
