@@ -10,4 +10,8 @@
     <string name="username">Username</string>
     <string name="full_name">Full Name</string>
 
+    //Cart
+    <string name="appBarCart">Cart</string>
+    <string name="cartInstructions">1. Refresh the list\n 2. Search for bluetooth device named 20-18-08-34-F7-3C\n 3. Connect to 20-18-08-34-F7-3C\n 4. After successful connection click on start dispensing   item</string>
+
 </resources>

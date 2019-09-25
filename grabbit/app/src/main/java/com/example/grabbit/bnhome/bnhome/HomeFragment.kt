@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -23,11 +24,18 @@ import retrofit2.HttpException
 class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
     ItemsAdapter.OnProductListClickListener {
     override fun onProductListClick(position: Int) {
-        addItemToCart(items.elementAt(position))
+        if (!singletonProductDataHolder.lstProductsAddedToCart.contains(items.elementAt(position)) && singletonProductDataHolder.lstProductsAddedToCart.count() <= 5){
+            addItemToCart(items.elementAt(position))
+        } else if (singletonProductDataHolder.lstProductsAddedToCart.count() == 5){
+            //TODO: Show dialog
+            Toast.makeText(activity?.applicationContext, "Maximum 5 items can be added to cart", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(activity?.applicationContext, "${items.elementAt(position).ITEMNAME} already added to cart", Toast.LENGTH_LONG).show();
+        }
+
     }
 
     override fun onProductCategoryClick(position: Int) {
-        print(position)
         getProductListForSelectedCategory(position)
     }
 

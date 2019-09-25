@@ -5,6 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".bluetooth.ScanBluetoothDevices">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cartInstructions"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </TextView>
     <ListView
         android:id="@+id/select_device_list"
         android:layout_width="wrap_content"
@@ -13,14 +24,14 @@
         app:layout_constraintBottom_toTopOf="@+id/select_device_referesh"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/select_device_referesh"
         android:text="Refresh"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-
+        app:cornerRadius="25dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

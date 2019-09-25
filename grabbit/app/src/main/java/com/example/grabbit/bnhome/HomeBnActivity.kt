@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class HomeBnActivity : AppCompatActivity() {
     companion object {
-        var qrCodeResult = String()
+        var qrCodeResult : String? = null
     }
     lateinit var homeFragment: HomeFragment
     lateinit var accountFragment: AccountFragment

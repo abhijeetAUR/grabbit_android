@@ -33,7 +33,7 @@ class CartItemListAdapter(private val lstHomeResponseList : ArrayList<HomeRespon
 
     override fun onBindViewHolder(holder: CustomViewHolderCart, position: Int) {
         holder.txtProductName.text = lstHomeResponseList[position].ITEMNAME
-        holder.txtProductPrice.text = lstHomeResponseList[position].ITEMRATE.toString()
+        holder.txtProductPrice.text = "Rs ${lstHomeResponseList[position].ITEMRATE}"
         Glide.with(context).load(lstHomeResponseList[position].ITEMIMAGE).into(holder.imgProduct)
     }
 

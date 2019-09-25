@@ -24,7 +24,7 @@ class MenuAdapter(private val categories : ArrayList<String>): RecyclerView.Adap
     override fun getItemCount() = categories.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.categoryName.text = categories[position]
+        holder.categoryName.text = categories[position].toUpperCase()
     }
     inner class ViewHolder(itemView: View, onProductCategoryListener: OnProductCategoryListener?) : RecyclerView.ViewHolder(itemView){
         val categoryName : TextView = itemView.findViewById(R.id.category_name)
