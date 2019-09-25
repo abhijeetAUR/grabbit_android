@@ -2,6 +2,7 @@ package com.example.grabbit.bnhome.bncart
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.grabbit.R
+import com.example.grabbit.bluetooth.ScanBluetoothDevices
 import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
 import com.example.grabbit.constants.*
 import com.example.grabbit.paytm.PaytmFactory
@@ -39,8 +41,8 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         private var paramMap: HashMap<String, String> = HashMap()
         val service = PaytmFactory.makePaytmService()
         val singletonProductDataHolder = SingletonProductDataHolder.instance
-        var adapter : CartItemListAdapter? = null
     }
+    var adapter : CartItemListAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,6 +63,14 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         adapter!!.setOnClickListener(this)
         btnCheckout.setOnClickListener {
 //            callPaytm()
+            navigateToBluetoothPage()
+        }
+    }
+
+    private fun navigateToBluetoothPage(){
+        if (singletonProductDataHolder.lstProductsAddedToCart.isNotEmpty()){
+            val intent = Intent(activity, ScanBluetoothDevices::class.java)
+            startActivity(intent)
         }
     }
 
