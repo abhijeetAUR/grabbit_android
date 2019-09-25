@@ -7,7 +7,7 @@
     <!-- we define border color and thick -->
     <stroke
         android:width="3dp"
-        android:color="#BEBEBE" />
+        android:color="#DCDCDC" />
     <corners android:radius="40dp" />
 
 </shape>

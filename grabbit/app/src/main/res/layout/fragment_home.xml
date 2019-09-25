@@ -2,7 +2,6 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#BEBEBE"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".bnhome.bnhome.HomeFragment">
@@ -10,7 +9,7 @@
         android:id="@+id/toolbar_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="15dp"
         android:background="@color/colorOrange">
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
@@ -30,12 +29,11 @@
             android:id="@+id/rv_product_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#BEBEBE"
-            android:padding="5dp"
+            android:padding="15dp"
+            android:background="#F0F0F0"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
         </androidx.recyclerview.widget.RecyclerView>
 
         <ScrollView
@@ -49,8 +47,6 @@
             >
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/purchase_item_list"
-
-                android:background="#BEBEBE"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="70dp"

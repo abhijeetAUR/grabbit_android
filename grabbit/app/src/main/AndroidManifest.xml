@@ -19,6 +19,7 @@
         android:theme="@style/MaterialTheme">
         <activity android:name=".bluetooth.ItemDispenseActivity"></activity>
         <activity android:name=".bluetooth.ScanBluetoothDevices" />
+        <activity android:name=".scanner.InformationActivity"></activity>
         <activity android:name=".bnhome.HomeBnActivity" />
         <activity android:name=".Signup.SignupActivity" />
         <activity android:name=".SplashscreenActivity">
