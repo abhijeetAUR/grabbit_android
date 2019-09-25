@@ -22,7 +22,7 @@ class HomeBnActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_bn)
-        //qrCodeResult= intent.getStringExtra("name")
+        qrCodeResult= intent.getStringExtra("name")
 
         val bottomNavigationHome : BottomNavigationView = findViewById(R.id.bottom_navigation_home)
         homeFragment = HomeFragment()
