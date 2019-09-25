@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.grabbit.MainActivity
 import com.example.grabbit.R
+import com.example.grabbit.bnhome.HomeBnActivity
 import me.dm7.barcodescanner.zbar.Result
 import me.dm7.barcodescanner.zbar.ZBarScannerView
 
@@ -14,7 +15,7 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler{
 
     override fun handleResult(rawResult: Result?) {
         val name = rawResult!!.barcodeFormat.name.toString()
-        val intent = Intent(this@QrScannerActivity,MainActivity::class.java )
+        val intent = Intent(this@QrScannerActivity,HomeBnActivity::class.java )
         intent.putExtra("name", name)
         startActivity(intent)
 

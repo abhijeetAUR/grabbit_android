@@ -9,9 +9,12 @@ import com.example.grabbit.bnhome.bnaccount.AccountFragment
 import com.example.grabbit.bnhome.bncart.CartFragment
 import com.example.grabbit.bnhome.bnhome.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 
 class HomeBnActivity : AppCompatActivity() {
-
+    companion object {
+        var qrCodeResult = String()
+    }
     lateinit var homeFragment: HomeFragment
     lateinit var accountFragment: AccountFragment
     lateinit var cartFragment: CartFragment
@@ -19,6 +22,7 @@ class HomeBnActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_bn)
+        qrCodeResult= intent.getStringExtra("name")
 
         val bottomNavigationHome : BottomNavigationView = findViewById(R.id.bottom_navigation_home)
         homeFragment = HomeFragment()
