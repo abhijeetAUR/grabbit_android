@@ -6,36 +6,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".bnhome.bncart.CartFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/toolbar_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:background="@color/colorOrange">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cart"
-            android:textColor="@color/white"
-            android:textSize="20sp"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/txt_item_count"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/toolbar_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:background="@color/colorOrange"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="70dp"
-                android:text="5 items"
-                android:textColor="#000000"
-                android:textSize="17dp" />
+                android:text="Cart"
+                android:textColor="@color/white"
+                android:textSize="20sp"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -44,13 +37,13 @@
             android:paddingTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_item_count"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_home"
             app:layout_constraintBottom_toBottomOf="parent"
             >
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cart_item_listrv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="70dp"
                 />
         </ScrollView>
