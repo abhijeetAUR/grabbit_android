@@ -7,8 +7,7 @@
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
     app:cardCornerRadius="15dp"
-    app:cardBackgroundColor="@color/colorOrange"
-    android:background="@drawable/selector_xml_btn_orange"
+    app:cardBackgroundColor="#f0f0f0"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -17,7 +16,8 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textColor="@color/colorOrange"
         android:layout_gravity="center">
     </TextView>
 
