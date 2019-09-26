@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.example.grabbit.R
 import com.example.grabbit.Signup.SignupActivity
 import com.example.grabbit.bnhome.HomeBnActivity
+import com.example.grabbit.scanner.InformationActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
                                 //TODO: Update ui on response
                                 print(response.body())
                                 if(response.body()!!.first().Result.contentEquals("SUCCESS")){
-                                    val intent = Intent(applicationContext, HomeBnActivity::class.java)
+                                    val intent = Intent(applicationContext, InformationActivity::class.java)
                                     startActivity(intent)
                                 }
                                 //Do something with response e.g show to the UI.
@@ -53,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        textView3.setOnClickListener {
+        txtViewSignUp.setOnClickListener {
             val intent = Intent(applicationContext, SignupActivity::class.java)
             startActivity(intent)
         }

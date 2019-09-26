@@ -10,17 +10,13 @@ import me.dm7.barcodescanner.zbar.Result
 import me.dm7.barcodescanner.zbar.ZBarScannerView
 
 class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler{
-
     private var mScannerView: ZBarScannerView? = null
-
     override fun handleResult(rawResult: Result?) {
         val name = rawResult!!.barcodeFormat.name.toString()
         val intent = Intent(this@QrScannerActivity,HomeBnActivity::class.java )
         intent.putExtra("name", name)
         startActivity(intent)
-
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mScannerView = ZBarScannerView(this)   // Programmatically initialize the scanner view
