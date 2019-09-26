@@ -82,7 +82,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:text="Wallet Balance"
-                android:textSize="20sp"/>
+                android:textSize="18sp"/>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -129,7 +129,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/item_purchased"
-                android:textSize="20sp"/>
+                android:textSize="18sp"/>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -169,7 +169,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_one"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
