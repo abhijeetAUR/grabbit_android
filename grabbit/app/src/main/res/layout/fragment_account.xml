@@ -116,6 +116,7 @@
             android:layout_below="@id/lin_lay_acc_2"
             >
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_logout"
                 android:textColor="#fff"
                 android:background="@drawable/selector_xml_btn_orange"
                 android:layout_gravity="center"

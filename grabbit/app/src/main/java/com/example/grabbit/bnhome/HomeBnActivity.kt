@@ -1,23 +1,42 @@
 package com.example.grabbit.bnhome
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.ForwardingListener
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.grabbit.R
 import com.example.grabbit.bnhome.bnaccount.AccountFragment
 import com.example.grabbit.bnhome.bncart.CartFragment
 import com.example.grabbit.bnhome.bnhome.HomeFragment
+import com.example.grabbit.login.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class HomeBnActivity : AppCompatActivity() {
+class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
+
+    override fun logoutApplication() {
+        val intent = Intent(this, LoginActivity::class.java);
+        startActivity(intent)
+        finish()
+    }
+
     companion object {
         var qrCodeResult : String? = null
     }
+
     lateinit var homeFragment: HomeFragment
     lateinit var accountFragment: AccountFragment
     lateinit var cartFragment: CartFragment
+
+    override fun onAttachFragment(fragment: Fragment) {
+        super.onAttachFragment(fragment)
+        if (fragment is AccountFragment) {
+            fragment.setOnClickListenerBtnLogoutClicked(this)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
