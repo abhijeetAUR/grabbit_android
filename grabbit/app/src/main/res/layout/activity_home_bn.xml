@@ -5,6 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".bnhome.HomeBnActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:background="@color/windowBackground">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:fontFamily="@font/open_sans_extra_bold"
+            android:textColor="@color/black"
+            android:textSize="24sp"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_home"
@@ -20,9 +34,12 @@
         android:layout_marginBottom="0dp"
         app:menu="@menu/bottom_navigation_menu_home"/>
     <FrameLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/framelayout_bottomnavigation"
-        android:layout_above="@id/bottom_navigation_home">
+        android:layout_above="@id/bottom_navigation_home"
+        android:layout_below="@id/toolbar_home">
     </FrameLayout>
+
 </RelativeLayout>

@@ -7,6 +7,7 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlue">#0084D4</color>
     <color name="colorGrey">#9d968d</color>
+    <color name="colorHomeMenuBtnGrey">#f5f6ff</color>
     <color name="colorFaintGray">#d1ccbd</color>
     <color name="colorDarkGray">#8e8e93</color>
     <color name="colorOrange">#f89326</color>
@@ -16,4 +17,5 @@
     <color name="toolBarTitle">#9d968d</color>
     <color name="colorMessageDialogBg">#efeeec</color>
     <color name="windowBackground">#ffffff</color>
+    <color name="homeTxtProductHeading">#252729</color>
 </resources>

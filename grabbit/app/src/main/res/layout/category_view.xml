@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="30dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    app:cardCornerRadius="15dp"
-    app:cardBackgroundColor="#f0f0f0"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    >
 
     <TextView
+        android:textColor="@color/homeTxtProductHeading"
         android:id="@+id/category_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center_horizontal"
         android:textAlignment="center"
         android:textSize="18sp"
-        android:textColor="@color/colorOrange"
-        android:layout_gravity="center">
+        android:text="sasasa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:foregroundGravity="center"
+        android:fontFamily="@font/open_sans_bold">
     </TextView>
 
-</androidx.cardview.widget.CardView>
+        <ImageView
+            android:foregroundGravity="top|center"
+            android:id="@+id/img_selected_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/category_name"
+            app:layout_constraintEnd_toEndOf="@id/category_name"
+            app:layout_constraintTop_toBottomOf="@id/category_name"
+            android:src="@drawable/ic_arrow_drop_up_black_24dp"
+            >
+        </ImageView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

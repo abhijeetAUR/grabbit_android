@@ -24,7 +24,7 @@ import retrofit2.HttpException
 class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
     ItemsAdapter.OnProductListClickListener {
     override fun onProductListClick(position: Int) {
-        if (!singletonProductDataHolder.lstProductsAddedToCart.contains(items.elementAt(position)) && singletonProductDataHolder.lstProductsAddedToCart.count() <= 5){
+        if (!singletonProductDataHolder.lstProductsAddedToCart.contains(items.elementAt(position)) && (singletonProductDataHolder.lstProductsAddedToCart.count() + 1) <= 5){
             addItemToCart(items.elementAt(position))
         } else if (singletonProductDataHolder.lstProductsAddedToCart.count() == 5){
             //TODO: Show dialog
@@ -86,6 +86,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         items.clear()
         items.addAll(getSelectedCategory())
         itemsAdapter!!.notifyDataSetChanged()
+        menuAdapter!!.notifyDataSetChanged()
     }
 
     private fun addItemToCart(item: HomeResponseList){

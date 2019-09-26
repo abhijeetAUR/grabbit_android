@@ -30,17 +30,17 @@ class ItemsAdapter(private val items : ArrayList<HomeResponseList>,private val c
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.itemNameHome.text = items[position].ITEMNAME
-        holder.itemPriceHome.text = "Rs ${items[position].ITEMRATE}"
+        holder.itemNameHome.text = items[position].ITEMNAME.trim()
+        holder.itemPriceHome.text = "Rs ${items[position].ITEMRATE}".trim()
         Glide.with(context).load(items[position].ITEMIMAGE).into(holder.itemImageHome)
     }
 
     inner class CustomViewHolder(itemView: View, listener: OnProductListClickListener?): RecyclerView.ViewHolder(itemView){
 
-        val itemImageHome: ImageView = itemView.findViewById(R.id.item_image_home)
-        val itemNameHome: TextView = itemView.findViewById(R.id.item_name_home)
-        val itemPriceHome: TextView = itemView.findViewById(R.id.item_price_home)
-        private val btnAddItemToCart: Button = itemView.findViewById(R.id.add_item_to_cart)
+        val itemImageHome: ImageView = itemView.findViewById(R.id.img_home)
+        val itemNameHome: TextView = itemView.findViewById(R.id.txt_name_home)
+        val itemPriceHome: TextView = itemView.findViewById(R.id.txt_price_home)
+        private val btnAddItemToCart: Button = itemView.findViewById(R.id.btn_add_item_to_cart)
         init {
             btnAddItemToCart.setOnClickListener {
                 if (listener != null){

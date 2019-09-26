@@ -19,4 +19,11 @@
     <string name="add_balance">Add balance</string>
     <string name="item_purchased">Item purchased</string>
 
+    //BottomNavigation
+    <string name="bnHome">Home</string>
+    <string name="bnCart">Cart</string>
+    <string name="bnAccount">Profile</string>
+
+    <string name="productContentDescription">Product Image</string>
+
 </resources>

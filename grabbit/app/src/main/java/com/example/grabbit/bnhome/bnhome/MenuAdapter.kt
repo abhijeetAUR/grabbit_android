@@ -1,14 +1,18 @@
 package com.example.grabbit.bnhome.bnhome
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
 
 class MenuAdapter(private val categories : ArrayList<String>): RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
     private var mOnProductCategoryListener: OnProductCategoryListener? = null
+    private val singletonProductDataHolder = SingletonProductDataHolder.instance
+
     interface OnProductCategoryListener{
         fun onProductCategoryClick(position: Int)
     }
@@ -24,10 +28,18 @@ class MenuAdapter(private val categories : ArrayList<String>): RecyclerView.Adap
     override fun getItemCount() = categories.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.categoryName.text = categories[position].toUpperCase()
+        holder.categoryName.text = categories[position].toLowerCase().capitalize()
+        if (singletonProductDataHolder.lstBtnNameAndStatus[position].status){
+            holder.selectedCategoryArrow.visibility = View.VISIBLE
+            holder.categoryName.setTextColor(Color.parseColor("#252729"))
+        } else{
+            holder.selectedCategoryArrow.visibility = View.GONE
+            holder.categoryName.setTextColor(Color.parseColor("#9d968d"))
+        }
     }
     inner class ViewHolder(itemView: View, onProductCategoryListener: OnProductCategoryListener?) : RecyclerView.ViewHolder(itemView){
         val categoryName : TextView = itemView.findViewById(R.id.category_name)
+        val selectedCategoryArrow: ImageView = itemView.findViewById(R.id.img_selected_category)
         init {
             itemView.setOnClickListener {
                 if (onProductCategoryListener != null){
