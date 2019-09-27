@@ -25,5 +25,6 @@
     <string name="bnAccount">Profile</string>
 
     <string name="productContentDescription">Product Image</string>
+    <string name="noDataAvailable">No products in cart</string>
 
 </resources>

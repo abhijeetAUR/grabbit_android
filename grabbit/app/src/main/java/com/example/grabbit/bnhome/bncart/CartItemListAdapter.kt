@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -48,7 +47,6 @@ class CartItemListAdapter(private val lstHomeResponseList : ArrayList<HomeRespon
         val imgProduct: ImageView = itemView.findViewById(R.id.img_product)
         val txtProductName : TextView = itemView.findViewById(R.id.txt_product_name)
         val txtProductPrice : TextView = itemView.findViewById(R.id.txt_product_price)
-//        val txtTotalItem : TextView = itemView.findViewById(R.id.txt_total_items)
         private val btnRemove: ImageButton = itemView.findViewById(R.id.btn_remove)
         init {
             if (listener != null){

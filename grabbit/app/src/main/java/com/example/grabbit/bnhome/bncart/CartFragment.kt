@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,14 +55,27 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        cart_item_listrv.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        adapter = CartItemListAdapter(singletonProductDataHolder.lstProductsAddedToCart, activity!!.applicationContext)
-        cart_item_listrv.adapter = adapter
-        adapter!!.setOnClickListener(this)
+        setupRecyclerView()
+        showNoItemSelectedTextView()
         btnCheckout.setOnClickListener {
 //            callPaytm()
             navigateToBluetoothPage()
         }
+    }
+
+    private fun setupRecyclerView(){
+        cart_item_listrv.layoutManager = LinearLayoutManager(activity?.applicationContext)
+        adapter = CartItemListAdapter(singletonProductDataHolder.lstProductsAddedToCart, activity!!.applicationContext)
+        cart_item_listrv.adapter = adapter
+        adapter!!.setOnClickListener(this)
+    }
+
+    private fun showNoItemSelectedTextView(){
+        if (singletonProductDataHolder.lstProductsAddedToCart.count() < 1)
+            txt_no_data_available.visibility = View.VISIBLE
+        else
+            txt_no_data_available.visibility = View.GONE
+
     }
 
     private fun navigateToBluetoothPage(){
@@ -162,6 +176,7 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
     private fun removeItemFromListOfCart(index: Int){
         singletonProductDataHolder.lstProductsAddedToCart.removeAt(index)
         adapter!!.notifyDataSetChanged()
+        showNoItemSelectedTextView()
     }
 
 
