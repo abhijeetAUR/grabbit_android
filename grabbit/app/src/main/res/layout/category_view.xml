@@ -23,7 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:foregroundGravity="center"
-        android:fontFamily="@font/open_sans_bold">
+        android:fontFamily="@font/sofia_pro_semi_bold">
     </TextView>
 
         <ImageView

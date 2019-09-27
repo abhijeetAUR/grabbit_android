@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -40,7 +41,7 @@ class ItemsAdapter(private val items : ArrayList<HomeResponseList>,private val c
         val itemImageHome: ImageView = itemView.findViewById(R.id.img_home)
         val itemNameHome: TextView = itemView.findViewById(R.id.txt_name_home)
         val itemPriceHome: TextView = itemView.findViewById(R.id.txt_price_home)
-        private val btnAddItemToCart: Button = itemView.findViewById(R.id.btn_add_item_to_cart)
+        private val btnAddItemToCart: ImageButton = itemView.findViewById(R.id.btn_add_item_to_cart)
         init {
             btnAddItemToCart.setOnClickListener {
                 if (listener != null){

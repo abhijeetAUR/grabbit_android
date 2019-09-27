@@ -45,7 +45,7 @@
 
             <TextView
                 android:layout_gravity="top"
-                android:fontFamily="@font/open_sans_bold"
+                android:fontFamily="@font/sofia_pro_semi_bold"
                 android:id="@+id/txt_name_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                 />
 
             <TextView
-                android:fontFamily="@font/open_sans_regular"
+                android:fontFamily="@font/sofia_pro_regular"
                 android:id="@+id/txt_price_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,16 +68,17 @@
                 android:textSize="18sp"/>
         </LinearLayout>
     </LinearLayout>
-
-    <com.google.android.material.button.MaterialButton
+    <ImageButton
+        style="@style/Widget.AppCompat.ImageButton"
         android:id="@+id/btn_add_item_to_cart"
         android:padding="5dp"
         android:layout_width="35dp"
-        android:layout_height="45dp"
-        app:icon="@drawable/ic_add_black_24dp"
-        app:cornerRadius="25dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_add_black_24dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/selector_xml_btn_orange">
+    </ImageButton>
 </androidx.constraintlayout.widget.ConstraintLayout>
