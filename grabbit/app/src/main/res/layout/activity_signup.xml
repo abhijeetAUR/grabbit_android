@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@drawable/signup"
     tools:context=".login.LoginActivity">
 
     <TextView
@@ -42,7 +42,7 @@
         android:fontFamily="@font/sofia_pro_regular"
         android:layout_marginBottom="30dp"
         android:layout_marginStart="30dp"
-        android:textColor="@color/white"
+        android:textColor="@color/colorDarkGray"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -62,7 +62,7 @@
             android:layout_marginStart="30dp"
             android:text="Sign up"
             android:fontFamily="@font/sofia_pro_semi_bold"
-            android:textColor="@color/white"
+            android:textColor="@color/colorDarkGray"
             android:textSize="25sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -76,6 +76,7 @@
             android:background="@drawable/scan_qr_code_circle_btn_background"
             android:drawableStart="@drawable/ic_arrow_forward_black_24dp"
             android:padding="20dp"
+            android:drawableTint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -99,7 +100,7 @@
         android:textColor="@color/white"
         android:paddingLeft="5dp"
         android:drawablePadding="15dp"
-        android:textColorHint="#999"/>
+        android:textColorHint="@color/white"/>
 
     <EditText
         app:layout_constraintBottom_toTopOf="@id/edit_text_contactno"
@@ -115,10 +116,10 @@
         android:textSize="14sp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="15dp"
-        android:textColor="#000"
+        android:textColor="@color/white"
         android:paddingLeft="5dp"
         android:drawablePadding="5dp"
-        android:textColorHint="#999"/>
+        android:textColorHint="@color/white"/>
     <EditText
         app:layout_constraintBottom_toTopOf="@id/edit_text_email"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,10 +134,10 @@
         android:textSize="14sp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="15dp"
-        android:textColor="#000"
+        android:textColor="@color/white"
         android:paddingLeft="5dp"
         android:drawablePadding="5dp"
-        android:textColorHint="#999"/>
+        android:textColorHint="@color/white"/>
     <EditText
         app:layout_constraintBottom_toTopOf="@id/constraintlyoutbottom"
         app:layout_constraintStart_toStartOf="parent"
@@ -151,10 +152,10 @@
         android:textSize="14sp"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="20dp"
-        android:textColor="#000"
+        android:textColor="@color/white"
         android:paddingLeft="5dp"
         android:drawablePadding="5dp"
-        android:textColorHint="#999"/>
+        android:textColorHint="@color/white"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
