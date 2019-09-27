@@ -48,6 +48,7 @@
             android:id="@+id/btnCheckout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/scan_qr_code_circle_btn_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/checkout"

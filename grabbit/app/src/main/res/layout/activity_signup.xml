@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
-            android:background="@drawable/selector_xml_btn_orange"
+            android:background="@drawable/scan_qr_code_circle_btn_background"
             android:drawableStart="@drawable/ic_arrow_forward_black_24dp"
             android:padding="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
