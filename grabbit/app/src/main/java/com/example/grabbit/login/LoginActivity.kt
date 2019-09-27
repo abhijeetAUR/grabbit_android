@@ -85,7 +85,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateTextBox(): Boolean {
         if (edit_text_password.text.isNotEmpty() && edit_text_username.text.isNotEmpty())
-            if (isEmailValid(edit_text_password.text.toString()))
+            if (isEmailValid(edit_text_username.text.toString()))
                 return true
             else
                 AlertDialogBox.showDialog(
