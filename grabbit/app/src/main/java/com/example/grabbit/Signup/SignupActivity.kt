@@ -30,6 +30,16 @@ class SignupActivity : AppCompatActivity() {
         btn_sign_up.setOnClickListener {
             checkInternetConnection()
         }
+
+        txt_back_arrow.setOnClickListener {
+            finish()
+        }
+
+        txt_sing_in.setOnClickListener {
+            startActivity(Intent(this@SignupActivity, LoginActivity::class.java ))
+            finish()
+        }
+
     }
 
     private fun signUpNetworkCall() {

@@ -8,7 +8,7 @@
     tools:context=".login.LoginActivity">
 
     <TextView
-        android:id="@+id/back_arrow"
+        android:id="@+id/txt_back_arrow"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -29,12 +29,12 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/back_arrow"
+        app:layout_constraintTop_toBottomOf="@id/txt_back_arrow"
         />
 
     <TextView
 
-        android:id="@+id/txtview_login"
+        android:id="@+id/txt_sing_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in"
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@id/txtview_login"
+        app:layout_constraintBottom_toTopOf="@id/txt_sing_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
