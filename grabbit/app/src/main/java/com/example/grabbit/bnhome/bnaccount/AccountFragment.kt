@@ -37,7 +37,7 @@ class AccountFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        btn_logout.setOnClickListener {
+        logout.setOnClickListener {
             if (btnLogoutClicked != null){
                 btnLogoutClicked!!.logoutApplication()
             }
