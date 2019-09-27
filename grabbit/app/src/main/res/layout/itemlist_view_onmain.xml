@@ -69,7 +69,6 @@
         </LinearLayout>
     </LinearLayout>
     <ImageButton
-        style="@style/Widget.AppCompat.ImageButton"
         android:id="@+id/btn_add_item_to_cart"
         android:padding="5dp"
         android:layout_width="35dp"
@@ -79,6 +78,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/scan_qr_code_circle_btn_background">
+        android:background="@drawable/scan_qr_code_circle_btn_background"
+        android:foreground="?android:attr/selectableItemBackground">
     </ImageButton>
 </androidx.constraintlayout.widget.ConstraintLayout>

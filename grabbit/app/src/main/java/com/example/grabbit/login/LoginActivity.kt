@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.example.grabbit.R
 import com.example.grabbit.Signup.SignupActivity
@@ -27,8 +28,10 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        progressBar.visibility = View.GONE
         btn_sign_in.setOnClickListener {
             // Handler code here.
+            progressBar.visibility = View.VISIBLE
             checkInternetConnection()
         }
 
@@ -53,6 +56,7 @@ class LoginActivity : AppCompatActivity() {
                                 val intent =
                                     Intent(applicationContext, InformationActivity::class.java)
                                 startActivity(intent)
+                                progressBar.visibility = View.GONE
                             }
                             //Do something with response e.g show to the UI.
                         } else {
@@ -66,6 +70,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+        progressBar.visibility = View.GONE
     }
 
 
@@ -76,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
                     if (internet) {
                         signInNetworkCall()
                     } else {
+                        progressBar.visibility = View.GONE
                         ConnectionDetector.showNoInternetConnectionDialog(context = this@LoginActivity)
                     }
                 }
