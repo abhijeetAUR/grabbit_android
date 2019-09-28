@@ -12,11 +12,12 @@ import kotlinx.android.synthetic.main.activity_item_dispense.*
 import java.io.*
 import java.lang.Exception
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.concurrent.timerTask
 
 class ItemDispenseActivity : AppCompatActivity() {
 
-    companion object{
+    companion object {
         var mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
         var mBluetoothSocket: BluetoothSocket? = null
         lateinit var mBluetoothAdapter: BluetoothAdapter
@@ -27,15 +28,15 @@ class ItemDispenseActivity : AppCompatActivity() {
         var receivedDataFromMega = 0
         var sendDataToMega = "12"
 
-        private fun sendData(){
+        private fun sendData() {
             outputStream = mBluetoothSocket!!.outputStream
             var arr: ByteArray
-            when(receivedDataFromMega){
+            when (receivedDataFromMega) {
                 48 -> {
                     sendDataToMega = "ai"
                     DataOutputStream(outputStream).writeBytes(sendDataToMega)
                 }
-                46,51 -> {
+                46, 51 -> {
                     sendDataToMega = "02"
                     arr = byteArrayOf(sendDataToMega.toByte())
                     DataOutputStream(outputStream).write(arr)
@@ -65,20 +66,21 @@ class ItemDispenseActivity : AppCompatActivity() {
             disconnect()
         }
     }
-    private fun disconnect(){
-        if (mBluetoothSocket != null){
+
+    private fun disconnect() {
+        if (mBluetoothSocket != null) {
             try {
                 mBluetoothSocket!!.close()
                 mBluetoothSocket = null
                 mIsConnected = false
-            } catch(e: Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
         finish()
     }
 
-    private class ConnectToDevice(c: Context): AsyncTask<Void, Void, String>(){
+    private class ConnectToDevice(c: Context) : AsyncTask<Void, Void, String>() {
         private var connectSuccess: Boolean = true
         private val context: Context
 
@@ -92,20 +94,19 @@ class ItemDispenseActivity : AppCompatActivity() {
 
         override fun onPostExecute(result: String?) {
             super.onPostExecute(result)
-            if (!connectSuccess){
+            if (!connectSuccess) {
                 print("Not connected")
             } else {
                 connectSuccess = true
-                print("connected")
-//                Timer().schedule(timerTask {
-//                    sendData()
-//                }, 2000)
+                every(3, TimeUnit.SECONDS) {
+                    sendData()
+                }
             }
         }
 
         override fun doInBackground(vararg params: Void?): String {
             try {
-                if (mBluetoothSocket == null || !mIsConnected){
+                if (mBluetoothSocket == null || !mIsConnected) {
                     mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
                     val device: BluetoothDevice = mBluetoothAdapter.getRemoteDevice(mAddress)
                     mBluetoothSocket = device.createInsecureRfcommSocketToServiceRecord(mUUID)
@@ -113,12 +114,24 @@ class ItemDispenseActivity : AppCompatActivity() {
                     mBluetoothSocket!!.connect()
                     print(mBluetoothSocket!!.isConnected)
                 }
-            }catch (e: IOException){
+            } catch (e: IOException) {
                 connectSuccess = false
                 e.printStackTrace()
             }
             return ""
         }
 
+    }
+}
+
+inline fun every(
+    duration: Long,
+    timeUnit: TimeUnit,
+    whileCondition: () -> Boolean = { true },
+    function: () -> Unit
+) {
+    while (whileCondition()) {
+        function()
+        Thread.sleep(timeUnit.toMillis(duration))
     }
 }

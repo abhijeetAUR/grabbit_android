@@ -78,7 +78,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/scan_qr_code_circle_btn_background"
-        android:foreground="?android:attr/selectableItemBackground">
+        android:background="@drawable/scan_qr_code_circle_btn_background">
+<!--        android:foreground="?android:attr/selectableItemBackground">-->
     </ImageButton>
 </androidx.constraintlayout.widget.ConstraintLayout>

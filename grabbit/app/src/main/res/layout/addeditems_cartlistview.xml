@@ -47,7 +47,7 @@
                 android:id="@+id/txt_product_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
                 android:text="Coke"
                 android:textColor="@color/homeTxtProductHeading"
@@ -77,9 +77,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:background="@drawable/scan_qr_code_circle_btn_background"
-                >
+                android:background="@drawable/scan_qr_code_circle_btn_background">
+<!--                android:foreground="?android:attr/selectableItemBackground"-->
             </ImageButton>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
