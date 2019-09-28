@@ -26,6 +26,29 @@ class ItemDispenseActivity : AppCompatActivity() {
         var outputStream: OutputStream? = null
         var receivedDataFromMega = 0
         var sendDataToMega = "12"
+
+        private fun sendData(){
+            outputStream = mBluetoothSocket!!.outputStream
+            var arr: ByteArray
+            when(receivedDataFromMega){
+                48 -> {
+                    sendDataToMega = "ai"
+                    DataOutputStream(outputStream).writeBytes(sendDataToMega)
+                }
+                46,51 -> {
+                    sendDataToMega = "02"
+                    arr = byteArrayOf(sendDataToMega.toByte())
+                    DataOutputStream(outputStream).write(arr)
+                }
+                else -> {
+                    sendDataToMega = "12"
+                    arr = byteArrayOf(sendDataToMega.toByte())
+                    DataOutputStream(outputStream).write(arr)
+                }
+            }
+            inputStream = mBluetoothSocket!!.inputStream
+            receivedDataFromMega = DataInputStream(inputStream).read()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,67 +58,13 @@ class ItemDispenseActivity : AppCompatActivity() {
         ConnectToDevice(this).execute()
         on.setOnClickListener {
             Timer().schedule(timerTask {
-//                sendCommand("12")
                 sendData()
-            }, 20)
+            }, 2000)
         }
         disconnect.setOnClickListener {
             disconnect()
         }
     }
-
-    private fun sendData(){
-        outputStream = mBluetoothSocket!!.outputStream
-        var arr: ByteArray
-        when(receivedDataFromMega){
-            48 -> {
-                sendDataToMega = "fi"
-//                arr = byteArrayOf(sendDataToMega.toByte())
-//                DataOutputStream(outputStream).write(arr)
-                DataOutputStream(outputStream).writeBytes(sendDataToMega)
-            }
-            46,51 -> {
-                sendDataToMega = "02"
-                arr = byteArrayOf(sendDataToMega.toByte())
-                DataOutputStream(outputStream).write(arr)
-            }
-            else -> {
-                sendDataToMega = "12"
-                arr = byteArrayOf(sendDataToMega.toByte())
-                DataOutputStream(outputStream).write(arr)
-            }
-        }
-        inputStream = mBluetoothSocket!!.inputStream
-        receivedDataFromMega = DataInputStream(inputStream).read()
-    }
-
-//    private fun sendCommand(input : String){
-//        var code = "12".toByte()
-//        var status = true
-//        var receivedDtata = 0
-//        try {
-//            outputStream = mBluetoothSocket!!.outputStream
-//            while (true){
-//                val arr = byteArrayOf(code)
-//                if (receivedDtata == 48) {
-//                    DataOutputStream(outputStream).writeBytes("fi")
-//                } else{
-//                    DataOutputStream(outputStream).write(arr)
-//                }
-//                inputStream = mBluetoothSocket!!.inputStream
-//                receivedDtata = DataInputStream(inputStream).read()
-//                if ((receivedDtata == 46 && status == true) || (receivedDtata == 51 && status == true)){
-//                    status == false
-//                    code = "02".toByte()
-//                } else {
-//                    code = "12".toByte()
-//                }
-//            }
-//        }catch (e: IOException){
-//            e.printStackTrace()
-//        }
-//    }
-
     private fun disconnect(){
         if (mBluetoothSocket != null){
             try {
@@ -128,6 +97,9 @@ class ItemDispenseActivity : AppCompatActivity() {
             } else {
                 connectSuccess = true
                 print("connected")
+//                Timer().schedule(timerTask {
+//                    sendData()
+//                }, 2000)
             }
         }
 
