@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.grabbit.R
+import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -68,7 +69,22 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         purchase_item_list.adapter = itemsAdapter
         menuAdapter!!.setOnItemClickListener(this)
         itemsAdapter!!.setOnItemClickListener(this)
-        fetchProductListApi()
+        checkInternetConnection()
+    }
+
+    private fun checkInternetConnection() {
+        ConnectionDetector(object : ConnectionDetector.Consumer {
+            override fun accept(internet: Boolean?) {
+                if (internet != null) {
+                    if (internet) {
+                        fetchProductListApi()
+                    } else {
+                        progressBar.visibility = View.GONE
+                        ConnectionDetector.showNoInternetConnectionDialog(context = activity!!)
+                    }
+                }
+            }
+        })
     }
 
     private fun getProductListForSelectedCategory(position: Int){
