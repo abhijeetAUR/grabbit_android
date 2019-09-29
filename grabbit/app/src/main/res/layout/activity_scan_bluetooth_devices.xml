@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".bluetooth.ScanBluetoothDevices">
     <TextView
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cartInstructions"
@@ -16,10 +17,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
     </TextView>
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/select_device_list"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/select_device_referesh"
         app:layout_constraintStart_toStartOf="parent" />
