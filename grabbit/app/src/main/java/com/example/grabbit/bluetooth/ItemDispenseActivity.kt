@@ -3,19 +3,28 @@ package com.example.grabbit.bluetooth
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
-import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.grabbit.R
-import kotlinx.android.synthetic.main.activity_item_dispense.*
+import com.example.grabbit.bnhome.HomeBnActivity
+import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
 import java.io.*
 import java.lang.Exception
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.timerTask
+import kotlin.concurrent.fixedRateTimer
 
 class ItemDispenseActivity : AppCompatActivity() {
+
+    private var sendDataToMega = "12"
+    private var itemsDispatched = 0
+    private var itemsToDispatch = 2
+    private var singletonProductDataHolder: SingletonProductDataHolder? = null
+    private var inputStream: InputStream? = null
+    private var outputStream: OutputStream? = null
+    private var receivedDataFromMega = 0
 
     companion object {
         var mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
@@ -23,46 +32,104 @@ class ItemDispenseActivity : AppCompatActivity() {
         lateinit var mBluetoothAdapter: BluetoothAdapter
         var mIsConnected: Boolean = false
         lateinit var mAddress: String
-        var inputStream: InputStream? = null
-        var outputStream: OutputStream? = null
-        var receivedDataFromMega = 0
-        var sendDataToMega = "12"
-
-        private fun sendData() {
-            outputStream = mBluetoothSocket!!.outputStream
-            var arr: ByteArray
-            when (receivedDataFromMega) {
-                48 -> {
-                    sendDataToMega = "ai"
-                    DataOutputStream(outputStream).writeBytes(sendDataToMega)
-                }
-                46, 51 -> {
-                    sendDataToMega = "02"
-                    arr = byteArrayOf(sendDataToMega.toByte())
-                    DataOutputStream(outputStream).write(arr)
-                }
-                else -> {
-                    sendDataToMega = "12"
-                    arr = byteArrayOf(sendDataToMega.toByte())
-                    DataOutputStream(outputStream).write(arr)
-                }
-            }
-            inputStream = mBluetoothSocket!!.inputStream
-            receivedDataFromMega = DataInputStream(inputStream).read()
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_dispense)
         mAddress = intent.getStringExtra(ScanBluetoothDevices.EXTRA_ADDRESS)
+        singletonProductDataHolder = SingletonProductDataHolder.instance
+        itemsToDispatch = getItemDispatchCount()
         ConnectToDevice(this).execute()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
+//        disconnect()
+    }
+
+    override fun onStop() {
+        super.onStop()
         disconnect()
     }
+
+
+    fun writeDataToMega() {
+        fixedRateTimer("default", false, 0L, 1000) {
+            if (itemsDispatched == itemsToDispatch) {
+                cancel()
+                sendDispenseDataInformation()
+                clearDataInCart()
+                navigateToHomePage()
+            } else {
+                sendData()
+            }
+        }
+    }
+
+    private fun sendDispenseDataInformation() {
+        //TODO: send dispensed data information to web service
+    }
+
+    private fun clearDataInCart() {
+        singletonProductDataHolder?.lstProductsAddedToCart?.clear()
+    }
+
+    private fun navigateToHomePage() {
+        var intent = Intent(this@ItemDispenseActivity, HomeBnActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        finish()
+    }
+
+
+    private fun sendData() {
+        try {
+            if (mBluetoothSocket != null) {
+                outputStream = mBluetoothSocket!!.outputStream
+                var arr: ByteArray
+                when (receivedDataFromMega) {
+                    48 -> {
+                        sendDataToMega = "ai"
+                        DataOutputStream(outputStream).writeBytes(sendDataToMega)
+                        itemsDispatched += 1
+                        Timer().schedule(object : TimerTask() {
+                            override fun run() {
+                                sendDataToMega = "12"
+                                arr = byteArrayOf(sendDataToMega.toByte())
+                                DataOutputStream(outputStream).write(arr)
+                                cancel()
+                            }
+                        }, 10000)
+                    }
+                    46, 51 -> {
+                        sendDataToMega = "02"
+                        arr = byteArrayOf(sendDataToMega.toByte())
+                        DataOutputStream(outputStream).write(arr)
+                    }
+                    else -> {
+                        sendDataToMega = "12"
+                        arr = byteArrayOf(sendDataToMega.toByte())
+                        DataOutputStream(outputStream).write(arr)
+                    }
+                }
+                inputStream = mBluetoothSocket!!.inputStream
+                receivedDataFromMega = DataInputStream(inputStream).read()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+
+    private fun getItemDispatchCount(): Int {
+        if (singletonProductDataHolder != null) {
+            return singletonProductDataHolder!!.lstProductsAddedToCart.count()
+        }
+        return 0
+    }
+
+
     private fun disconnect() {
         if (mBluetoothSocket != null) {
             try {
@@ -73,15 +140,15 @@ class ItemDispenseActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         }
-        finish()
     }
 
-    private class ConnectToDevice(c: Context) : AsyncTask<Void, Void, String>() {
+    private class ConnectToDevice(itemDispenseActivity: ItemDispenseActivity) :
+        AsyncTask<Void, Void, String>() {
         private var connectSuccess: Boolean = true
-        private val context: Context
+        private var itemDispenseActivity: ItemDispenseActivity? = null
 
         init {
-            this.context = c
+            this.itemDispenseActivity = itemDispenseActivity
         }
 
         override fun onProgressUpdate(vararg values: Void?) {
@@ -94,9 +161,7 @@ class ItemDispenseActivity : AppCompatActivity() {
                 print("Not connected")
             } else {
                 connectSuccess = true
-                every(3, TimeUnit.SECONDS) {
-                    sendData()
-                }
+                itemDispenseActivity?.writeDataToMega()
             }
         }
 
@@ -117,17 +182,5 @@ class ItemDispenseActivity : AppCompatActivity() {
             return ""
         }
 
-    }
-}
-
-inline fun every(
-    duration: Long,
-    timeUnit: TimeUnit,
-    whileCondition: () -> Boolean = { true },
-    function: () -> Unit
-) {
-    while (whileCondition()) {
-        function()
-        Thread.sleep(timeUnit.toMillis(duration))
     }
 }
