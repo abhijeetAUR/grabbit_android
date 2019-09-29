@@ -44,7 +44,8 @@ class ItemDispenseActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        //TODO: Handle disconnection of bluetooth on back button pressed, uncomment super.onBackPressed()
+//        super.onBackPressed()
 //        disconnect()
     }
 
