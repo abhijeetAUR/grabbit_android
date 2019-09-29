@@ -57,16 +57,12 @@ class ItemDispenseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_item_dispense)
         mAddress = intent.getStringExtra(ScanBluetoothDevices.EXTRA_ADDRESS)
         ConnectToDevice(this).execute()
-        on.setOnClickListener {
-            Timer().schedule(timerTask {
-                sendData()
-            }, 2000)
-        }
-        disconnect.setOnClickListener {
-            disconnect()
-        }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        disconnect()
+    }
     private fun disconnect() {
         if (mBluetoothSocket != null) {
             try {
