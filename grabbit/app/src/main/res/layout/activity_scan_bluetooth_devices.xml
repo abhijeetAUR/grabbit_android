@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".bluetooth.ScanBluetoothDevices">
     <TextView
-        android:visibility="invisible"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cartInstructions"
@@ -17,22 +17,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
     </TextView>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/select_device_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/select_device_referesh"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/select_device_referesh"
-        android:text="Refresh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:cornerRadius="25dp"
-        />
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_select_device_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,18 +6,28 @@ import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
 import kotlinx.android.synthetic.main.activity_scan_bluetooth_devices.*
 
-class ScanBluetoothDevices : AppCompatActivity() {
+class ScanBluetoothDevices : AppCompatActivity(), BluetoothListAdapter.OnBluetoothDispenseBtnClick {
+    override fun onDispenseBtnClick(position: Int) {
+            val device = list[position]
+            val address: String = device.address
+            val intent = Intent(this, ItemDispenseActivity::class.java)
+            intent.putExtra(EXTRA_ADDRESS, address)
+            startActivity(intent)
+    }
 
-    private var mBluetoothAdapter: BluetoothAdapter? = null
-    lateinit var mPairedDevices : Set<BluetoothDevice>
-    private val requestEnableBluetooth= 1
 
     companion object{
-        val EXTRA_ADDRESS : String = "20-18-08-34-F7-3C"
+        const private val requestEnableBluetooth= 1
+        private var mBluetoothAdapter: BluetoothAdapter? = null
+        lateinit var mPairedDevices : Set<BluetoothDevice>
+        const val EXTRA_ADDRESS : String = "20-18-08-34-F7-3C"
+        private var bluetoothListAdapter : BluetoothListAdapter? = null
+        private var list : ArrayList<BluetoothDevice> = ArrayList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,30 +41,23 @@ class ScanBluetoothDevices : AppCompatActivity() {
             val enableBluetoothIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
             startActivityForResult(enableBluetoothIntent, requestEnableBluetooth)
         }
-        select_device_referesh.setOnClickListener { pairedDeviceList() }
     }
-    private fun pairedDeviceList(){
+
+    override fun onStart() {
+        super.onStart()
         mPairedDevices = mBluetoothAdapter!!.bondedDevices
-        val list : ArrayList<BluetoothDevice> = ArrayList()
-        if (!mPairedDevices.isEmpty()){
+        list.clear()
+        if (mPairedDevices.isNotEmpty()){
             mPairedDevices.forEach {
                 list.add(it)
-                print(it)
             }
         } else {
             print("No paired bluetooth device found")
         }
-
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
-        select_device_list.adapter = adapter
-        select_device_list.setOnItemClickListener { parent, view, position, id ->
-            val device = list[position]
-            val address: String = device.address
-
-            val intent = Intent(this, ItemDispenseActivity::class.java)
-            intent.putExtra(EXTRA_ADDRESS, address)
-            startActivity(intent)
-        }
+        rv_select_device_list.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        bluetoothListAdapter  = BluetoothListAdapter(list)
+        rv_select_device_list.adapter = bluetoothListAdapter
+        bluetoothListAdapter!!.setOnDispenseBtnClickListener(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
