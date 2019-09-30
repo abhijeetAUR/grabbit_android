@@ -59,7 +59,7 @@ class ItemDispenseActivity : AppCompatActivity() {
         itemsDispatched = 0
         itemsToDispatch = getItemDispatchCount()
         runOnUiThread {
-            txt_item_dispense_msg.text = singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME
+            txt_item_dispense_msg.text = "Dispensing item : ${singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME}"
         }
     }
 
@@ -106,13 +106,13 @@ class ItemDispenseActivity : AppCompatActivity() {
                 when (receivedDataFromMega) {
                     48 -> {
                         var data = singletonProductDataHolder!!.lstProductsAddedToCart[counter].SERIALDATA
-                        counter += 1
                         runOnUiThread {
-                            txt_item_dispense_msg.text = singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME
+                            txt_item_dispense_msg.text = "Dispensing item : ${singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME}"
+                            counter += 1
+                            itemsDispatched += 1
                         }
                         sendDataToMega = data
 //                        sendDataToMega = "ai"
-                        itemsDispatched += 1
                         DataOutputStream(outputStream).writeBytes(sendDataToMega)
                         Timer().schedule(object : TimerTask() {
                             override fun run() {

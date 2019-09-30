@@ -57,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
                                     Intent(applicationContext, InformationActivity::class.java)
                                 startActivity(intent)
                                 progressBar.visibility = View.GONE
+                                finish()
                             }
                             //Do something with response e.g show to the UI.
                         } else {
@@ -70,7 +71,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-        progressBar.visibility = View.GONE
     }
 
 
