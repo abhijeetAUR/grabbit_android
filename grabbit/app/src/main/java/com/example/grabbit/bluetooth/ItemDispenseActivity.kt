@@ -20,12 +20,12 @@ class ItemDispenseActivity : AppCompatActivity() {
 
     private var sendDataToMega = "12"
     private var itemsDispatched = 0
-    private var itemsToDispatch = 2
+    private var itemsToDispatch = 0
     private var singletonProductDataHolder: SingletonProductDataHolder? = null
     private var inputStream: InputStream? = null
     private var outputStream: OutputStream? = null
     private var receivedDataFromMega = 0
-
+    private var counter = 0
     companion object {
         var mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
         var mBluetoothSocket: BluetoothSocket? = null
@@ -47,6 +47,11 @@ class ItemDispenseActivity : AppCompatActivity() {
         //TODO: Handle disconnection of bluetooth on back button pressed, uncomment super.onBackPressed()
 //        super.onBackPressed()
 //        disconnect()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        counter = 0
     }
 
     override fun onStop() {
@@ -91,7 +96,8 @@ class ItemDispenseActivity : AppCompatActivity() {
                 var arr: ByteArray
                 when (receivedDataFromMega) {
                     48 -> {
-                        var data = singletonProductDataHolder!!.lstProductsAddedToCart[itemsToDispatch].SERIALDATA
+                        var data = singletonProductDataHolder!!.lstProductsAddedToCart[counter].SERIALDATA
+                        counter += 1
                         sendDataToMega = data
 //                        sendDataToMega = "ai"
                         itemsDispatched += 1
