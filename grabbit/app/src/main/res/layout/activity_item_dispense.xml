@@ -37,7 +37,7 @@
             android:text="@string/doNoRefreshPageMessage"
             android:fontFamily="@font/sofia_pro_semi_bold"
             android:textColor="@color/colorDarkGray"
-            android:padding="25dp"
+            android:padding="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:textSize="18sp"/>
@@ -48,7 +48,10 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/sofia_pro_regular"
             android:textColor="@color/colorDarkGray"
-            android:padding="25dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txt_do_not_refresh"
             android:textSize="16sp"/>
