@@ -12,6 +12,7 @@
         android:padding="15dp"
         android:background="@drawable/gradientbackgroundprofile">
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Home"

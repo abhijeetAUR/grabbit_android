@@ -13,6 +13,7 @@ import com.example.grabbit.bnhome.bncart.CartFragment
 import com.example.grabbit.bnhome.bnhome.HomeFragment
 import com.example.grabbit.login.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_home_bn.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
@@ -54,6 +55,7 @@ class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
         bottomNavigationHome.setOnNavigationItemSelectedListener { item ->
             when (item.itemId){
                 R.id.home_bn -> {
+                    appbar_title.text="Home"
                     homeFragment = HomeFragment()
                     supportFragmentManager
                         .beginTransaction()
@@ -62,6 +64,7 @@ class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
                         .commit()
                 }
                 R.id.cart_bn -> {
+                    appbar_title.text="Cart"
                     cartFragment = CartFragment()
                     supportFragmentManager
                         .beginTransaction()
@@ -70,6 +73,7 @@ class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
                         .commit()
                 }
                 R.id.account_bn -> {
+                    appbar_title.text="Account"
                     accountFragment = AccountFragment()
                     supportFragmentManager
                         .beginTransaction()
