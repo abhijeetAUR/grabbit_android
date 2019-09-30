@@ -27,4 +27,5 @@
     <string name="productContentDescription">Product Image</string>
     <string name="noDataAvailable">No products in cart</string>
 
+    <string name="doNoRefreshPageMessage">Please do not press back button or refresh page</string>
 </resources>

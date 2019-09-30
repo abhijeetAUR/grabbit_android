@@ -31,16 +31,27 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar_home">
 
         <TextView
-            android:id="@+id/txt_item_dispense_msg"
+            android:id="@+id/txt_do_not_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Parle biscuit dispensing"
-            android:fontFamily="@font/sofia_pro_regular"
+            android:text="@string/doNoRefreshPageMessage"
+            android:fontFamily="@font/sofia_pro_semi_bold"
             android:textColor="@color/colorDarkGray"
             android:padding="25dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/txt_item_dispense_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sofia_pro_regular"
+            android:textColor="@color/colorDarkGray"
+            android:padding="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_do_not_refresh"
+            android:textSize="16sp"/>
 
         <pl.droidsonroids.gif.GifImageView
             android:layout_width="400dp"

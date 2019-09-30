@@ -40,19 +40,27 @@ class ItemDispenseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_item_dispense)
         mAddress = intent.getStringExtra(ScanBluetoothDevices.EXTRA_ADDRESS)
         singletonProductDataHolder = SingletonProductDataHolder.instance
-        itemsToDispatch = getItemDispatchCount()
         ConnectToDevice(this).execute()
     }
 
     override fun onBackPressed() {
         //TODO: Handle disconnection of bluetooth on back button pressed, uncomment super.onBackPressed()
-//        super.onBackPressed()
+        super.onBackPressed()
 //        disconnect()
     }
 
     override fun onStart() {
         super.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
         counter = 0
+        itemsDispatched = 0
+        itemsToDispatch = getItemDispatchCount()
+        runOnUiThread {
+            txt_item_dispense_msg.text = singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME
+        }
     }
 
     override fun onStop() {
@@ -98,8 +106,10 @@ class ItemDispenseActivity : AppCompatActivity() {
                 when (receivedDataFromMega) {
                     48 -> {
                         var data = singletonProductDataHolder!!.lstProductsAddedToCart[counter].SERIALDATA
-                        txt_item_dispense_msg.text = singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME
                         counter += 1
+                        runOnUiThread {
+                            txt_item_dispense_msg.text = singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME
+                        }
                         sendDataToMega = data
 //                        sendDataToMega = "ai"
                         itemsDispatched += 1
