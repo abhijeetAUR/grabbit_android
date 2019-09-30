@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".bluetooth.ScanBluetoothDevices">
     <TextView
-        android:visibility="gone"
+        android:id="@+id/txt_connection_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cartInstructions"
+        android:text="Connect only to green\nhighlighted device"
+        android:textSize="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
     </TextView>
     <ScrollView
         android:id="@+id/scroll_view"
@@ -24,7 +24,7 @@
         android:paddingTop="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_connection_msg"
         app:layout_constraintBottom_toBottomOf="parent"
         >
         <androidx.recyclerview.widget.RecyclerView

@@ -6,6 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".bluetooth.ItemDispenseActivity">
     android:layout_height="match_parent">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="15dp"
+        android:background="@drawable/gradientbackgroundprofile">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Despensing"
+            android:fontFamily="@font/sofia_pro_semi_bold"
+            android:textColor="@color/white"
+            android:textSize="24sp"/>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_home">
+
+        <TextView
+            android:id="@+id/txt_item_dispense_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Parle biscuit dispensing"
+            android:fontFamily="@font/sofia_pro_regular"
+            android:textColor="@color/colorDarkGray"
+            android:padding="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="20sp"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/vendingmachine"
+            app:layout_constraintTop_toBottomOf="@id/txt_item_dispense_msg"/>
 
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
