@@ -10,6 +10,7 @@ import android.os.Bundle
 import com.example.grabbit.R
 import com.example.grabbit.bnhome.HomeBnActivity
 import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
+import kotlinx.android.synthetic.main.activity_item_dispense.*
 import java.io.*
 import java.lang.Exception
 import java.util.*
@@ -97,6 +98,7 @@ class ItemDispenseActivity : AppCompatActivity() {
                 when (receivedDataFromMega) {
                     48 -> {
                         var data = singletonProductDataHolder!!.lstProductsAddedToCart[counter].SERIALDATA
+                        txt_item_dispense_msg.text = singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME
                         counter += 1
                         sendDataToMega = data
 //                        sendDataToMega = "ai"
