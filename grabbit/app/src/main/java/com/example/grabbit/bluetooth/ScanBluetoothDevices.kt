@@ -18,6 +18,7 @@ class ScanBluetoothDevices : AppCompatActivity(), BluetoothListAdapter.OnBluetoo
             val intent = Intent(this, ItemDispenseActivity::class.java)
             intent.putExtra(EXTRA_ADDRESS, address)
             startActivity(intent)
+            finish()
     }
 
 

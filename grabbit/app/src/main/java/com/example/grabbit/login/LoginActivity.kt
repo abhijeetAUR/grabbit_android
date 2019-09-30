@@ -81,8 +81,10 @@ class LoginActivity : AppCompatActivity() {
                     if (internet) {
                         signInNetworkCall()
                     } else {
-                        progressBar.visibility = View.GONE
                         ConnectionDetector.showNoInternetConnectionDialog(context = this@LoginActivity)
+                        runOnUiThread {
+                            progressBar.visibility = View.GONE
+                        }
                     }
                 }
             }
