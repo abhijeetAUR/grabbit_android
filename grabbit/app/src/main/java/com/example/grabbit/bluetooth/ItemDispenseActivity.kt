@@ -91,9 +91,11 @@ class ItemDispenseActivity : AppCompatActivity() {
                 var arr: ByteArray
                 when (receivedDataFromMega) {
                     48 -> {
-                        sendDataToMega = "ai"
-                        DataOutputStream(outputStream).writeBytes(sendDataToMega)
+                        var data = singletonProductDataHolder!!.lstProductsAddedToCart[itemsToDispatch].SERIALDATA
+                        sendDataToMega = data
+//                        sendDataToMega = "ai"
                         itemsDispatched += 1
+                        DataOutputStream(outputStream).writeBytes(sendDataToMega)
                         Timer().schedule(object : TimerTask() {
                             override fun run() {
                                 sendDataToMega = "12"
