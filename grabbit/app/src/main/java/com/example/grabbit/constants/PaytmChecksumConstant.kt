@@ -12,4 +12,4 @@ val CHANNEL_ID = "WAP" //Paytm Channel Id, got it in paytm credentials
 val INDUSTRY_TYPE_ID = "Retail" //Paytm industry type got it in paytm credential
 
 val WEBSITE = "DEFAULT"
-val CALLBACK_URL = "https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp"
+val CALLBACK_URL = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID="

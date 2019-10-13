@@ -41,8 +41,8 @@ class InformationActivity : AppCompatActivity() {
     }
 
     private fun callPaytm() {
-        val orderId = UUID.randomUUID().toString().subSequence(0,28).toString()
-        val customerId = UUID.randomUUID().toString().subSequence(0,28).toString()
+        val orderId = UUID.randomUUID().toString().subSequence(0,28).toString().replace("-","")
+        val customerId = UUID.randomUUID().toString().subSequence(0,28).toString().replace("-","")
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.getChecksum(orderId, amount)
             withContext(Dispatchers.Main) {
@@ -52,7 +52,7 @@ class InformationActivity : AppCompatActivity() {
                         print(response.CHECKSUMHASH)
                         val request = PaytmTransactionRequest(
                             M_ID, orderId, customerId, CHANNEL_ID, amount,
-                            WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID
+                            WEBSITE, CALLBACK_URL+orderId, INDUSTRY_TYPE_ID
                         )
                         initializePayment(response.CHECKSUMHASH, request)
                     } else {
