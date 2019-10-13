@@ -3,6 +3,7 @@ package com.example.grabbit.Signup
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.grabbit.R
 import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.utils.AlertDialogBox
@@ -15,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import java.util.regex.Pattern
 
 
 class SignupActivity : AppCompatActivity() {
@@ -26,7 +28,7 @@ class SignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
-
+        progressBarSignUp.visibility = View.GONE
         btn_sign_up.setOnClickListener {
             checkInternetConnection()
         }
@@ -43,19 +45,22 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun signUpNetworkCall() {
+        progressBarSignUp.visibility = View.VISIBLE
         if (validateTextBox()) {
             CoroutineScope(Dispatchers.IO).launch {
                 val response = service.getSignupResponse(
-                    edit_text_username.toString(),
-                    edit_text_fullname.toString(),
-                    edit_text_contactno.toString(),
-                    edit_text_email.toString()
+                    edit_text_username.toString().trim(),
+                    edit_text_fullname.toString().trim(),
+                    edit_text_contactno.toString().trim(),
+                    edit_text_email.toString().trim(),
+                    ed_password.toString().trim()
                 )
                 withContext(Dispatchers.Main) {
                     try {
                         if (response.isSuccessful) {
                             //TODO: Update ui on response
                             print(response.body())
+                            progressBarSignUp.visibility = View.GONE
                             if (response.body()!!.first().Result.contentEquals("Success")) {
                                 val intent = Intent(applicationContext, LoginActivity::class.java)
                                 startActivity(intent)
@@ -90,20 +95,46 @@ class SignupActivity : AppCompatActivity() {
 
 
     private fun validateTextBox(): Boolean {
-        if (edit_text_username.text.isNotEmpty() && edit_text_email.text.isNotEmpty() && edit_text_fullname.text.isNotEmpty() && edit_text_contactno.text.isNotEmpty())
-            if (isEmailValid(edit_text_email.text.toString()))
-                return true
-            else
+        if (edit_text_username.text.isNotEmpty() && edit_text_email.text.isNotEmpty() && edit_text_fullname.text.isNotEmpty() && edit_text_contactno.text.isNotEmpty()){
+            if(isEmailValid(edit_text_email.text.trim().toString())){
+                if (isPhoneNumberValid(edit_text_contactno.text.trim().toString()))
+                    return true
+                else
+                    AlertDialogBox.showDialog(
+                        this@SignupActivity,
+                        title = "Validation failed",
+                        message = "Not a valid phone number",
+                        btnText = "Ok",
+                        progressBar = progressBarSignUp
+                    )
+            } else{
                 AlertDialogBox.showDialog(
                     this@SignupActivity,
-                    title = "Email validation",
-                    message = "Not a valid email",
-                    btnText = "Ok"
+                    title = "Validation failed",
+                    message = "Not a valid email id",
+                    btnText = "Ok",
+                    progressBar = progressBarSignUp
                 )
+            }
+        } else{
+            AlertDialogBox.showDialog(
+                this@SignupActivity,
+                title = "Validation failed",
+                message = "All fields required",
+                btnText = "Ok",
+                progressBar = progressBarSignUp
+            )
+        }
+
         return false
     }
 
     private fun isEmailValid(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
+    private fun isPhoneNumberValid(phone: String): Boolean {
+        return android.util.Patterns.PHONE.matcher(phone).matches()
+    }
+
+
 }

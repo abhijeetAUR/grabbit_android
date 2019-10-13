@@ -12,10 +12,13 @@ import retrofit2.http.Query
 
 interface ISignupService {
     @POST(UrlEndpoints.newRegistration)
-    suspend fun getSignupResponse(@Query("UserName") UserName: String,
-                                 @Query("FullName") FullName: String,
-                                  @Query("ContactNumber") ContactNumber: String,
-                                    @Query("EmailAddress") EmailAddress: String): Response<List<SignupResponse>>
+    suspend fun getSignupResponse(
+        @Query("UserName") UserName: String,
+        @Query("FullName") FullName: String,
+        @Query("ContactNumber") ContactNumber: String,
+        @Query("EmailAddress") EmailAddress: String,
+        @Query("Password") Password: String
+    ): Response<List<SignupResponse>>
 }
 
 object SignupFactory {

@@ -7,9 +7,9 @@ package com.example.grabbit.constants
 //val WEBSITE = "WEBSTAGING"
 //val CALLBACK_URL = "https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp"
 
-val M_ID = "BoaAiJ81172402071862" //Paytm Merchand Id we got it in paytm credentials
+val M_ID = "Phoeni40823936709523" //Paytm Merchand Id we got it in paytm credentials
 val CHANNEL_ID = "WAP" //Paytm Channel Id, got it in paytm credentials
 val INDUSTRY_TYPE_ID = "Retail" //Paytm industry type got it in paytm credential
 
-val WEBSITE = "WEBSTAGING"
+val WEBSITE = "DEFAULT"
 val CALLBACK_URL = "https://pguat.paytm.com/paytmchecksum/paytmCallback.jsp"

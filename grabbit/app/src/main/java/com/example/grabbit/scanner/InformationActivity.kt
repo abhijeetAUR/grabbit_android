@@ -24,6 +24,7 @@ import kotlin.collections.HashMap
 class InformationActivity : AppCompatActivity() {
 
     companion object {
+        val amount = "110.00"
         private var paramMap: HashMap<String, String> = HashMap()
         val service = PaytmFactory.makePaytmService()
     }
@@ -40,30 +41,22 @@ class InformationActivity : AppCompatActivity() {
     }
 
     private fun callPaytm() {
-//        val request = PaytmTransactionRequest(
-//            M_ID,"ORDER00100981", "CUST0010991", CHANNEL_ID, "110.00",
-//            WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID
-//        )
-
-//        val request = PaytmTransactionRequest(
-//            "ORDER00100981", "110.00"
-//        )
-
+        val orderId = UUID.randomUUID().toString().subSequence(0,28).toString()
+        val customerId = UUID.randomUUID().toString().subSequence(0,28).toString()
         CoroutineScope(Dispatchers.IO).launch {
-            //            val response = service.getChecksum(request.MID,request.ORDER_ID,request.CUST_ID , request.CHANNEL_ID, request.TXN_AMOUNT,request.WEBSITE, CALLBACK_URL, request.INDUSTRY_TYPE_ID)
-            val response = service.getChecksum("ORDER00100981", "110.00")
+            val response = service.getChecksum(orderId, amount)
             withContext(Dispatchers.Main) {
                 try {
                     if (response.CHECKSUMHASH.isNotEmpty()) {
                         //TODO: Update ui on response
                         print(response.CHECKSUMHASH)
                         val request = PaytmTransactionRequest(
-                            M_ID, "ORDER00100981", "CUST0010991", CHANNEL_ID, "110.00",
+                            M_ID, orderId, customerId, CHANNEL_ID, amount,
                             WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID
                         )
                         initializePayment(response.CHECKSUMHASH, request)
                     } else {
-                        print("Error: ${response}")
+                        print("Error: $response")
                     }
                 } catch (e: HttpException) {
                     e.printStackTrace()
@@ -75,7 +68,8 @@ class InformationActivity : AppCompatActivity() {
     }
 
     private fun initializePayment(checksum: String, request: PaytmTransactionRequest) {
-        val service = PaytmPGService.getStagingService();
+//        val service = PaytmPGService.getStagingService()
+        val service = PaytmPGService.getProductionService()
         val order = createParams(checksum, request)
         service.initialize(order, null)
         service.startPaymentTransaction(this, true, true, paytmCallback())
@@ -142,27 +136,15 @@ class InformationActivity : AppCompatActivity() {
     }
 
     private fun createParams(checksum: String, request: PaytmTransactionRequest): PaytmOrder {
-        paramMap.put("MID", request.MID)
-// Key ig and production MID available in your dashboard
-        paramMap.put("ORDER_ID", request.ORDER_ID)
-        paramMap.put("CUST_ID", request.CUST_ID)
-        paramMap.put("CHANNEL_ID", request.CHANNEL_ID)
-        paramMap.put("TXN_AMOUNT", request.TXN_AMOUNT)
-        paramMap.put("WEBSITE", request.WEBSITE)
-// This g value. Production value is available in your dashboard
-        paramMap.put("INDUSTRY_TYPE_ID", request.INDUSTRY_TYPE_ID)
-// This g value. Production value is available in your dashboard
-        paramMap.put("CALLBACK_URL", request.CALLBACK_URL)
-        paramMap.put("CHECKSUMHASH", checksum)
-        val order: PaytmOrder = PaytmOrder(paramMap)
-        return order
+        paramMap["MID"] = request.MID
+        paramMap["ORDER_ID"] = request.ORDER_ID
+        paramMap["CUST_ID"] = request.CUST_ID
+        paramMap["CHANNEL_ID"] = request.CHANNEL_ID
+        paramMap["TXN_AMOUNT"] = request.TXN_AMOUNT
+        paramMap["WEBSITE"] = request.WEBSITE
+        paramMap["INDUSTRY_TYPE_ID"] = request.INDUSTRY_TYPE_ID
+        paramMap["CALLBACK_URL"] = request.CALLBACK_URL
+        paramMap["CHECKSUMHASH"] = checksum
+        return PaytmOrder(paramMap)
     }
-
-    private fun generateString(): String {
-        var str = ""
-        str = UUID.randomUUID().toString().replace("-", "")
-        return str
-    }
-
-
 }
