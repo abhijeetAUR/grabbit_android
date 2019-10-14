@@ -6,6 +6,7 @@ class UrlEndpoints {
         const val newRegistration = "/Userdetails.asmx/NEWREGISTRATION"
         const val paytm = "/generate_checksum"
         const val generateChecksum = "/GenerateChecksum.aspx"
+        const val generateChecksumPhp = "/payment/payment_paytm/generateChecksum.php"
         const val productListHome = "/Userdetails.asmx/PRODUCTLIST"
     }
 }

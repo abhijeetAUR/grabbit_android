@@ -8,6 +8,7 @@ import com.example.grabbit.R
 import com.example.grabbit.constants.*
 import com.example.grabbit.paytm.PaytmFactory
 import com.example.grabbit.paytm.PaytmTransactionRequest
+import com.example.grabbit.paytm.TransactionPaytm
 import com.paytm.pgsdk.PaytmOrder
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
@@ -41,10 +42,41 @@ class InformationActivity : AppCompatActivity() {
     }
 
     private fun callPaytm() {
-        val orderId = UUID.randomUUID().toString().subSequence(0,28).toString().replace("-","")
-        val customerId = UUID.randomUUID().toString().subSequence(0,28).toString().replace("-","")
+        val orderId = UUID.randomUUID().toString().subSequence(0,12).toString().replace("-","")
+        val customerId = UUID.randomUUID().toString().subSequence(0,12).toString().replace("-","")
+//        CoroutineScope(Dispatchers.IO).launch {
+//            val response = service.getChecksum(orderId, amount)
+//            withContext(Dispatchers.Main) {
+//                try {
+//                    if (response.CHECKSUMHASH.isNotEmpty()) {
+//                        //TODO: Update ui on response
+//                        print(response.CHECKSUMHASH)
+//                        val request = PaytmTransactionRequest(
+//                            M_ID, orderId, customerId, CHANNEL_ID, amount,
+//                            WEBSITE, CALLBACK_URL+orderId, INDUSTRY_TYPE_ID
+//                        )
+//                        initializePayment(response.CHECKSUMHASH, request)
+//                    } else {
+//                        print("Error: $response")
+//                    }
+//                } catch (e: HttpException) {
+//                    e.printStackTrace()
+//                } catch (e: Throwable) {
+//                    e.printStackTrace()
+//                }
+//            }
+//        }
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getChecksum(orderId, amount)
+            val response = service.getChecksum(
+                mid = M_ID,
+                orderId = orderId,
+                custId = customerId,
+                txnAmount = amount,
+                callbackUrl = CALLBACK_URL,
+                website = WEBSITE,
+                industryTypeId = INDUSTRY_TYPE_ID,
+                channelId = CHANNEL_ID
+            )
             withContext(Dispatchers.Main) {
                 try {
                     if (response.CHECKSUMHASH.isNotEmpty()) {
@@ -52,7 +84,7 @@ class InformationActivity : AppCompatActivity() {
                         print(response.CHECKSUMHASH)
                         val request = PaytmTransactionRequest(
                             M_ID, orderId, customerId, CHANNEL_ID, amount,
-                            WEBSITE, CALLBACK_URL+orderId, INDUSTRY_TYPE_ID
+                            WEBSITE, CALLBACK_URL , INDUSTRY_TYPE_ID
                         )
                         initializePayment(response.CHECKSUMHASH, request)
                     } else {
@@ -68,8 +100,8 @@ class InformationActivity : AppCompatActivity() {
     }
 
     private fun initializePayment(checksum: String, request: PaytmTransactionRequest) {
-//        val service = PaytmPGService.getStagingService()
-        val service = PaytmPGService.getProductionService()
+        val service = PaytmPGService.getStagingService()
+//        val service = PaytmPGService.getProductionService()
         val order = createParams(checksum, request)
         service.initialize(order, null)
         service.startPaymentTransaction(this, true, true, paytmCallback())

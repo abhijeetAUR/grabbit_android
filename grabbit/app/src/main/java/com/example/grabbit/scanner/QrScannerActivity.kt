@@ -15,15 +15,19 @@ import android.widget.Toast
 
 
 class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
-    private var mScannerView: ZBarScannerView? = null
+
     private val REQUEST_CODE_ASK_PERMISSIONS = 123
 
+    companion object{
+        private var mScannerView: ZBarScannerView? = null
+    }
 
     private fun requestPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
                 CAMERA
             ) != PackageManager.PERMISSION_GRANTED
+
         ) {
             ActivityCompat
                 .requestPermissions(
@@ -31,6 +35,9 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
                     arrayOf(CAMERA),
                     REQUEST_CODE_ASK_PERMISSIONS
                 )
+        } else{
+            mScannerView = ZBarScannerView(this)   // Programmatically initialize the scan
+            setContentView(mScannerView)// ner view
         }
     }
 
@@ -62,7 +69,6 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestPermission()
-
     }
 
     public override fun onResume() {
