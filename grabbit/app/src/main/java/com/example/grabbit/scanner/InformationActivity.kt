@@ -8,7 +8,6 @@ import com.example.grabbit.R
 import com.example.grabbit.constants.*
 import com.example.grabbit.paytm.PaytmFactory
 import com.example.grabbit.paytm.PaytmTransactionRequest
-import com.example.grabbit.paytm.TransactionPaytm
 import com.paytm.pgsdk.PaytmOrder
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
