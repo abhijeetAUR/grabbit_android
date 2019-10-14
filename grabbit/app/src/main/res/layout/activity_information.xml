@@ -11,14 +11,16 @@
         android:id="@+id/btn_scan_qr_code"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:padding="30dp"
+        android:padding="15dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/scan_qr_code_circle_btn_background"
         app:layout_constraintCircleRadius="30dp"
-        android:src="@drawable/ic_qr_code"
+        android:src="@drawable/qrcode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         app:layout_constraintTop_toTopOf="parent"
@@ -68,12 +70,12 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="30dp"
+                    android:padding="10dp"
                     android:fontFamily="@font/sofia_pro_semi_bold"
                     android:textColor="@color/white"
                     android:drawableStart="@drawable/ic_rupee"
                     android:drawablePadding="5dp"
-                    android:text="5000"
+                    android:text="500"
                     android:textSize="25sp"
                     android:layout_marginBottom="25dp"
                     app:layout_constraintBottom_toBottomOf="parent"
