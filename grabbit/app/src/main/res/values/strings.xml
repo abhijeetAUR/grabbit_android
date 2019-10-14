@@ -28,4 +28,7 @@
     <string name="noDataAvailable">No products in cart</string>
 
     <string name="doNoRefreshPageMessage">Please do not press back button or refresh page</string>
+
+    //Paytm
+    <string name="processingTransaction">Please do not press back button or refresh page \nProcessing Paytm Transaction</string>
 </resources>
