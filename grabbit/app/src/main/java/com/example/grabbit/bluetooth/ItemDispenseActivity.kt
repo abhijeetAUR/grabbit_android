@@ -27,6 +27,7 @@ class ItemDispenseActivity : AppCompatActivity() {
     private var outputStream: OutputStream? = null
     private var receivedDataFromMega = 0
     private var counter = 0
+
     companion object {
         var mUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB")
         var mBluetoothSocket: BluetoothSocket? = null
@@ -46,7 +47,7 @@ class ItemDispenseActivity : AppCompatActivity() {
     override fun onBackPressed() {
         //TODO: Handle disconnection of bluetooth on back button pressed, uncomment super.onBackPressed()
         super.onBackPressed()
-//        disconnect()
+        disconnect()
     }
 
     override fun onStart() {
@@ -59,7 +60,8 @@ class ItemDispenseActivity : AppCompatActivity() {
         itemsDispatched = 0
         itemsToDispatch = getItemDispatchCount()
         runOnUiThread {
-            txt_item_dispense_msg.text = "Dispensing item : ${singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME}"
+            txt_item_dispense_msg.text =
+                "Dispensing item : ${singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME}"
         }
     }
 
@@ -100,42 +102,46 @@ class ItemDispenseActivity : AppCompatActivity() {
 
     private fun sendData() {
         try {
-            if (mBluetoothSocket != null) {
+            if (mBluetoothSocket != null ) {
                 outputStream = mBluetoothSocket!!.outputStream
-                var arr: ByteArray
-                when (receivedDataFromMega) {
-                    48 -> {
-                        var data = singletonProductDataHolder!!.lstProductsAddedToCart[counter].SERIALDATA
-                        runOnUiThread {
-                            txt_item_dispense_msg.text = "Dispensing item : ${singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME}"
-                            counter += 1
-                            itemsDispatched += 1
-                        }
-                        sendDataToMega = data
-//                        sendDataToMega = "ai"
-                        DataOutputStream(outputStream).writeBytes(sendDataToMega)
-                        Timer().schedule(object : TimerTask() {
-                            override fun run() {
-                                sendDataToMega = "12"
-                                arr = byteArrayOf(sendDataToMega.toByte())
-                                DataOutputStream(outputStream).write(arr)
-                                cancel()
-                            }
-                        }, 10000)
-                    }
-                    46, 51 -> {
-                        sendDataToMega = "02"
-                        arr = byteArrayOf(sendDataToMega.toByte())
-                        DataOutputStream(outputStream).write(arr)
-                    }
-                    else -> {
-                        sendDataToMega = "12"
-                        arr = byteArrayOf(sendDataToMega.toByte())
-                        DataOutputStream(outputStream).write(arr)
-                    }
-                }
                 inputStream = mBluetoothSocket!!.inputStream
-                receivedDataFromMega = DataInputStream(inputStream).read()
+                if (inputStream != null && outputStream != null){
+                    var arr: ByteArray
+                    when (receivedDataFromMega) {
+                        48 -> {
+                            var data =
+                                singletonProductDataHolder!!.lstProductsAddedToCart[counter].SERIALDATA
+                            runOnUiThread {
+                                txt_item_dispense_msg.text =
+                                    "Dispensing item : ${singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME}"
+                                counter += 1
+                                itemsDispatched += 1
+                            }
+                            sendDataToMega = data
+//                        sendDataToMega = "ai"
+                            DataOutputStream(outputStream).writeBytes(sendDataToMega)
+                            Timer().schedule(object : TimerTask() {
+                                override fun run() {
+                                    sendDataToMega = "12"
+                                    arr = byteArrayOf(sendDataToMega.toByte())
+                                    DataOutputStream(outputStream).write(arr)
+                                    cancel()
+                                }
+                            }, 10000)
+                        }
+                        46, 51 -> {
+                            sendDataToMega = "02"
+                            arr = byteArrayOf(sendDataToMega.toByte())
+                            DataOutputStream(outputStream).write(arr)
+                        }
+                        else -> {
+                            sendDataToMega = "12"
+                            arr = byteArrayOf(sendDataToMega.toByte())
+                            DataOutputStream(outputStream).write(arr)
+                        }
+                    }
+                    receivedDataFromMega = DataInputStream(inputStream).read()
+                }
             }
         } catch (e: IOException) {
             e.printStackTrace()
@@ -152,14 +158,32 @@ class ItemDispenseActivity : AppCompatActivity() {
 
 
     private fun disconnect() {
+        if (inputStream != null) {
+            try {
+                inputStream!!.close()
+            } catch (e: Exception) {
+            }
+
+            inputStream = null
+        }
+
+        if (outputStream != null) {
+            try {
+                outputStream!!.close()
+            } catch (e: Exception) {
+            }
+
+            outputStream = null
+        }
+
         if (mBluetoothSocket != null) {
             try {
                 mBluetoothSocket!!.close()
-                mBluetoothSocket = null
                 mIsConnected = false
             } catch (e: Exception) {
-                e.printStackTrace()
             }
+
+            mBluetoothSocket = null
         }
     }
 
