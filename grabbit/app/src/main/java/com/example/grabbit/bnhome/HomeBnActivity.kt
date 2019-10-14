@@ -1,6 +1,7 @@
 package com.example.grabbit.bnhome
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.ForwardingListener
@@ -12,6 +13,9 @@ import com.example.grabbit.bnhome.bnaccount.AccountFragment
 import com.example.grabbit.bnhome.bncart.CartFragment
 import com.example.grabbit.bnhome.bnhome.HomeFragment
 import com.example.grabbit.login.LoginActivity
+import com.example.grabbit.utils.PREF_NAME
+import com.example.grabbit.utils.PRIVATE_MODE
+import com.example.grabbit.utils.isUserLoggedIn
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_home_bn.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
 
     override fun logoutApplication() {
+        changedIsUserLoggedIntoFalse()
         val intent = Intent(this, LoginActivity::class.java);
         startActivity(intent)
         finish()
@@ -26,6 +31,8 @@ class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
 
     companion object {
         var qrCodeResult : String? = null
+        var sharedPreferences: SharedPreferences? = null
+
     }
 
     lateinit var homeFragment: HomeFragment
@@ -39,9 +46,19 @@ class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
         }
     }
 
+    private fun changedIsUserLoggedIntoFalse(){
+        if(sharedPreferences != null){
+            val editor = sharedPreferences!!.edit()
+            editor.putBoolean(isUserLoggedIn, false)
+            editor.apply()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_bn)
+        sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+
         qrCodeResult= intent.getStringExtra("name")
 
         val bottomNavigationHome : BottomNavigationView = findViewById(R.id.bottom_navigation_home)

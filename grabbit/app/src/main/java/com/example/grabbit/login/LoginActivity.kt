@@ -1,13 +1,14 @@
 package com.example.grabbit.login
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.grabbit.R
 import com.example.grabbit.Signup.SignupActivity
 import com.example.grabbit.scanner.InformationActivity
-import com.example.grabbit.utils.AlertDialogBox
+import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         val service = LoginFactory.makeLoginService()
+        var sharedPreferences: SharedPreferences? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
             checkInternetConnection()
         }
-
+        sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         txtViewSignUp.setOnClickListener {
             val intent = Intent(applicationContext, SignupActivity::class.java)
             startActivity(intent)
@@ -43,14 +45,16 @@ class LoginActivity : AppCompatActivity() {
     private fun signInNetworkCall() {
         if (validateTextBox()) {
             CoroutineScope(Dispatchers.IO).launch {
-                                    val response = service.getLoginResponse(edit_text_username.text.toString().trim(),edit_text_password.text.toString().trim())
+                val response = service.getLoginResponse(
+                    edit_text_username.text.toString().trim(),
+                    edit_text_password.text.toString().trim()
+                )
 //                val response = service.getLoginResponse("9890698284", "grabbit123")
                 withContext(Dispatchers.Main) {
                     try {
                         if (response.isSuccessful) {
-                            //TODO: Update ui on response
-                            print(response.body())
                             if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
+                                putDataInSharedPrefrences()
                                 val intent =
                                     Intent(applicationContext, InformationActivity::class.java)
                                 startActivity(intent)
@@ -65,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
                                     progressBar = progressBar
                                 )
                             }
-                            //Do something with response e.g show to the UI.
                         } else {
                             print("Error: ${response.code()}")
                         }
@@ -76,6 +79,14 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun putDataInSharedPrefrences() {
+        if (sharedPreferences != null){
+            val editor = sharedPreferences!!.edit()
+            editor.putBoolean(isUserLoggedIn, true)
+            editor.apply()
         }
     }
 
@@ -98,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validateTextBox(): Boolean {
-        if (edit_text_password.text.isNotEmpty() && edit_text_username.text.isNotEmpty()){
+        if (edit_text_password.text.isNotEmpty() && edit_text_username.text.isNotEmpty()) {
             if (isPhoneNumberValid(edit_text_username.text.trim().toString()))
                 return true
             else
@@ -109,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
                     btnText = "Ok",
                     progressBar = progressBar
                 )
-        } else{
+        } else {
             AlertDialogBox.showDialog(
                 this@LoginActivity,
                 title = "Validation failed",

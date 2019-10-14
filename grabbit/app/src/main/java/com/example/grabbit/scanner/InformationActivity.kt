@@ -24,7 +24,7 @@ import kotlin.collections.HashMap
 class InformationActivity : AppCompatActivity() {
 
     companion object {
-        val amount = "110.00"
+        val amount = "11.00"
         private var paramMap: HashMap<String, String> = HashMap()
         val service = PaytmFactory.makePaytmService()
     }
@@ -43,28 +43,6 @@ class InformationActivity : AppCompatActivity() {
     private fun callPaytm() {
         val orderId = UUID.randomUUID().toString().subSequence(0,12).toString().replace("-","")
         val customerId = UUID.randomUUID().toString().subSequence(0,12).toString().replace("-","")
-//        CoroutineScope(Dispatchers.IO).launch {
-//            val response = service.getChecksum(orderId, amount)
-//            withContext(Dispatchers.Main) {
-//                try {
-//                    if (response.CHECKSUMHASH.isNotEmpty()) {
-//                        //TODO: Update ui on response
-//                        print(response.CHECKSUMHASH)
-//                        val request = PaytmTransactionRequest(
-//                            M_ID, orderId, customerId, CHANNEL_ID, amount,
-//                            WEBSITE, CALLBACK_URL+orderId, INDUSTRY_TYPE_ID
-//                        )
-//                        initializePayment(response.CHECKSUMHASH, request)
-//                    } else {
-//                        print("Error: $response")
-//                    }
-//                } catch (e: HttpException) {
-//                    e.printStackTrace()
-//                } catch (e: Throwable) {
-//                    e.printStackTrace()
-//                }
-//            }
-//        }
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.getChecksum(
                 mid = M_ID,
@@ -100,6 +78,7 @@ class InformationActivity : AppCompatActivity() {
 
     private fun initializePayment(checksum: String, request: PaytmTransactionRequest) {
         val service = PaytmPGService.getStagingService()
+        //Use this for production environment
 //        val service = PaytmPGService.getProductionService()
         val order = createParams(checksum, request)
         service.initialize(order, null)
