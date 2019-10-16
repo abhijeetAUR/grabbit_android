@@ -3,18 +3,29 @@ package com.example.grabbit.bluetooth
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import com.example.grabbit.R
 import com.example.grabbit.bnhome.HomeBnActivity
+import com.example.grabbit.bnhome.bnhome.DispensedItemData
 import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
+import com.example.grabbit.utils.AlertDialogBox
+import com.example.grabbit.utils.PREF_NAME
+import com.example.grabbit.utils.PRIVATE_MODE
+import com.example.grabbit.utils.mobileNumber
 import kotlinx.android.synthetic.main.activity_item_dispense.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.*
 import java.lang.Exception
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.concurrent.fixedRateTimer
 
 class ItemDispenseActivity : AppCompatActivity() {
@@ -47,7 +58,24 @@ class ItemDispenseActivity : AppCompatActivity() {
     override fun onBackPressed() {
         //TODO: Handle disconnection of bluetooth on back button pressed, uncomment super.onBackPressed()
         super.onBackPressed()
-        disconnect()
+            val dialogBuilder = AlertDialog.Builder(this)
+            // set message of alert dialog
+            dialogBuilder.setMessage("Are you sure you want to cancel item dispensing?")
+                // if the dialog is cancelable
+                // positive button text and action
+                .setPositiveButton("Yes") { dialog, _ ->
+                    disconnect()
+                    dialog.dismiss()
+                }.setNegativeButton("No"){ dialog, _->
+                    dialog.dismiss()
+                }
+                .setCancelable(false)
+            // create dialog box
+            val alert = dialogBuilder.create()
+            // set title for alert dialog box
+            alert.setTitle("Confirmation")
+            // show alert dialog
+            alert.show()
     }
 
     override fun onStart() {
@@ -75,9 +103,11 @@ class ItemDispenseActivity : AppCompatActivity() {
         fixedRateTimer("default", false, 0L, 1000) {
             if (itemsDispatched == itemsToDispatch) {
                 cancel()
-                sendDispenseDataInformation()
+
+//                sendDispenseDataInformation()
                 clearDataInCart()
                 navigateToHomePage()
+
             } else {
                 sendData()
             }
@@ -85,7 +115,7 @@ class ItemDispenseActivity : AppCompatActivity() {
     }
 
     private fun sendDispenseDataInformation() {
-        //TODO: send dispensed data information to web service
+
     }
 
     private fun clearDataInCart() {
@@ -102,15 +132,17 @@ class ItemDispenseActivity : AppCompatActivity() {
 
     private fun sendData() {
         try {
-            if (mBluetoothSocket != null ) {
+            if (mBluetoothSocket != null) {
                 outputStream = mBluetoothSocket!!.outputStream
                 inputStream = mBluetoothSocket!!.inputStream
-                if (inputStream != null && outputStream != null){
+                if (inputStream != null && outputStream != null) {
                     var arr: ByteArray
                     when (receivedDataFromMega) {
                         48 -> {
                             var data =
                                 singletonProductDataHolder!!.lstProductsAddedToCart[counter].SERIALDATA
+                            val homeProduct = singletonProductDataHolder!!.lstProductsAddedToCart[counter]
+                            singletonProductDataHolder!!.lstOfProductDispensed.add(DispensedItemData(status = true, data = homeProduct))
                             runOnUiThread {
                                 txt_item_dispense_msg.text =
                                     "Dispensing item : ${singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME}"
@@ -118,7 +150,6 @@ class ItemDispenseActivity : AppCompatActivity() {
                                 itemsDispatched += 1
                             }
                             sendDataToMega = data
-//                        sendDataToMega = "ai"
                             DataOutputStream(outputStream).writeBytes(sendDataToMega)
                             Timer().schedule(object : TimerTask() {
                                 override fun run() {

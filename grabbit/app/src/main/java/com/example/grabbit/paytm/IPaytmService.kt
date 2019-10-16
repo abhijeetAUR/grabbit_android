@@ -4,6 +4,7 @@ import com.example.grabbit.login.LoginResponse
 import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.PAYTM_BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints
+import com.example.grabbit.network_layer.UrlEndpoints.Companion.chargeWallet
 import com.example.grabbit.network_layer.UrlEndpoints.Companion.generateChecksum
 import com.example.grabbit.network_layer.UrlEndpoints.Companion.generateChecksumPhp
 import com.example.grabbit.network_layer.UrlEndpoints.Companion.paytm
@@ -59,6 +60,21 @@ interface IPaytmService {
         @Field("CALLBACK_URL") callbackUrl: String,
         @Field("INDUSTRY_TYPE_ID") industryTypeId: String
     ): PaytmChecksumResponse
+
+    @FormUrlEncoded
+    @POST(chargeWallet)
+    suspend fun rechargeWallet(
+        @Field("mobileno") mobileNo: String,
+        @Field("amount") amount: String,
+        @Field("bankname") bankName: String,
+        @Field("orderid") orderId: String,
+        @Field("txnid") txnId: String,
+        @Field("respcode") respCode: String,
+        @Field("paymentmode") paymentMode: String,
+        @Field("banktxtid") bankTxtId: String,
+        @Field("gatewayname") gateWayName: String,
+        @Field("respmsg") respMsg: String
+    ): WalletResponse
 }
 
 object PaytmFactory {

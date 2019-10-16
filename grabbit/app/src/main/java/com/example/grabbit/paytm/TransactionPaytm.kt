@@ -1,11 +1,15 @@
 package com.example.grabbit.paytm
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.example.grabbit.R
 import com.example.grabbit.constants.*
+import com.example.grabbit.utils.PREF_NAME
+import com.example.grabbit.utils.PRIVATE_MODE
+import com.example.grabbit.utils.mobileNumber
 import com.paytm.pgsdk.PaytmOrder
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
@@ -24,18 +28,21 @@ class TransactionPaytm : AppCompatActivity() {
         val amount = "11.00"
         private var paramMap: HashMap<String, String> = HashMap()
         val service = PaytmFactory.makePaytmService()
+        var sharedPreferences: SharedPreferences? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trasnaction_paytm)
         pg_bar_txn_paytm.visibility = View.VISIBLE
+        sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         callPaytm()
     }
 
+
     private fun callPaytm() {
-        val orderId = UUID.randomUUID().toString().subSequence(0,12).toString().replace("-","")
-        val customerId = UUID.randomUUID().toString().subSequence(0,12).toString().replace("-","")
+        val orderId = UUID.randomUUID().toString().subSequence(0, 12).toString().replace("-", "")
+        val customerId = UUID.randomUUID().toString().subSequence(0, 12).toString().replace("-", "")
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.getChecksum(
                 mid = M_ID,
@@ -54,7 +61,7 @@ class TransactionPaytm : AppCompatActivity() {
                         print(response.CHECKSUMHASH)
                         val request = PaytmTransactionRequest(
                             M_ID, orderId, customerId, CHANNEL_ID, amount,
-                            WEBSITE, CALLBACK_URL , INDUSTRY_TYPE_ID
+                            WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID
                         )
                         initializePayment(response.CHECKSUMHASH, request)
                     } else {
@@ -69,6 +76,7 @@ class TransactionPaytm : AppCompatActivity() {
         }
         pg_bar_txn_paytm.visibility = View.GONE
     }
+
     private fun initializePayment(checksum: String, request: PaytmTransactionRequest) {
         val service = PaytmPGService.getStagingService()
         //Use this for production environment
@@ -95,8 +103,30 @@ class TransactionPaytm : AppCompatActivity() {
                     "Payment Transaction response " + inResponse.toString(),
                     Toast.LENGTH_LONG
                 ).show();
-                finish()
+                sendRechargeWalletToServer(inResponse)
+            }
 
+            fun sendRechargeWalletToServer(inResponse : Bundle) {
+                if (sharedPreferences == null)
+                    return
+                val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
+                CoroutineScope(Dispatchers.IO).launch {
+                    service.rechargeWallet(
+                        mobileNo = mobileNo.toString(),
+                        amount = inResponse.get("TXNAMOUNT").toString(),
+                        bankName = inResponse.get("BANKNAME").toString(),
+                        orderId = inResponse.get("ORDERID").toString(),
+                        txnId = inResponse.get("TXNID").toString(),
+                        respCode = inResponse.get("RESPCODE").toString(),
+                        paymentMode = inResponse.get("PAYMENTMODE").toString(),
+                        bankTxtId = inResponse.get("BANKTXNID").toString(),
+                        gateWayName = inResponse.get("HDFC").toString(),
+                        respMsg = inResponse.get("RESPMSG").toString()
+                    )
+                    withContext(Dispatchers.Main) {
+                        finish()
+                    }
+                }
             }
 
             override fun networkNotAvailable() {

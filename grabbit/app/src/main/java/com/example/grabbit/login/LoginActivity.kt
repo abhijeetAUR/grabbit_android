@@ -16,7 +16,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
 
@@ -86,6 +85,7 @@ class LoginActivity : AppCompatActivity() {
         if (sharedPreferences != null){
             val editor = sharedPreferences!!.edit()
             editor.putBoolean(isUserLoggedIn, true)
+            editor.putString(mobileNumber, edit_text_username.text.toString().trim())
             editor.apply()
         }
     }
