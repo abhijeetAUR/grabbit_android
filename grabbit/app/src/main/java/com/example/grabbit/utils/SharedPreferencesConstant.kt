@@ -5,3 +5,5 @@ const val PREF_NAME = "UserCred"
 
 const val isUserLoggedIn = "IsUserLoggedIn"
 const val mobileNumber = "MobileNo"
+const val username = "Username"
+const val walletBalance= "WalletBalance"

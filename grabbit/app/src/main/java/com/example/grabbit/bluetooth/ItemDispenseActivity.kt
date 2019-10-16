@@ -58,24 +58,25 @@ class ItemDispenseActivity : AppCompatActivity() {
     override fun onBackPressed() {
         //TODO: Handle disconnection of bluetooth on back button pressed, uncomment super.onBackPressed()
         super.onBackPressed()
-            val dialogBuilder = AlertDialog.Builder(this)
-            // set message of alert dialog
-            dialogBuilder.setMessage("Are you sure you want to cancel item dispensing?")
-                // if the dialog is cancelable
-                // positive button text and action
-                .setPositiveButton("Yes") { dialog, _ ->
-                    disconnect()
-                    dialog.dismiss()
-                }.setNegativeButton("No"){ dialog, _->
-                    dialog.dismiss()
-                }
-                .setCancelable(false)
-            // create dialog box
-            val alert = dialogBuilder.create()
-            // set title for alert dialog box
-            alert.setTitle("Confirmation")
-            // show alert dialog
-            alert.show()
+        disconnect()
+//            val dialogBuilder = AlertDialog.Builder(this)
+//            // set message of alert dialog
+//            dialogBuilder.setMessage("Are you sure you want to cancel item dispensing?")
+//                // if the dialog is cancelable
+//                // positive button text and action
+//                .setPositiveButton("Yes") { dialog, _ ->
+//                    disconnect()
+//                    dialog.dismiss()
+//                }.setNegativeButton("No"){ dialog, _->
+//                    dialog.dismiss()
+//                }
+//                .setCancelable(false)
+//            // create dialog box
+//            val alert = dialogBuilder.create()
+//            // set title for alert dialog box
+//            alert.setTitle("Confirmation")
+//            // show alert dialog
+//            alert.show()
     }
 
     override fun onStart() {

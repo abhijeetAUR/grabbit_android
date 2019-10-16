@@ -80,60 +80,25 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         purchase_item_list.adapter = itemsAdapter
         menuAdapter!!.setOnItemClickListener(this)
         itemsAdapter!!.setOnItemClickListener(this)
-        sendDispensedItemData()
+        checkInternetConnection()
+//        sendDispensedItemData()
     }
 
     private fun sendDispensedItemData() {
         val dispensedItems = singletonProductDataHolder.lstOfProductDispensed.filter { it.status }
         var count = 0
-        do {
-
-
-        }while (count != dispensedItems.count())
-        if (dispensedItems.count() > 0) {
-            val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
-            var count = 0
-//            CoroutineScope(Dispatchers.IO).launch {
-//                val response = requestUpdateInvoice.getCreateInvoice(
-//                    kioskid = dispensedItems[0].data.KioskID,
-//                    invoiceid = (0..1000000).random().toString(),
-//                    itemname = dispensedItems[0].data.ITEMNAME,
-//                    itemid = dispensedItems[0].data.ITEMID.toString(),
-//                    amount = dispensedItems[0].data.ITEMRATE.toString(),
-//                    trayid = dispensedItems[0].data.TRAYID.toString(),
-//                    colnumber = dispensedItems[0].data.COLNUMBER.toString(),
-//                    dispensed = 0.toString(),
-//                    mobileno = mobileNo.toString()
-//                )
-//                withContext(Dispatchers.Main) {
-//                    try {
-//                        if (response.isSuccessful) {
-//                            count += 1
-//                            if (count == singletonProductDataHolder!!.lstOfProductDispensed.count()) {
-//                                singletonProductDataHolder.lstOfProductDispensed.clear()
-//                                checkInternetConnection()
-//                            }
-//                        } else {
-////                            AlertDialogBox.showDialog(activity!!.applicationContext, "Error", "", "O", progressBar = progressBar)
-//                        }
-//                    } catch (e: HttpException) {
-//                        e.printStackTrace()
-//                    } catch (e: Throwable) {
-//                        e.printStackTrace()
-//                    }
-//                }
-//
-//            }
-            singletonProductDataHolder!!.lstProductsAddedToCart.forEach {
+        val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
+        if (dispensedItems.count() > 0){
+            do {
                 CoroutineScope(Dispatchers.IO).async {
                     val response = requestUpdateInvoice.getCreateInvoice(
-                        kioskid = it.KioskID,
+                        kioskid = dispensedItems[count].data.KioskID,
                         invoiceid = (0..1000000).random().toString(),
-                        itemname = it.ITEMNAME,
-                        itemid = it.ITEMID.toString(),
-                        amount = it.ITEMRATE.toString(),
-                        trayid = it.TRAYID.toString(),
-                        colnumber = it.COLNUMBER.toString(),
+                        itemname = dispensedItems[count].data.ITEMNAME,
+                        itemid = dispensedItems[count].data.ITEMID.toString(),
+                        amount = dispensedItems[count].data.toString(),
+                        trayid = dispensedItems[count].data.toString(),
+                        colnumber = dispensedItems[count].data.COLNUMBER.toString(),
                         dispensed = 0.toString(),
                         mobileno = mobileNo.toString()
                     )
@@ -156,9 +121,8 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
                     }
 
                 }
-            }
-            //TODO: send dispensed data information to web service
-        } else {
+            }while (count != dispensedItems.count())
+        } else{
             checkInternetConnection()
         }
     }

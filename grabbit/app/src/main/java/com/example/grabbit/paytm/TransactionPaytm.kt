@@ -134,7 +134,7 @@ class TransactionPaytm : AppCompatActivity() {
                     this@TransactionPaytm,
                     "Network connection error: Check your internet connectivity",
                     Toast.LENGTH_LONG
-                ).show();
+                ).show()
                 finish()
             }
 

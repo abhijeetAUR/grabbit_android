@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                     try {
                         if (response.isSuccessful) {
                             if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
-                                putDataInSharedPrefrences()
+                                putDataInSharedPrefrences(response.body()!!.first().Username)
                                 val intent =
                                     Intent(applicationContext, InformationActivity::class.java)
                                 startActivity(intent)
@@ -81,11 +81,12 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun putDataInSharedPrefrences() {
+    private fun putDataInSharedPrefrences(name: String) {
         if (sharedPreferences != null){
             val editor = sharedPreferences!!.edit()
             editor.putBoolean(isUserLoggedIn, true)
             editor.putString(mobileNumber, edit_text_username.text.toString().trim())
+            editor.putString(username, name)
             editor.apply()
         }
     }

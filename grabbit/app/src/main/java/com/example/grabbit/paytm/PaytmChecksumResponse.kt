@@ -7,3 +7,4 @@ data class PaytmChecksumResponse(val CHECKSUMHASH: String,
 
 data class WalletResponse(val Result: String){
 }
+

@@ -10,5 +10,7 @@ class UrlEndpoints {
         const val productListHome = "/Userdetails.asmx/PRODUCTLIST"
         const val createInvoice = "/Userdetails.asmx/CreateInvoice"
         const val chargeWallet = "/USERDETAILS.asmx/RECHARGEWALLET"
+        const val balanceUser = "/USERDETAILS.asmx/BALANCE_USER"
+        const val transactionDetails = "/USERDETAILS.asmx/TRANSACTIONDETAILS"
     }
 }

@@ -31,4 +31,6 @@
 
     //Paytm
     <string name="processingTransaction">Please do not press back button or refresh page \nProcessing Paytm Transaction</string>
+
+    <string name="transactionDetails">Transaction Details</string>
 </resources>
