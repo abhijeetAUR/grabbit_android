@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import com.example.grabbit.R
 import com.example.grabbit.constants.*
+import com.example.grabbit.utils.ConnectionDetector
 import com.example.grabbit.utils.PREF_NAME
 import com.example.grabbit.utils.PRIVATE_MODE
 import com.example.grabbit.utils.mobileNumber
@@ -36,43 +37,64 @@ class TransactionPaytm : AppCompatActivity() {
         setContentView(R.layout.activity_trasnaction_paytm)
         pg_bar_txn_paytm.visibility = View.VISIBLE
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-        callPaytm()
+        checkInternetConnection()
+    }
+
+    private fun checkInternetConnection() {
+        ConnectionDetector(object : ConnectionDetector.Consumer {
+            override fun accept(internet: Boolean?) {
+                if (internet != null) {
+                    if (internet) {
+                        callPaytm()
+                    } else {
+                        ConnectionDetector.showNoInternetConnectionDialog(context = this@TransactionPaytm)
+                        runOnUiThread {
+                            pg_bar_txn_paytm.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        })
     }
 
 
     private fun callPaytm() {
         val orderId = UUID.randomUUID().toString().subSequence(0, 12).toString().replace("-", "")
         val customerId = UUID.randomUUID().toString().subSequence(0, 12).toString().replace("-", "")
-        CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getChecksum(
-                mid = M_ID,
-                orderId = orderId,
-                custId = customerId,
-                txnAmount = amount,
-                callbackUrl = CALLBACK_URL,
-                website = WEBSITE,
-                industryTypeId = INDUSTRY_TYPE_ID,
-                channelId = CHANNEL_ID
-            )
-            withContext(Dispatchers.Main) {
-                try {
-                    if (response.CHECKSUMHASH.isNotEmpty()) {
-                        //TODO: Update ui on response
-                        print(response.CHECKSUMHASH)
-                        val request = PaytmTransactionRequest(
-                            M_ID, orderId, customerId, CHANNEL_ID, amount,
-                            WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID
-                        )
-                        initializePayment(response.CHECKSUMHASH, request)
-                    } else {
-                        print("Error: $response")
+        try {
+            CoroutineScope(Dispatchers.IO).launch {
+                val response = service.getChecksum(
+                    mid = M_ID,
+                    orderId = orderId,
+                    custId = customerId,
+                    txnAmount = amount,
+                    callbackUrl = CALLBACK_URL,
+                    website = WEBSITE,
+                    industryTypeId = INDUSTRY_TYPE_ID,
+                    channelId = CHANNEL_ID
+                )
+                withContext(Dispatchers.Main) {
+                    try {
+                        if (response.CHECKSUMHASH.isNotEmpty()) {
+                            //TODO: Update ui on response
+                            print(response.CHECKSUMHASH)
+                            val request = PaytmTransactionRequest(
+                                M_ID, orderId, customerId, CHANNEL_ID, amount,
+                                WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID
+                            )
+                            initializePayment(response.CHECKSUMHASH, request)
+                        } else {
+                            print("Error: $response")
+                        }
+                    } catch (e: HttpException) {
+                        e.printStackTrace()
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
                     }
-                } catch (e: HttpException) {
-                    e.printStackTrace()
-                } catch (e: Throwable) {
-                    e.printStackTrace()
                 }
             }
+        }catch (e: Exception){
+            e.printStackTrace()
         }
         pg_bar_txn_paytm.visibility = View.GONE
     }
@@ -103,31 +125,15 @@ class TransactionPaytm : AppCompatActivity() {
                     "Payment Transaction response " + inResponse.toString(),
                     Toast.LENGTH_LONG
                 ).show();
-                sendRechargeWalletToServer(inResponse)
+                checkInternetConnectionForWallet(inResponse)
             }
 
             fun sendRechargeWalletToServer(inResponse : Bundle) {
                 if (sharedPreferences == null)
                     return
-                val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
-                CoroutineScope(Dispatchers.IO).launch {
-                    service.rechargeWallet(
-                        mobileNo = mobileNo.toString(),
-                        amount = inResponse.get("TXNAMOUNT").toString(),
-                        bankName = inResponse.get("BANKNAME").toString(),
-                        orderId = inResponse.get("ORDERID").toString(),
-                        txnId = inResponse.get("TXNID").toString(),
-                        respCode = inResponse.get("RESPCODE").toString(),
-                        paymentMode = inResponse.get("PAYMENTMODE").toString(),
-                        bankTxtId = inResponse.get("BANKTXNID").toString(),
-                        gateWayName = inResponse.get("HDFC").toString(),
-                        respMsg = inResponse.get("RESPMSG").toString()
-                    )
-                    withContext(Dispatchers.Main) {
-                        finish()
-                    }
-                }
+
             }
+
 
             override fun networkNotAvailable() {
                 Toast.makeText(
@@ -169,6 +175,46 @@ class TransactionPaytm : AppCompatActivity() {
             override fun onTransactionCancel(inErrorMessage: String, inResponse: Bundle) {
                 Toast.makeText(this@TransactionPaytm, "Transaction cancelled", Toast.LENGTH_LONG)
                     .show();
+                finish()
+            }
+        }
+    }
+
+
+
+    private fun checkInternetConnectionForWallet(inResponse: Bundle) {
+        ConnectionDetector(object : ConnectionDetector.Consumer {
+            override fun accept(internet: Boolean?) {
+                if (internet != null) {
+                    if (internet) {
+                        sendRechargeWalletToServer(inResponse = inResponse)
+                    } else {
+                        ConnectionDetector.showNoInternetConnectionDialog(context = this@TransactionPaytm)
+                        runOnUiThread {
+                            pg_bar_txn_paytm.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    private fun sendRechargeWalletToServer(inResponse: Bundle) {
+        val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
+        CoroutineScope(Dispatchers.IO).launch {
+            service.rechargeWallet(
+                mobileNo = mobileNo.toString(),
+                amount = inResponse.get("TXNAMOUNT").toString(),
+                bankName = inResponse.get("BANKNAME").toString(),
+                orderId = inResponse.get("ORDERID").toString(),
+                txnId = inResponse.get("TXNID").toString(),
+                respCode = inResponse.get("RESPCODE").toString(),
+                paymentMode = inResponse.get("PAYMENTMODE").toString(),
+                bankTxtId = inResponse.get("BANKTXNID").toString(),
+                gateWayName = inResponse.get("HDFC").toString(),
+                respMsg = inResponse.get("RESPMSG").toString()
+            )
+            withContext(Dispatchers.Main) {
                 finish()
             }
         }

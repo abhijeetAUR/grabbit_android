@@ -83,7 +83,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         checkInternetConnection()
 //        sendDispensedItemData()
     }
-
+    //TODO: Send dispensed item data to updateinvoice
     private fun sendDispensedItemData() {
         val dispensedItems = singletonProductDataHolder.lstOfProductDispensed.filter { it.status }
         var count = 0

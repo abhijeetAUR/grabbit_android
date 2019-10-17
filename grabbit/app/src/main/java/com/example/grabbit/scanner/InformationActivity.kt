@@ -28,7 +28,24 @@ class InformationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_information)
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         progress_indicator.visibility = View.VISIBLE
-        getWalletDetails()
+        checkInternetConnection()
+    }
+
+    private fun checkInternetConnection() {
+        ConnectionDetector(object : ConnectionDetector.Consumer {
+            override fun accept(internet: Boolean?) {
+                if (internet != null) {
+                    if (internet) {
+                        getWalletDetails()
+                    } else {
+                        ConnectionDetector.showNoInternetConnectionDialog(context = this@InformationActivity)
+                        runOnUiThread {
+                            progress_indicator.visibility = View.GONE
+                        }
+                    }
+                }
+            }
+        })
     }
 
     private fun getWalletDetails() {
