@@ -80,52 +80,101 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         purchase_item_list.adapter = itemsAdapter
         menuAdapter!!.setOnItemClickListener(this)
         itemsAdapter!!.setOnItemClickListener(this)
-        checkInternetConnection()
-//        sendDispensedItemData()
+        addItems()
+        sendCreateInvoiceDataInRecursiveCall()
     }
-    //TODO: Send dispensed item data to updateinvoice
-    private fun sendDispensedItemData() {
+
+    var count1 = 0
+    fun addItems(){
+        var obj1 = HomeResponseList(
+            COLNUMBER = 1,
+            TRAYID = 1,
+            MAXCAPACITY = 10,
+            ISBLOCKED = false,
+            CHILLED = false,
+            SERIALDATA = "aiq",
+            ITEMID = 1,
+            KioskID = "00001",
+            TRAYCOLID = 1,
+            ITEMNAME = "Bingo Masala",
+            TYPE = "ELITE",
+            ITEMDESC = "ELITE",
+            ITEMRATE = 10,
+            ITEMENABLED = true,
+            ITEMIMAGE = "https://grabbit.myvend.in/items/Bingo Masala.jpeg",
+            CLIENTID = 1
+        )
+        var obj2 = HomeResponseList(
+            COLNUMBER = 1,
+            TRAYID = 1,
+            MAXCAPACITY = 10,
+            ISBLOCKED = false,
+            CHILLED = false,
+            SERIALDATA = "aiq",
+            ITEMID = 1,
+            KioskID = "00001",
+            TRAYCOLID = 1,
+            ITEMNAME = "Bingo Salted",
+            TYPE = "ELITE",
+            ITEMDESC = "ELITE",
+            ITEMRATE = 10,
+            ITEMENABLED = true,
+            ITEMIMAGE = "https://grabbit.myvend.in/items/Bingo Masala.jpeg",
+            CLIENTID = 1
+        )
+
+        singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(obj1, true))
+        singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(obj2, true))
+    }
+    private fun sendCreateInvoiceDataInRecursiveCall(){
         val dispensedItems = singletonProductDataHolder.lstOfProductDispensed.filter { it.status }
         var count = 0
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
-        if (dispensedItems.count() > 0){
-            do {
-                CoroutineScope(Dispatchers.IO).async {
-                    val response = requestUpdateInvoice.getCreateInvoice(
-                        kioskid = dispensedItems[count].data.KioskID,
-                        invoiceid = (0..1000000).random().toString(),
-                        itemname = dispensedItems[count].data.ITEMNAME,
-                        itemid = dispensedItems[count].data.ITEMID.toString(),
-                        amount = dispensedItems[count].data.toString(),
-                        trayid = dispensedItems[count].data.toString(),
-                        colnumber = dispensedItems[count].data.COLNUMBER.toString(),
-                        dispensed = 0.toString(),
-                        mobileno = mobileNo.toString()
-                    )
-                    withContext(Dispatchers.Main) {
-                        try {
-                            if (response.isSuccessful) {
-                                count += 1
-                                if (count == singletonProductDataHolder!!.lstProductsAddedToCart.count()) {
-                                    singletonProductDataHolder.lstOfProductDispensed.clear()
-                                    checkInternetConnection()
-                                }
-                            } else {
+       if (dispensedItems.count() > 0 ){
+           CoroutineScope(Dispatchers.IO).async {
+               val response = requestUpdateInvoice.getCreateInvoice(
+                   kioskid = dispensedItems[count].data.KioskID,
+                   invoiceid = (0..1000000).random().toString(),
+                   itemname = dispensedItems[count].data.ITEMNAME,
+                   itemid = dispensedItems[count].data.ITEMID.toString(),
+                   amount = dispensedItems[count].data.toString(),
+                   trayid = dispensedItems[count].data.toString(),
+                   colnumber = dispensedItems[count].data.COLNUMBER.toString(),
+                   dispensed = 0.toString(),
+                   mobileno = mobileNo.toString()
+               )
+               withContext(Dispatchers.Main) {
+                   try {
+                       count1 += 1
+                       if (count1 == singletonProductDataHolder!!.lstOfProductDispensed.count()){
+                           singletonProductDataHolder!!.lstOfProductDispensed.clear()
+                           checkInternetConnection()
+                       } else{
+                           sendCreateInvoiceDataInRecursiveCall()
+                       }
+                       if (response.isSuccessful) {
+                           count += 1
+                           count1 += 1
+                           if (count1 == singletonProductDataHolder!!.lstProductsAddedToCart.count()){
+                               checkInternetConnection()
+                           } else{
+                               sendCreateInvoiceDataInRecursiveCall()
+                           }
+                       } else {
 //                            AlertDialogBox.showDialog(activity!!.applicationContext, "Error", "", "O", progressBar = progressBar)
-                            }
-                        } catch (e: HttpException) {
-                            e.printStackTrace()
-                        } catch (e: Throwable) {
-                            e.printStackTrace()
-                        }
-                    }
-
-                }
-            }while (count != dispensedItems.count())
-        } else{
-            checkInternetConnection()
-        }
+                       }
+                   } catch (e: HttpException) {
+                       e.printStackTrace()
+                   } catch (e: Throwable) {
+                       e.printStackTrace()
+                   }
+               }
+           }
+       } else{
+           checkInternetConnection()
+       }
     }
+
 
     private fun checkInternetConnection() {
         ConnectionDetector(object : ConnectionDetector.Consumer {

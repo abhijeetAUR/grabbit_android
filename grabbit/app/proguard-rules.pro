@@ -22,3 +22,7 @@
 -keepclassmembers class com.paytm.pgsdk.PaytmWebView$PaytmJavaScriptInterface {
    public *;
 }
+
+-keepclassmembernames class kotlinx.**{
+    volatile <fields>;
+}

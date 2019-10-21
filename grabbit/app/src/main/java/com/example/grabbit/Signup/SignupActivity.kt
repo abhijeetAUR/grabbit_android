@@ -49,11 +49,11 @@ class SignupActivity : AppCompatActivity() {
         if (validateTextBox()) {
             CoroutineScope(Dispatchers.IO).launch {
                 val response = service.getSignupResponse(
-                    edit_text_username.toString().trim(),
-                    edit_text_fullname.toString().trim(),
-                    edit_text_contactno.toString().trim(),
-                    edit_text_email.toString().trim(),
-                    ed_password.toString().trim()
+                    edit_text_username.text.toString().trim(),
+                    edit_text_fullname.text.toString().trim(),
+                    edit_text_contactno.text.toString().trim(),
+                    edit_text_email.text.toString().trim(),
+                    ed_password.text.toString().trim()
                 )
                 withContext(Dispatchers.Main) {
                     try {
