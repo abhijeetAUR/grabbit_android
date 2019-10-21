@@ -29,6 +29,9 @@ class InformationActivity : AppCompatActivity() {
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         progress_indicator.visibility = View.VISIBLE
         checkInternetConnection()
+        txt_transaction_details.setOnClickListener {
+            startActivity(Intent(this@InformationActivity, TransactionDetailsPage::class.java))
+        }
     }
 
     private fun checkInternetConnection() {

@@ -54,8 +54,7 @@ class TransactionDetailsPage : AppCompatActivity() {
     private fun fetchTransactionDetails() {
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
         CoroutineScope(Dispatchers.IO).launch {
-//            mobileNo.toString()
-            val response = service.getTransactionDetails(mobileNo = "9890698284")
+            val response = service.getTransactionDetails(mobileNo = mobileNo.toString())
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
