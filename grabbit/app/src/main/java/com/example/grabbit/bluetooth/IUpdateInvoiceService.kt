@@ -1,6 +1,7 @@
 package com.example.grabbit.bluetooth
 
 import com.example.grabbit.network_layer.BASE_SECURE_URL
+import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -9,7 +10,7 @@ import retrofit2.http.*
 
 interface IUpdateInvoiceService {
     @FormUrlEncoded
-    @Headers("Content-Type: application/json")
+    @Headers("Content-Type: application/x-www-form-urlencoded")
     @POST(UrlEndpoints.createInvoice)
     suspend fun getCreateInvoice(
         @Field("Kioskid") kioskid: String,

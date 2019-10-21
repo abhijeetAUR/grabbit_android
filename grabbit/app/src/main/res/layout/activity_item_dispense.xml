@@ -18,7 +18,7 @@
             android:id="@+id/appbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Item Despensing"
+            android:text="@string/itemDispenseScreenName"
             android:fontFamily="@font/sofia_pro_semi_bold"
             android:textColor="@color/white"
             android:textSize="24sp"/>

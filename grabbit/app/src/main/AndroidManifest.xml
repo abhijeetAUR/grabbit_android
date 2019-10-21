@@ -20,6 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".scanner.TransactionDetailsPage">
+        </activity>
         <activity
             android:name=".paytm.TransactionPaytm"
             android:screenOrientation="portrait" />
@@ -34,12 +36,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".bnhome.HomeBnActivity"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Signup.SignupActivity"
@@ -47,6 +44,11 @@
         <activity
             android:name=".SplashscreenActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".scanner.QrScannerActivity"
