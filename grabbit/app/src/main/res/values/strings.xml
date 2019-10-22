@@ -35,4 +35,7 @@
     <string name="transactionDetails">Transaction Details</string>
 
     <string name="itemDispenseScreenName">Item Dispensing</string>
+    <string name="paymentMode">Payment mode: </string>
+    <string name="quantity">Quantity: </string>
+    <string name="itemPurchasedQuantity">1</string>
 </resources>

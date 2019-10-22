@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".scanner.TransactionDetailsPage">
+        <activity android:name=".scanner.TransactionDetailsPage"
+            android:theme="@style/MaterialTheme">
         </activity>
         <activity
             android:name=".paytm.TransactionPaytm"

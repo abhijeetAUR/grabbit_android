@@ -29,10 +29,11 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_add_item_to_cart">
 
         <ImageView
+            android:visibility="invisible"
             android:contentDescription="@string/productContentDescription"
             android:id="@+id/img_td_item_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="30dp"
+            android:layout_height="140dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
@@ -66,7 +67,63 @@
                 android:layout_marginBottom="5dp"
                 android:text="Rs 40"
                 android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:fontFamily="@font/sofia_pro_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/homeTxtProductHeading"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/paymentMode"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:fontFamily="@font/sofia_pro_regular"
+                    android:id="@+id/txt_payment_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/homeTxtProductHeading"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Cash"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    >
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/sofia_pro_regular"
+                    android:text="@string/quantity"
+                    android:textColor="@color/homeTxtProductHeading"
+                    android:textSize="18sp" />
+                <TextView
+
+                    android:id="@+id/txt_td_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/sofia_pro_regular"
+                    android:text="@string/itemPurchasedQuantity"
+                    android:textColor="@color/homeTxtProductHeading"
+                    android:textSize="18sp" />
+            </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
 <!--    <ImageButton-->
 <!--        android:id="@+id/btn_add_item_to_cart"-->

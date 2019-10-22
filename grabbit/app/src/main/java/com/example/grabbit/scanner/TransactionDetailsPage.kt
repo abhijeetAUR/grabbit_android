@@ -4,6 +4,8 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
 import com.example.grabbit.scanner.Adapter.TransactionDetailsAdapter
 import com.example.grabbit.scanner.Model.TransactionDetailsResponse
@@ -33,6 +35,8 @@ class TransactionDetailsPage : AppCompatActivity() {
         setContentView(R.layout.activity_transaction_details_page)
         sharedPreferences = getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         transactionDetailsAdapter = TransactionDetailsAdapter(items, this)
+        rv_transaction_details.layoutManager  = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
+        rv_transaction_details.adapter = transactionDetailsAdapter
         checkInternetConnection()
     }
 
@@ -54,13 +58,13 @@ class TransactionDetailsPage : AppCompatActivity() {
     private fun fetchTransactionDetails() {
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getTransactionDetails(mobileNo = mobileNo.toString())
+            val response = service.getTransactionDetails(mobileNo = "9890698284")
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         //TODO: Update ui on response
                         //Add to singleton class
-//                        putDataInSingleton(response.body()!!.Table1)
+                        putDataInItems(response.body()!!.Table1)
                         pb_td.visibility = View.GONE
                     } else {
                         print("Error: ${response.code()}")
@@ -72,6 +76,12 @@ class TransactionDetailsPage : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun putDataInItems(list: List<TransactionDetailsResponse>) {
+        items.clear()
+        items.addAll(list)
+        transactionDetailsAdapter!!.notifyDataSetChanged()
     }
 
 

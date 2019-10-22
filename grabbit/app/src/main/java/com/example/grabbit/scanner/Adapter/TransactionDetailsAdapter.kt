@@ -21,6 +21,9 @@ class TransactionDetailsAdapter(private val items : ArrayList<TransactionDetails
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.itemNameHome.text = items[position].itemName.trim()
         holder.itemPriceHome.text = "Rs ${items[position].AMOUNT}".trim()
+        holder.itemPaymentMode.text = items[position].PAYMENTMODE
+        holder.itemQuantity.text = items[position].QUANTITY.toString()
+
     }
 
 
@@ -28,5 +31,8 @@ class TransactionDetailsAdapter(private val items : ArrayList<TransactionDetails
         val itemImageHome: ImageView = itemView.findViewById(R.id.img_td_item_image)
         val itemNameHome: TextView = itemView.findViewById(R.id.txt_td_item_name)
         val itemPriceHome: TextView = itemView.findViewById(R.id.txt_td_item_price)
+        val itemPaymentMode: TextView = itemView.findViewById(R.id.txt_payment_mode)
+        val itemQuantity: TextView = itemView.findViewById(R.id.txt_td_quantity)
+
     }
 }

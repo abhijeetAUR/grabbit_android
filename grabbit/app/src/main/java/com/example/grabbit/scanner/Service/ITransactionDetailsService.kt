@@ -6,15 +6,11 @@ import com.example.grabbit.scanner.Model.TDetailResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface ITransactionDetailsService {
-    @FormUrlEncoded
     @POST(UrlEndpoints.transactionDetails )
-    suspend fun getTransactionDetails(@Field("mobileno") mobileNo : String): Response<TDetailResponse>
-
+    suspend fun getTransactionDetails(@Query("mobileno") mobileNo : String): Response<TDetailResponse>
 }
 
 object TransactionDetailsService  {
