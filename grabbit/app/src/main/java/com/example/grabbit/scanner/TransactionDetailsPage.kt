@@ -10,10 +10,8 @@ import com.example.grabbit.R
 import com.example.grabbit.scanner.Adapter.TransactionDetailsAdapter
 import com.example.grabbit.scanner.Model.TransactionDetailsResponse
 import com.example.grabbit.scanner.Service.TransactionDetailsService
+import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
-import com.example.grabbit.utils.PREF_NAME
-import com.example.grabbit.utils.PRIVATE_MODE
-import com.example.grabbit.utils.mobileNumber
 import kotlinx.android.synthetic.main.activity_transaction_details_page.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -64,7 +62,18 @@ class TransactionDetailsPage : AppCompatActivity() {
                     if (response.isSuccessful) {
                         //TODO: Update ui on response
                         //Add to singleton class
-                        putDataInItems(response.body()!!.Table1)
+                        if (response.body()!!.Table1.isNotEmpty()){
+                            putDataInItems(response.body()!!.Table1)
+                        } else{
+                            AlertDialogBox.showDialog(
+                                context = applicationContext,
+                                progressBar = pb_td,
+                                message = "No Details",
+                                title = "No transaction has been done",
+                                btnText = "Ok"
+                            )
+                        }
+
                         pb_td.visibility = View.GONE
                     } else {
                         print("Error: ${response.code()}")
