@@ -24,26 +24,33 @@
         </activity>
         <activity
             android:name=".paytm.TransactionPaytm"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme"/>
         <activity
             android:name=".bluetooth.ItemDispenseActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme"/>
         <activity
             android:name=".bluetooth.ScanBluetoothDevices"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme"/>
         <activity
             android:name=".scanner.InformationActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme"/>
         <activity
             android:name=".bnhome.HomeBnActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme">
         </activity>
         <activity
             android:name=".Signup.SignupActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme"/>
         <activity
             android:name=".SplashscreenActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,10 +59,12 @@
         </activity>
         <activity
             android:name=".scanner.QrScannerActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme"/>
         <activity
             android:name=".login.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme"/>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

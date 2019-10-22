@@ -32,6 +32,12 @@ class InformationActivity : AppCompatActivity() {
         txt_transaction_details.setOnClickListener {
             startActivity(Intent(this@InformationActivity, TransactionDetailsPage::class.java))
         }
+        btn_scan_qr_code.setOnClickListener {
+            startActivity(Intent(this@InformationActivity, QrScannerActivity::class.java))
+        }
+        btn_add_balance.setOnClickListener {
+            startActivity(Intent(this@InformationActivity, TransactionPaytm::class.java))
+        }
     }
 
     private fun checkInternetConnection() {
@@ -53,30 +59,44 @@ class InformationActivity : AppCompatActivity() {
 
     private fun getWalletDetails() {
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
-        val name= sharedPreferences!!.getString(username, "User")
+        val name = sharedPreferences!!.getString(username, "User")
         CoroutineScope(Dispatchers.IO).launch {
             val response = service.balanceWalletDetails(mobileNo.toString())
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
+                        if (response.body()!!.first().Balance.isNotEmpty()) {
+                            val balance =
+                                storeBalanceInSharedPreferences(response.body()!!.first().Balance.toFloat())
+                            runOnUiThread {
+                                txt_balance.text = balance.toString()
+                            }
+                        } else {
+                            runOnUiThread {
+                                txt_balance.text = "0"
+                                AlertDialogBox.showDialog(
+                                    this@InformationActivity,
+                                    "Add money",
+                                    "Please add balance before buying products",
+                                    "Ok",
+                                    progress_indicator
+                                )
+                            }
+                        }
 
-                        val balance = storeBalanceInSharedPreferences(response.body()!!.first().Balance.toFloat())
                         runOnUiThread {
-                            txt_balance.text = balance.toString()
+
                             txt_username.text = "Hi $name"
                         }
-                        if (balance < 1){
-                            AlertDialogBox.showDialog(this@InformationActivity, "Add money", "Please add money before starting transaction", "Ok", progress_indicator)
-                        } else{
-                            btn_scan_qr_code.setOnClickListener {
-                                startActivity(Intent(this@InformationActivity, QrScannerActivity::class.java))
-                            }
-                            btn_add_balance.setOnClickListener {
-                                startActivity(Intent(this@InformationActivity, TransactionPaytm::class.java))
-                            }
-                        }
-                    } else{
-                        AlertDialogBox.showDialog(this@InformationActivity, "Error", "Unable to fetch balance", "Ok", progress_indicator)
+
+                    } else {
+                        AlertDialogBox.showDialog(
+                            this@InformationActivity,
+                            "Error",
+                            "Unable to fetch balance",
+                            "Ok",
+                            progress_indicator
+                        )
                     }
                     progress_indicator.visibility = View.GONE
                 } catch (e: IOException) {
@@ -86,7 +106,7 @@ class InformationActivity : AppCompatActivity() {
         }
     }
 
-    private fun storeBalanceInSharedPreferences(balance: Float): Float{
+    private fun storeBalanceInSharedPreferences(balance: Float): Float {
         val editor = sharedPreferences!!.edit()
         editor.putFloat(walletBalance, balance)
         editor.apply()
