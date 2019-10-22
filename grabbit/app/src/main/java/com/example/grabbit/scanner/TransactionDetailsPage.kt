@@ -56,12 +56,11 @@ class TransactionDetailsPage : AppCompatActivity() {
     private fun fetchTransactionDetails() {
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
         CoroutineScope(Dispatchers.IO).launch {
+            //TODO:Change mobile number to shared pref mobile no
             val response = service.getTransactionDetails(mobileNo = "9890698284")
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
-                        //TODO: Update ui on response
-                        //Add to singleton class
                         if (response.body()!!.Table1.isNotEmpty()){
                             putDataInItems(response.body()!!.Table1)
                         } else{

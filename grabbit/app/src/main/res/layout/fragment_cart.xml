@@ -23,6 +23,17 @@
             android:fontFamily="@font/sofia_pro_semi_bold"
             android:textSize="20sp">
         </TextView>
+        <ProgressBar
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/pb_cart"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+        </ProgressBar>
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="0dp"
@@ -40,6 +51,7 @@
                 android:layout_marginBottom="10dp"
                 />
         </ScrollView>
+
 
         <TextView
             android:id="@+id/txt_total_items"

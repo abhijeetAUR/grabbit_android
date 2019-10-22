@@ -9,6 +9,7 @@ class UrlEndpoints {
         const val generateChecksumPhp = "/payment/payment_paytm/generateChecksum.php"
         const val productListHome = "/Userdetails.asmx/PRODUCTLIST"
         const val createInvoice = "/Userdetails.asmx/CreateInvoice"
+        const val updateInvoice = "/Userdetails.asmx/UpdateInvoice"
         const val chargeWallet = "/USERDETAILS.asmx/RECHARGEWALLET"
         const val balanceUser = "/USERDETAILS.asmx/BALANCE_USER"
         const val transactionDetails = "/Userdetails.asmx/TRANSACTIONDETAILS"

@@ -11,13 +11,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
-import com.example.grabbit.bluetooth.UpdateInvoice
+import com.example.grabbit.bluetooth.UpdateInvoiceService
 import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.coroutines.*
 import retrofit2.HttpException
-import kotlin.coroutines.suspendCoroutine
 
 /**
  * A simple [Fragment] subclass.
@@ -54,7 +53,8 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         var setFirstButtonSelected = true
         var menuAdapter: MenuAdapter? = null
         var itemsAdapter: ItemsAdapter? = null
-        val requestUpdateInvoice = UpdateInvoice.makeInvoiceService()
+//        val requestUpdateInvoice = CreateInvoiceService.makeInvoiceService()
+        val requestUpdateInvoice = UpdateInvoiceService.makeInvoiceService()
         var sharedPreferences: SharedPreferences? = null
         val btnNameAndStatus: ArrayList<String> = ArrayList()
         val items: ArrayList<HomeResponseList> = ArrayList()
@@ -80,8 +80,10 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         purchase_item_list.adapter = itemsAdapter
         menuAdapter!!.setOnItemClickListener(this)
         itemsAdapter!!.setOnItemClickListener(this)
-        addItems()
-        sendCreateInvoiceDataInRecursiveCall()
+        //addItems()
+//        checkInternetConnection()
+
+        sendUpdateInvoiceDataInRecursiveCall()
     }
 
     var count1 = 0
@@ -102,7 +104,8 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
             ITEMRATE = 10,
             ITEMENABLED = true,
             ITEMIMAGE = "https://grabbit.myvend.in/items/Bingo Masala.jpeg",
-            CLIENTID = 1
+            CLIENTID = 1,
+            InvoiceId = "1000010000105"
         )
         var obj2 = HomeResponseList(
             COLNUMBER = 1,
@@ -120,28 +123,28 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
             ITEMRATE = 10,
             ITEMENABLED = true,
             ITEMIMAGE = "https://grabbit.myvend.in/items/Bingo Masala.jpeg",
-            CLIENTID = 1
+            CLIENTID = 1,
+            InvoiceId = "1000010000106"
         )
 
         singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(obj1, true))
         singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(obj2, true))
     }
-    private fun sendCreateInvoiceDataInRecursiveCall(){
+    private fun sendUpdateInvoiceDataInRecursiveCall(){
         val dispensedItems = singletonProductDataHolder.lstOfProductDispensed.filter { it.status }
         var count = 0
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
        if (dispensedItems.count() > 0 ){
            CoroutineScope(Dispatchers.IO).async {
-               val response = requestUpdateInvoice.getCreateInvoice(
-                   kioskid = dispensedItems[count].data.KioskID,
-                   invoiceid = (0..1000000).random().toString(),
-                   itemname = dispensedItems[count].data.ITEMNAME,
-                   itemid = dispensedItems[count].data.ITEMID.toString(),
-                   amount = dispensedItems[count].data.toString(),
-                   trayid = dispensedItems[count].data.toString(),
-                   colnumber = dispensedItems[count].data.COLNUMBER.toString(),
-                   dispensed = 0.toString(),
-                   mobileno = mobileNo.toString()
+               val response = requestUpdateInvoice.updateCreateInvoice(
+                   invoiceIdNew = "000010000102",//dispensedItems[count].data.KioskID,
+                   itemName = "Bingo Potato Chips".replace(" ", "").trim().toString(),//dispensedItems[count].data.ITEMNAME,
+                   itemId = "2",//dispensedItems[c ount].data.ITEMID.toString(),
+                   qty = "1",//dispensedItems[count].data.ITEMID.toString(),//TODO:Change this
+                   amount = "1",//dispensedItems[count].data.toString(),
+                   trayId = "1",//dispensedItems[count].data.toString(),
+                   colnumber = "1",//dispensedItems[count].data.COLNUMBER.toString(),
+                   dispensed = "1"// 0.toString()
                )
                withContext(Dispatchers.Main) {
                    try {
@@ -150,15 +153,15 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
                            singletonProductDataHolder!!.lstOfProductDispensed.clear()
                            checkInternetConnection()
                        } else{
-                           sendCreateInvoiceDataInRecursiveCall()
+                           sendUpdateInvoiceDataInRecursiveCall()
                        }
                        if (response.isSuccessful) {
                            count += 1
                            count1 += 1
-                           if (count1 == singletonProductDataHolder!!.lstProductsAddedToCart.count()){
+                           if (count1 == singletonProductDataHolder!!.lstOfProductDispensed.count()){
                                checkInternetConnection()
                            } else{
-                               sendCreateInvoiceDataInRecursiveCall()
+                               sendUpdateInvoiceDataInRecursiveCall()
                            }
                        } else {
 //                            AlertDialogBox.showDialog(activity!!.applicationContext, "Error", "", "O", progressBar = progressBar)

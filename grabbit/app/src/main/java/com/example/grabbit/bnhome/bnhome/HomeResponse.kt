@@ -17,7 +17,8 @@ data class HomeResponseList(val COLNUMBER: Int,
                             val ITEMRATE: Int,
                             val ITEMENABLED: Boolean,
                             val ITEMIMAGE: String,
-                            val CLIENTID: Int
+                            val CLIENTID: Int,
+                            val InvoiceId: String
 ){
     companion object{}
 }

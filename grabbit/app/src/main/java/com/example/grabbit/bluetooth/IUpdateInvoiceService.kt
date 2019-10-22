@@ -1,31 +1,31 @@
 package com.example.grabbit.bluetooth
 
 import com.example.grabbit.network_layer.BASE_SECURE_URL
-import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.*
+import retrofit2.http.Field
+import retrofit2.http.Headers
+import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface IUpdateInvoiceService {
-    @FormUrlEncoded
-    @Headers("Content-Type: application/x-www-form-urlencoded")
-    @POST(UrlEndpoints.createInvoice)
-    suspend fun getCreateInvoice(
-        @Field("Kioskid") kioskid: String,
-        @Field("itemname") itemname: String,
-        @Field("itemid") itemid: String,
-        @Field("mobileno") mobileno: String,
-        @Field("amount") amount: String,
-        @Field("trayid") trayid: String,
-        @Field("COLNUMBER") colnumber: String,
-        @Field("DISPENSED") dispensed: String,
-        @Field("invoiceid") invoiceid: String
+
+    @POST(UrlEndpoints.updateInvoice)
+    suspend fun updateCreateInvoice(
+        @Query("invoiceidnew") invoiceIdNew: String,
+        @Query("itemname") itemName: String,
+        @Query("itemid") itemId: String,
+        @Query("qty") qty: String,
+        @Query("amount") amount: String,
+        @Query("trayid") trayId: String,
+        @Query("COLNUMBER") colnumber: String,
+        @Query("DISPENSED") dispensed: String
     ): Response<List<UpdateInvoiceResponse>>
 }
 
-object UpdateInvoice {
+object UpdateInvoiceService {
     fun makeInvoiceService(): IUpdateInvoiceService {
         return Retrofit.Builder()
             .baseUrl(BASE_SECURE_URL)
