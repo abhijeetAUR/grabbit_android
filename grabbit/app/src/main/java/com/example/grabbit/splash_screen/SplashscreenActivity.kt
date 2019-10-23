@@ -1,14 +1,13 @@
-package com.example.grabbit
+package com.example.grabbit.splash_screen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Handler
-import com.example.grabbit.bnhome.HomeBnActivity
+import com.example.grabbit.R
 import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.scanner.InformationActivity
-import com.example.grabbit.scanner.QrScannerActivity
 import com.example.grabbit.utils.PREF_NAME
 import com.example.grabbit.utils.PRIVATE_MODE
 import com.example.grabbit.utils.isUserLoggedIn

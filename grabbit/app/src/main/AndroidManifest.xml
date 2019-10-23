@@ -48,7 +48,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/MaterialTheme"/>
         <activity
-            android:name=".SplashscreenActivity"
+            android:name=".splash_screen.SplashscreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MaterialTheme">
             <intent-filter>
