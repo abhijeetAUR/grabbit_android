@@ -1,5 +1,6 @@
-package com.example.grabbit.bnhome.bnhome
+package com.example.grabbit.bnhome.bnhome.contract
 
+import com.example.grabbit.bnhome.bnhome.model.HomeResponse
 import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints
 import retrofit2.Response

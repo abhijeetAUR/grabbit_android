@@ -7,6 +7,9 @@ import android.view.View
 import android.widget.Toast
 import com.example.grabbit.R
 import com.example.grabbit.constants.*
+import com.example.grabbit.paytm.contract.PaytmFactory
+import com.example.grabbit.paytm.contract.RechargeWalletFactory
+import com.example.grabbit.paytm.model.PaytmTransactionRequest
 import com.example.grabbit.utils.ConnectionDetector
 import com.example.grabbit.utils.PREF_NAME
 import com.example.grabbit.utils.PRIVATE_MODE
@@ -29,6 +32,7 @@ class TransactionPaytm : AppCompatActivity() {
         val amount = "11.00"
         private var paramMap: HashMap<String, String> = HashMap()
         val service = PaytmFactory.makePaytmService()
+        val rechargeWalletService = RechargeWalletFactory.makeRechargeWalletService()
         var sharedPreferences: SharedPreferences? = null
     }
 
@@ -124,14 +128,10 @@ class TransactionPaytm : AppCompatActivity() {
                     this@TransactionPaytm,
                     "Payment Transaction response " + inResponse.toString(),
                     Toast.LENGTH_LONG
-                ).show();
-                checkInternetConnectionForWallet(inResponse)
-            }
-
-            fun sendRechargeWalletToServer(inResponse : Bundle) {
-                if (sharedPreferences == null)
-                    return
-
+                ).show()
+                finish()
+                //TODO: Add wallet recharge api
+                //checkInternetConnectionForWallet(inResponse)
             }
 
 
@@ -202,19 +202,20 @@ class TransactionPaytm : AppCompatActivity() {
     private fun sendRechargeWalletToServer(inResponse: Bundle) {
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
         CoroutineScope(Dispatchers.IO).launch {
-            service.rechargeWallet(
+            val response = rechargeWalletService.rechargeWallet(
                 mobileNo = mobileNo.toString(),
                 amount = inResponse.get("TXNAMOUNT").toString(),
-                bankName = inResponse.get("BANKNAME").toString(),
+                bankName = "",//inResponse.get("BANKNAME").toString(),
                 orderId = inResponse.get("ORDERID").toString(),
                 txnId = inResponse.get("TXNID").toString(),
                 respCode = inResponse.get("RESPCODE").toString(),
                 paymentMode = inResponse.get("PAYMENTMODE").toString(),
-                bankTxtId = inResponse.get("BANKTXNID").toString(),
-                gateWayName = inResponse.get("HDFC").toString(),
-                respMsg = inResponse.get("RESPMSG").toString()
+                bankTxtId = "",//inResponse.get("BANKTXNID").toString(),
+                gateWayName = "",//inResponse.get("HDFC").toString(),
+                respMsg = ""//inResponse.get("RESPMSG").toString()
             )
             withContext(Dispatchers.Main) {
+                print(response)
                 finish()
             }
         }

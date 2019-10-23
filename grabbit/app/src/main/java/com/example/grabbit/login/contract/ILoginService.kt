@@ -1,8 +1,8 @@
-package com.example.grabbit.login
+package com.example.grabbit.login.contract
 
+import com.example.grabbit.login.model.LoginResponse
 import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints
-import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

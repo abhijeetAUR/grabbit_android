@@ -1,4 +1,4 @@
-package com.example.grabbit.bnhome.bncart
+package com.example.grabbit.bnhome.bncart.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.grabbit.R
-import com.example.grabbit.bnhome.bnhome.HomeResponseList
-import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
+import com.example.grabbit.bnhome.bnhome.model.HomeResponseList
+import com.example.grabbit.utils.SingletonProductDataHolder
 
 class CartItemListAdapter(private val lstHomeResponseList : ArrayList<HomeResponseList>, private val context: Context): RecyclerView.Adapter<CartItemListAdapter.CustomViewHolderCart>() {
     private val singletonProductDataHolder = SingletonProductDataHolder.instance
@@ -29,7 +29,10 @@ class CartItemListAdapter(private val lstHomeResponseList : ArrayList<HomeRespon
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolderCart {
         val cellForRowCart = LayoutInflater.from(parent.context).inflate(R.layout.addeditems_cartlistview, parent, false)
-        return CustomViewHolderCart(cellForRowCart, mOnBtnRemoveClickListener)
+        return CustomViewHolderCart(
+            cellForRowCart,
+            mOnBtnRemoveClickListener
+        )
     }
 
     override fun onBindViewHolder(holder: CustomViewHolderCart, position: Int) {

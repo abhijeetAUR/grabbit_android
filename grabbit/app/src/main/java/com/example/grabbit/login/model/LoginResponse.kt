@@ -1,4 +1,4 @@
-package com.example.grabbit.login
+package com.example.grabbit.login.model
 
 data class LoginResponse(val Result: String,
                          val Balance: String,

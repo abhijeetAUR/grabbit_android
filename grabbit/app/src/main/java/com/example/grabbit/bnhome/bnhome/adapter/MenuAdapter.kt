@@ -1,4 +1,4 @@
-package com.example.grabbit.bnhome.bnhome
+package com.example.grabbit.bnhome.bnhome.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
+import com.example.grabbit.utils.SingletonProductDataHolder
 
 class MenuAdapter(private val categories : ArrayList<String>): RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
     private var mOnProductCategoryListener: OnProductCategoryListener? = null

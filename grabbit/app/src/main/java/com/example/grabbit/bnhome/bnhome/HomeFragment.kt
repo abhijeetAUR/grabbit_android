@@ -11,7 +11,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
-import com.example.grabbit.bnhome.bnhome.Contract.UpdateInvoiceService
+import com.example.grabbit.bnhome.bnhome.adapter.ItemsAdapter
+import com.example.grabbit.bnhome.bnhome.adapter.MenuAdapter
+import com.example.grabbit.bnhome.bnhome.contract.HomeFactory
+import com.example.grabbit.bnhome.bnhome.contract.UpdateInvoiceService
+import com.example.grabbit.bnhome.bnhome.model.HomeResponseList
 import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -51,9 +55,13 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         progressBar.visibility = View.VISIBLE
         rv_product_list.layoutManager =
             LinearLayoutManager(activity?.applicationContext, RecyclerView.HORIZONTAL, false)
-        menuAdapter = MenuAdapter(categories = btnNameAndStatus)
+        menuAdapter =
+            MenuAdapter(categories = btnNameAndStatus)
         rv_product_list.adapter = menuAdapter
-        itemsAdapter = ItemsAdapter(items, activity!!.applicationContext)
+        itemsAdapter = ItemsAdapter(
+            items,
+            activity!!.applicationContext
+        )
         purchase_item_list.layoutManager = LinearLayoutManager(activity?.applicationContext)
         purchase_item_list.adapter = itemsAdapter
         menuAdapter!!.setOnItemClickListener(this)
@@ -182,9 +190,19 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         lst.clear()
         for (btnNameAndStatus in singletonProductDataHolder.lstBtnNameAndStatus) {
             if (btnNameAndStatus.name.contentEquals(categoryName))
-                lst.add(BtnNameAndStatus(name = btnNameAndStatus.name, status = true))
+                lst.add(
+                    BtnNameAndStatus(
+                        name = btnNameAndStatus.name,
+                        status = true
+                    )
+                )
             else
-                lst.add(BtnNameAndStatus(name = btnNameAndStatus.name, status = false))
+                lst.add(
+                    BtnNameAndStatus(
+                        name = btnNameAndStatus.name,
+                        status = false
+                    )
+                )
         }
         singletonProductDataHolder.lstBtnNameAndStatus.clear()
         singletonProductDataHolder.lstBtnNameAndStatus.addAll(lst)

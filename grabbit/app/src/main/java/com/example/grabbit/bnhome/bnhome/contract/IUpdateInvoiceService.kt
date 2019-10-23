@@ -1,6 +1,6 @@
-package com.example.grabbit.bnhome.bnhome.Contract
+package com.example.grabbit.bnhome.bnhome.contract
 
-import com.example.grabbit.bluetooth.UpdateInvoiceResponse
+import com.example.grabbit.bnhome.bnhome.model.UpdateInvoiceResponse
 import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints
 import retrofit2.Response

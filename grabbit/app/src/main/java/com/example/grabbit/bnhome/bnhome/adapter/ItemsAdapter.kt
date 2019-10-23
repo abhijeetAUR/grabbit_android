@@ -1,4 +1,4 @@
-package com.example.grabbit.bnhome.bnhome
+package com.example.grabbit.bnhome.bnhome.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,8 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.grabbit.R
+import com.example.grabbit.bnhome.bnhome.model.HomeResponseList
 
-class ItemsAdapter(private val items : ArrayList<HomeResponseList>,private val context: Context): RecyclerView.Adapter<ItemsAdapter.CustomViewHolder>() {
+class ItemsAdapter(private val items : ArrayList<HomeResponseList>, private val context: Context): RecyclerView.Adapter<ItemsAdapter.CustomViewHolder>() {
     interface OnProductListClickListener {
         fun onProductListClick(position: Int)
     }

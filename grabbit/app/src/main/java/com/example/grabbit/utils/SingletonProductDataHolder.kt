@@ -1,4 +1,6 @@
-package com.example.grabbit.bnhome.bnhome
+package com.example.grabbit.utils
+
+import com.example.grabbit.bnhome.bnhome.model.HomeResponseList
 
 class SingletonProductDataHolder{
     companion object{

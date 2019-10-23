@@ -1,4 +1,5 @@
-package com.example.grabbit.bnhome.bncart
+package com.example.grabbit.bnhome.bncart.contract
+import com.example.grabbit.bnhome.bncart.model.CreateInvoiceResponse
 import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints
 import retrofit2.Response

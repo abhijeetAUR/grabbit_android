@@ -1,4 +1,4 @@
-package com.example.grabbit.bnhome.bnhome
+package com.example.grabbit.bnhome.bnhome.model
 
 data class HomeResponse(val Table1: List<HomeResponseList>)
 

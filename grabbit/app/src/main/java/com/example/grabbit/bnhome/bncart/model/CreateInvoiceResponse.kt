@@ -1,4 +1,4 @@
-package com.example.grabbit.bnhome.bncart
+package com.example.grabbit.bnhome.bncart.model
 
 data class CreateInvoiceResponse(val Invoiceidfull: String,
                                  val Itemid: String,

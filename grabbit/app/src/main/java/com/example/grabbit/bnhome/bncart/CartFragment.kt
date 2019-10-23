@@ -12,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.grabbit.R
 import com.example.grabbit.bluetooth.ScanBluetoothDevices
-import com.example.grabbit.bnhome.bnhome.DispensedItemData
-import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
+import com.example.grabbit.bnhome.bncart.adapter.CartItemListAdapter
+import com.example.grabbit.bnhome.bncart.contract.CreateInvoiceService
+import com.example.grabbit.utils.DispensedItemData
+import com.example.grabbit.utils.SingletonProductDataHolder
 import com.example.grabbit.utils.ConnectionDetector
 import com.example.grabbit.utils.PREF_NAME
 import com.example.grabbit.utils.PRIVATE_MODE
@@ -60,7 +62,10 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
 
     private fun setupRecyclerView(){
         cart_item_listrv.layoutManager = LinearLayoutManager(activity?.applicationContext)
-        adapter = CartItemListAdapter(singletonProductDataHolder.lstProductsAddedToCart, activity!!.applicationContext)
+        adapter = CartItemListAdapter(
+            singletonProductDataHolder.lstProductsAddedToCart,
+            activity!!.applicationContext
+        )
         cart_item_listrv.adapter = adapter
         adapter!!.setOnClickListener(this)
     }
@@ -105,7 +110,13 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
                         if (response.isSuccessful) {
                             //Append invoice id to singleton dispensed item data
                             if(response.body() != null && response.body()!!.first().Invoiceidfull.isNotEmpty()){
-                                singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(itemAddedToCart[countToMatchLstProductDispensed], false, response.body()!!.first().Invoiceidfull))
+                                singletonProductDataHolder.lstOfProductDispensed.add(
+                                    DispensedItemData(
+                                        itemAddedToCart[countToMatchLstProductDispensed],
+                                        false,
+                                        response.body()!!.first().Invoiceidfull
+                                    )
+                                )
                             }
 
 

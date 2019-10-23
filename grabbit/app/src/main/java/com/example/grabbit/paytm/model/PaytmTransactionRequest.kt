@@ -1,4 +1,4 @@
-package com.example.grabbit.paytm
+package com.example.grabbit.paytm.model
 
  data class PaytmTransactionRequest(val MID:String,
                                     val ORDER_ID : String ,
