@@ -7,17 +7,20 @@ import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ISignupService {
+    @FormUrlEncoded
     @POST(UrlEndpoints.newRegistration)
     suspend fun getSignupResponse(
-        @Query("UserName") UserName: String,
-        @Query("FullName") FullName: String,
-        @Query("ContactNumber") ContactNumber: String,
-        @Query("EmailAddress") EmailAddress: String,
-        @Query("Password") Password: String
+        @Field("UserName") UserName: String,
+        @Field("FullName") FullName: String,
+        @Field("ContactNumber") ContactNumber: String,
+        @Field("EmailAddress") EmailAddress: String,
+        @Field("Password") Password: String
     ): Response<List<SignupResponse>>
 }
 

@@ -6,13 +6,16 @@ import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ILoginService {
-        @POST(UrlEndpoints.userLogin)
-        suspend fun getLoginResponse(@Query("mobileNo") mobileNo: String,
-                                     @Query("password") password: String): Response<List<LoginResponse>>
+    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @FormUrlEncoded
+    @POST(UrlEndpoints.userLogin)
+    suspend fun getLoginResponse(
+        @Field("mobileNo") mobileNo: String,
+        @Field("password") password: String
+    ): Response<List<LoginResponse>>
 }
 
 object LoginFactory {

@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
-import com.example.grabbit.bluetooth.UpdateInvoiceService
+import com.example.grabbit.bnhome.bnhome.Contract.UpdateInvoiceService
 import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -23,29 +23,8 @@ import retrofit2.HttpException
  */
 class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
     ItemsAdapter.OnProductListClickListener {
-    override fun onProductListClick(position: Int) {
-        if (!singletonProductDataHolder.lstProductsAddedToCart.contains(items.elementAt(position)) && (singletonProductDataHolder.lstProductsAddedToCart.count() + 1) <= 5) {
-            addItemToCart(items.elementAt(position))
-        } else if (singletonProductDataHolder.lstProductsAddedToCart.count() == 5) {
-            //TODO: Show dialog
-            Toast.makeText(
-                activity?.applicationContext,
-                "Maximum 5 items can be added to cart",
-                Toast.LENGTH_LONG
-            ).show();
-        } else {
-            Toast.makeText(
-                activity?.applicationContext,
-                "${items.elementAt(position).ITEMNAME} already added to cart",
-                Toast.LENGTH_LONG
-            ).show();
-        }
 
-    }
-
-    override fun onProductCategoryClick(position: Int) {
-        getProductListForSelectedCategory(position)
-    }
+    var itemInvoiceUpdatedCount = 0
 
     companion object {
         val service = HomeFactory.makeHomeService()
@@ -53,7 +32,6 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         var setFirstButtonSelected = true
         var menuAdapter: MenuAdapter? = null
         var itemsAdapter: ItemsAdapter? = null
-//        val requestUpdateInvoice = CreateInvoiceService.makeInvoiceService()
         val requestUpdateInvoice = UpdateInvoiceService.makeInvoiceService()
         var sharedPreferences: SharedPreferences? = null
         val btnNameAndStatus: ArrayList<String> = ArrayList()
@@ -80,14 +58,12 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         purchase_item_list.adapter = itemsAdapter
         menuAdapter!!.setOnItemClickListener(this)
         itemsAdapter!!.setOnItemClickListener(this)
-        //addItems()
-//        checkInternetConnection()
-
+//        addItems()
         sendUpdateInvoiceDataInRecursiveCall()
     }
 
-    var count1 = 0
-    fun addItems(){
+
+    fun addItems() {
         var obj1 = HomeResponseList(
             COLNUMBER = 1,
             TRAYID = 1,
@@ -104,9 +80,9 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
             ITEMRATE = 10,
             ITEMENABLED = true,
             ITEMIMAGE = "https://grabbit.myvend.in/items/Bingo Masala.jpeg",
-            CLIENTID = 1,
-            InvoiceId = "1000010000105"
+            CLIENTID = 1
         )
+
         var obj2 = HomeResponseList(
             COLNUMBER = 1,
             TRAYID = 1,
@@ -123,59 +99,65 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
             ITEMRATE = 10,
             ITEMENABLED = true,
             ITEMIMAGE = "https://grabbit.myvend.in/items/Bingo Masala.jpeg",
-            CLIENTID = 1,
-            InvoiceId = "1000010000106"
+            CLIENTID = 1
         )
 
-        singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(obj1, true))
-        singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(obj2, true))
+        singletonProductDataHolder.lstOfProductDispensed.add(
+            DispensedItemData(
+                obj1,
+                true,
+                invoiceId = "1000010000105"
+            )
+        )
+        singletonProductDataHolder.lstOfProductDispensed.add(
+            DispensedItemData(
+                obj2,
+                true,
+                invoiceId = "1000010000106"
+            )
+        )
     }
-    private fun sendUpdateInvoiceDataInRecursiveCall(){
+
+    private fun sendUpdateInvoiceDataInRecursiveCall() {
         val dispensedItems = singletonProductDataHolder.lstOfProductDispensed.filter { it.status }
-        var count = 0
-        val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
-       if (dispensedItems.count() > 0 ){
-           CoroutineScope(Dispatchers.IO).async {
-               val response = requestUpdateInvoice.updateCreateInvoice(
-                   invoiceIdNew = "000010000102",//dispensedItems[count].data.KioskID,
-                   itemName = "Bingo Potato Chips".replace(" ", "").trim().toString(),//dispensedItems[count].data.ITEMNAME,
-                   itemId = "2",//dispensedItems[c ount].data.ITEMID.toString(),
-                   qty = "1",//dispensedItems[count].data.ITEMID.toString(),//TODO:Change this
-                   amount = "1",//dispensedItems[count].data.toString(),
-                   trayId = "1",//dispensedItems[count].data.toString(),
-                   colnumber = "1",//dispensedItems[count].data.COLNUMBER.toString(),
-                   dispensed = "1"// 0.toString()
-               )
-               withContext(Dispatchers.Main) {
-                   try {
-                       count1 += 1
-                       if (count1 == singletonProductDataHolder!!.lstOfProductDispensed.count()){
-                           singletonProductDataHolder!!.lstOfProductDispensed.clear()
-                           checkInternetConnection()
-                       } else{
-                           sendUpdateInvoiceDataInRecursiveCall()
-                       }
-                       if (response.isSuccessful) {
-                           count += 1
-                           count1 += 1
-                           if (count1 == singletonProductDataHolder!!.lstOfProductDispensed.count()){
-                               checkInternetConnection()
-                           } else{
-                               sendUpdateInvoiceDataInRecursiveCall()
-                           }
-                       } else {
+        if (dispensedItems.count() > 0) {
+            var dispensedStatus = when (dispensedItems[itemInvoiceUpdatedCount].status) {
+                true -> "0"
+                false -> "1"
+            }
+            CoroutineScope(Dispatchers.IO).async {
+                val response = requestUpdateInvoice.updateCreateInvoice(
+                    invoiceIdNew = dispensedItems[itemInvoiceUpdatedCount].invoiceId,
+                    itemName = dispensedItems[itemInvoiceUpdatedCount].data.ITEMNAME,
+                    itemId = dispensedItems[itemInvoiceUpdatedCount].data.ITEMID.toString(),
+                    qty = "1",//TODO:Change this
+                    amount = dispensedItems[itemInvoiceUpdatedCount].data.ITEMRATE.toString(),
+                    trayId = dispensedItems[itemInvoiceUpdatedCount].data.TRAYID.toString(),
+                    colnumber = dispensedItems[itemInvoiceUpdatedCount].data.COLNUMBER.toString(),
+                    dispensed = dispensedStatus
+                )
+                withContext(Dispatchers.Main) {
+                    try {
+                        if (response.isSuccessful) {
+                            itemInvoiceUpdatedCount += 1
+                            if (itemInvoiceUpdatedCount == singletonProductDataHolder!!.lstOfProductDispensed.count()) {
+                                checkInternetConnection()
+                            } else {
+                                sendUpdateInvoiceDataInRecursiveCall()
+                            }
+                        } else {
 //                            AlertDialogBox.showDialog(activity!!.applicationContext, "Error", "", "O", progressBar = progressBar)
-                       }
-                   } catch (e: HttpException) {
-                       e.printStackTrace()
-                   } catch (e: Throwable) {
-                       e.printStackTrace()
-                   }
-               }
-           }
-       } else{
-           checkInternetConnection()
-       }
+                        }
+                    } catch (e: HttpException) {
+                        e.printStackTrace()
+                    } catch (e: Throwable) {
+                        e.printStackTrace()
+                    }
+                }
+            }
+        } else {
+            checkInternetConnection()
+        }
     }
 
 
@@ -292,5 +274,31 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         val list = singletonProductDataHolder.homeProductDictionary[selectedCategory[0].name]
         return list!!
     }
+
+    //Delegate functions
+    override fun onProductListClick(position: Int) {
+        if (!singletonProductDataHolder.lstProductsAddedToCart.contains(items.elementAt(position)) && (singletonProductDataHolder.lstProductsAddedToCart.count() + 1) <= 5) {
+            addItemToCart(items.elementAt(position))
+        } else if (singletonProductDataHolder.lstProductsAddedToCart.count() == 5) {
+            //TODO: Show dialog
+            Toast.makeText(
+                activity?.applicationContext,
+                "Maximum 5 items can be added to cart",
+                Toast.LENGTH_LONG
+            ).show();
+        } else {
+            Toast.makeText(
+                activity?.applicationContext,
+                "${items.elementAt(position).ITEMNAME} already added to cart",
+                Toast.LENGTH_LONG
+            ).show();
+        }
+
+    }
+
+    override fun onProductCategoryClick(position: Int) {
+        getProductListForSelectedCategory(position)
+    }
+
 
 }

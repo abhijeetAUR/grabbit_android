@@ -70,35 +70,36 @@ class InformationActivity : AppCompatActivity() {
                                 storeBalanceInSharedPreferences(response.body()!!.first().Balance.toFloat())
                             runOnUiThread {
                                 txt_balance.text = balance.toString()
+                                progress_indicator.visibility = View.GONE
                             }
                         } else {
                             runOnUiThread {
                                 txt_balance.text = "0"
                                 AlertDialogBox.showDialog(
                                     this@InformationActivity,
-                                    "Add money",
+                                    "Add balance",
                                     "Please add balance before buying products",
                                     "Ok",
                                     progress_indicator
                                 )
                             }
                         }
-
                         runOnUiThread {
-
                             txt_username.text = "Hi $name"
                         }
 
                     } else {
-                        AlertDialogBox.showDialog(
-                            this@InformationActivity,
-                            "Error",
-                            "Unable to fetch balance",
-                            "Ok",
-                            progress_indicator
-                        )
+                        runOnUiThread {
+                            AlertDialogBox.showDialog(
+                                this@InformationActivity,
+                                "Error",
+                                "Unable to fetch balance",
+                                "Ok",
+                                progress_indicator
+                            )
+                            progress_indicator.visibility = View.GONE
+                        }
                     }
-                    progress_indicator.visibility = View.GONE
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

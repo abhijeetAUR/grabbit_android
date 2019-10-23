@@ -9,8 +9,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.*
 
 interface ITransactionDetailsService {
+    @FormUrlEncoded
     @POST(UrlEndpoints.transactionDetails )
-    suspend fun getTransactionDetails(@Query("mobileno") mobileNo : String): Response<TDetailResponse>
+    suspend fun getTransactionDetails(@Field("mobileno") mobileNo : String): Response<TDetailResponse>
 }
 
 object TransactionDetailsService  {

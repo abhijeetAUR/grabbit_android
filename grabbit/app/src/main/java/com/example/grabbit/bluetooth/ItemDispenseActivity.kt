@@ -124,7 +124,7 @@ class ItemDispenseActivity : AppCompatActivity() {
                             var data =
                                 singletonProductDataHolder!!.lstProductsAddedToCart[counter].SERIALDATA
                             val homeProduct = singletonProductDataHolder!!.lstProductsAddedToCart[counter]
-                            singletonProductDataHolder!!.lstOfProductDispensed.add(DispensedItemData(status = true, data = homeProduct))
+                            singletonProductDataHolder!!.lstOfProductDispensed.filter { it.data.SERIALDATA == homeProduct.SERIALDATA }.map { it.status = true }
                             runOnUiThread {
                                 txt_item_dispense_msg.text =
                                     "Dispensing item : ${singletonProductDataHolder!!.lstProductsAddedToCart[counter].ITEMNAME}"

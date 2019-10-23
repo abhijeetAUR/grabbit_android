@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.grabbit.R
 import com.example.grabbit.bluetooth.ScanBluetoothDevices
-import com.example.grabbit.bluetooth.CreateInvoiceService
 import com.example.grabbit.bnhome.bnhome.DispensedItemData
-import com.example.grabbit.bnhome.bnhome.HomeResponseList
 import com.example.grabbit.bnhome.bnhome.SingletonProductDataHolder
 import com.example.grabbit.utils.ConnectionDetector
 import com.example.grabbit.utils.PREF_NAME
@@ -32,13 +30,15 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         removeItemFromListOfCart(index = position)
     }
     var countToMatchLstProductDispensed = 0
+    var adapter : CartItemListAdapter? = null
+
     companion object{
         val singletonProductDataHolder = SingletonProductDataHolder.instance
         var sharedPreferences: SharedPreferences? = null
         val requestCreateInvoice = CreateInvoiceService.makeInvoiceService()
 
     }
-    var adapter : CartItemListAdapter? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,10 +52,9 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         sharedPreferences = activity!!.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         setupRecyclerView()
         showNoItemSelectedTextView()
+        pb_cart.visibility = View.GONE
         btnCheckout.setOnClickListener {
-          //  addItems()
             checkInternetConnection()
-//            navigateToBluetoothPage()
         }
     }
 
@@ -87,73 +86,33 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         showNoItemSelectedTextView()
     }
 
-    fun addItems(){
-        var obj1 = HomeResponseList(
-            COLNUMBER = 1,
-            TRAYID = 1,
-            MAXCAPACITY = 10,
-            ISBLOCKED = false,
-            CHILLED = false,
-            SERIALDATA = "aiq",
-            ITEMID = 1,
-            KioskID = "00001",
-            TRAYCOLID = 1,
-            ITEMNAME = "Bingo Masala",
-            TYPE = "ELITE",
-            ITEMDESC = "ELITE",
-            ITEMRATE = 10,
-            ITEMENABLED = true,
-            ITEMIMAGE = "https://grabbit.myvend.in/items/Bingo Masala.jpeg",
-            CLIENTID = 1,
-            InvoiceId = "1000010000103"
-        )
-        var obj2 = HomeResponseList(
-            COLNUMBER = 1,
-            TRAYID = 1,
-            MAXCAPACITY = 10,
-            ISBLOCKED = false,
-            CHILLED = false,
-            SERIALDATA = "aiq",
-            ITEMID = 1,
-            KioskID = "00001",
-            TRAYCOLID = 1,
-            ITEMNAME = "Bingo Salted",
-            TYPE = "ELITE",
-            ITEMDESC = "ELITE",
-            ITEMRATE = 10,
-            ITEMENABLED = true,
-            ITEMIMAGE = "https://grabbit.myvend.in/items/Bingo Masala.jpeg",
-            CLIENTID = 1,
-            InvoiceId = "1000010000104"
-        )
-
-        singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(obj1, true))
-        singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(obj2, true))
-    }
-
     private fun sendCreateInvoiceDataInRecursiveCall(){
         val itemAddedToCart = singletonProductDataHolder.lstProductsAddedToCart
-        var count = 0
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
         if (itemAddedToCart .count() > 0 ){
             CoroutineScope(Dispatchers.IO).async {
                 val response = requestCreateInvoice.getCreateInvoice(
-                    kioskid = itemAddedToCart[count].KioskID,
-                    itemname = itemAddedToCart[count].ITEMNAME,
-                    itemid = itemAddedToCart[count].ITEMID.toString(),
-                    amount = itemAddedToCart[count].toString(),
-                    trayid = itemAddedToCart[count].toString(),
-                    colnumber = itemAddedToCart [count].COLNUMBER.toString(),
+                    kioskid = itemAddedToCart[countToMatchLstProductDispensed].KioskID,
+                    itemname = itemAddedToCart[countToMatchLstProductDispensed].ITEMNAME,
+                    itemid = itemAddedToCart[countToMatchLstProductDispensed].ITEMID.toString(),
+                    amount = itemAddedToCart[countToMatchLstProductDispensed].ITEMRATE.toString(),
+                    trayid = itemAddedToCart[countToMatchLstProductDispensed].TRAYID.toString(),
+                    colnumber = itemAddedToCart [countToMatchLstProductDispensed].COLNUMBER.toString(),
                     mobileno = mobileNo.toString()
                 )
                 withContext(Dispatchers.Main) {
                     try {
-
                         if (response.isSuccessful) {
+                            //Append invoice id to singleton dispensed item data
+                            if(response.body() != null && response.body()!!.first().Invoiceidfull.isNotEmpty()){
+                                singletonProductDataHolder.lstOfProductDispensed.add(DispensedItemData(itemAddedToCart[countToMatchLstProductDispensed], false, response.body()!!.first().Invoiceidfull))
+                            }
+
+
+
                             countToMatchLstProductDispensed += 1
                             if (countToMatchLstProductDispensed == singletonProductDataHolder.lstProductsAddedToCart.count()){
-                                //TODO: delete from  cart data
-                                checkInternetConnection()
+                                navigateToBluetoothPage()
                             } else{
                                 sendCreateInvoiceDataInRecursiveCall()
                             }
@@ -169,6 +128,7 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
             }
         }
     }
+
     private fun checkInternetConnection() {
         ConnectionDetector(object : ConnectionDetector.Consumer {
             override fun accept(internet: Boolean?) {

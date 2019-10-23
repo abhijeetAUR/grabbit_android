@@ -35,6 +35,7 @@ class TransactionDetailsPage : AppCompatActivity() {
         transactionDetailsAdapter = TransactionDetailsAdapter(items, this)
         rv_transaction_details.layoutManager  = LinearLayoutManager(applicationContext, RecyclerView.VERTICAL, false)
         rv_transaction_details.adapter = transactionDetailsAdapter
+        pb_td.visibility = View.VISIBLE
         checkInternetConnection()
     }
 
@@ -57,23 +58,19 @@ class TransactionDetailsPage : AppCompatActivity() {
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
         CoroutineScope(Dispatchers.IO).launch {
             //TODO:Change mobile number to shared pref mobile no
-            val response = service.getTransactionDetails(mobileNo = "9890698284")
+            val response = service.getTransactionDetails(mobileNo = mobileNo.toString())
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
                         if (response.body()!!.Table1.isNotEmpty()){
                             putDataInItems(response.body()!!.Table1)
                         } else{
-                            AlertDialogBox.showDialog(
-                                context = applicationContext,
-                                progressBar = pb_td,
-                                message = "No Details",
-                                title = "No transaction has been done",
-                                btnText = "Ok"
-                            )
+                            runOnUiThread {
+                                txt_td_no_transaction_done.visibility = View.VISIBLE
+                                pb_td.visibility = View.GONE
+                            }
                         }
 
-                        pb_td.visibility = View.GONE
                     } else {
                         print("Error: ${response.code()}")
                     }
@@ -90,6 +87,9 @@ class TransactionDetailsPage : AppCompatActivity() {
         items.clear()
         items.addAll(list)
         transactionDetailsAdapter!!.notifyDataSetChanged()
+        runOnUiThread {
+            pb_td.visibility = View.GONE
+        }
     }
 
 

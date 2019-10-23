@@ -42,6 +42,22 @@
     </ScrollView>
 
 
+    <TextView
+        android:id="@+id/txt_td_no_transaction_done"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="@string/noTransactionsDone"
+        android:fontFamily="@font/sofia_pro_semi_bold"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ProgressBar
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

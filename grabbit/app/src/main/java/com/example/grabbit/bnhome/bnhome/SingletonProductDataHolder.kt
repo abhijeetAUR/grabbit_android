@@ -10,6 +10,6 @@ class SingletonProductDataHolder{
     var lstOfProductDispensed: ArrayList<DispensedItemData> = arrayListOf()
 }
 
-data class DispensedItemData(val data : HomeResponseList, val status: Boolean)
+data class DispensedItemData(val data : HomeResponseList, var status: Boolean, val invoiceId: String)
 
 class BtnNameAndStatus(val name: String, val status: Boolean)

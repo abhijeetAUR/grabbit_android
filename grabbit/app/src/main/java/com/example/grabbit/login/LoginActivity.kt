@@ -11,11 +11,9 @@ import com.example.grabbit.scanner.InformationActivity
 import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.HttpException
+import java.lang.Exception
 
 class LoginActivity : AppCompatActivity() {
 
@@ -43,41 +41,46 @@ class LoginActivity : AppCompatActivity() {
 
     private fun signInNetworkCall() {
         if (validateTextBox()) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = service.getLoginResponse(
-                    edit_text_username.text.toString().trim(),
-                    edit_text_password.text.toString().trim()
-                )
+            try {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val response = service.getLoginResponse(
+                        edit_text_username.text.toString().trim(),
+                        edit_text_password.text.toString().trim()
+                    )
 //                val response = service.getLoginResponse("9890698284", "grabbit123")
-                withContext(Dispatchers.Main) {
-                    try {
-                        if (response.isSuccessful) {
-                            if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
-                                putDataInSharedPrefrences(response.body()!!.first().Username)
-                                val intent =
-                                    Intent(applicationContext, InformationActivity::class.java)
-                                startActivity(intent)
-                                progressBar.visibility = View.GONE
-                                finish()
-                            } else if (response.body()!!.first().Result.contentEquals("FAILED")) {
-                                AlertDialogBox.showDialog(
-                                    this@LoginActivity,
-                                    title = "Validation failed",
-                                    message = "Invalid contact number and password",
-                                    btnText = "Ok",
-                                    progressBar = progressBar
-                                )
+                    withContext(Dispatchers.Main) {
+                        try {
+                            if (response.isSuccessful) {
+                                if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
+                                    putDataInSharedPrefrences(response.body()!!.first().Username)
+                                    val intent =
+                                        Intent(applicationContext, InformationActivity::class.java)
+                                    startActivity(intent)
+                                    progressBar.visibility = View.GONE
+                                    finish()
+                                } else if (response.body()!!.first().Result.contentEquals("FAILED")) {
+                                    AlertDialogBox.showDialog(
+                                        this@LoginActivity,
+                                        title = "Validation failed",
+                                        message = "Invalid contact number and password",
+                                        btnText = "Ok",
+                                        progressBar = progressBar
+                                    )
+                                }
+                            } else {
+                                print("Error: ${response.code()}")
                             }
-                        } else {
-                            print("Error: ${response.code()}")
+                        } catch (e: HttpException) {
+                            e.printStackTrace()
+                        } catch (e: Throwable) {
+                            e.printStackTrace()
                         }
-                    } catch (e: HttpException) {
-                        e.printStackTrace()
-                    } catch (e: Throwable) {
-                        e.printStackTrace()
                     }
                 }
+            }catch(e: Exception){
+                e.printStackTrace()
             }
+
         }
     }
 
