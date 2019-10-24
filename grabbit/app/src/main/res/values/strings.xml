@@ -39,5 +39,7 @@
     <string name="quantity">Quantity: </string>
     <string name="itemPurchasedQuantity">1</string>
     <string name="noTransactionsDone">No transactions done</string>
+    <string name="logout">Logout</string>
+
 
 </resources>

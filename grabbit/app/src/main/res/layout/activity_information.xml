@@ -138,6 +138,60 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_2"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/linear_card_background"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear_ly_2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sofia_pro_regular"
+                android:paddingTop="6dp"
+                android:text="@string/logout"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_ia_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textSize="25dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/sofia_pro_semi_bold"
+                    android:gravity="end"
+                    />
+                <TextView
+                    android:id="@+id/txt_ia_logout_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="25dp"
+                    android:drawableRight="@drawable/ic_arrow_back_black_24dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/sofia_pro_semi_bold"
+                    android:gravity="end"
+                    />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
         <ProgressBar
             android:id="@+id/progress_indicator"
             android:layout_width="match_parent"

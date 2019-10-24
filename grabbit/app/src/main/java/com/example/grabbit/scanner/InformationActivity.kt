@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.grabbit.R
+import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.paytm.TransactionPaytm
 import com.example.grabbit.utils.*
 import kotlinx.android.synthetic.main.activity_information.*
@@ -27,6 +28,7 @@ class InformationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_information)
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+
         progress_indicator.visibility = View.VISIBLE
         checkInternetConnection()
         txt_transaction_details.setOnClickListener {
@@ -37,6 +39,20 @@ class InformationActivity : AppCompatActivity() {
         }
         btn_add_balance.setOnClickListener {
             startActivity(Intent(this@InformationActivity, TransactionPaytm::class.java))
+        }
+        txt_ia_logout_btn.setOnClickListener {
+            changedIsUserLoggedIntoFalse()
+            val intent = Intent(this, LoginActivity::class.java);
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun changedIsUserLoggedIntoFalse(){
+        if(sharedPreferences != null){
+            val editor = sharedPreferences!!.edit()
+            editor.putBoolean(isUserLoggedIn, false)
+            editor.apply()
         }
     }
 
