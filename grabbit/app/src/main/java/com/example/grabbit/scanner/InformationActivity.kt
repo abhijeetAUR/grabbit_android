@@ -19,8 +19,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import androidx.appcompat.app.AlertDialog
 import android.widget.EditText
-
-
+import androidx.appcompat.view.ContextThemeWrapper
 
 
 class InformationActivity : AppCompatActivity() {
@@ -47,18 +46,14 @@ class InformationActivity : AppCompatActivity() {
             buildCustomDialog()
         }
         txt_ia_logout_btn.setOnClickListener {
-            changedIsUserLoggedIntoFalse()
-            val intent = Intent(this, LoginActivity::class.java);
-            startActivity(intent)
-            finish()
+            showDialogForLogout("Confirm", "Are you sure you want to logout?", "Yes", "Cancel")
         }
     }
 
     private fun buildCustomDialog() {
         val alert = AlertDialog.Builder(this)
         val edittext = EditText(this)
-//        edittext.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL) //for decimal numbers
-        edittext.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED)
+        edittext.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
         alert.setMessage("Enter amount to recharge")
         alert.setTitle("Recharge wallet")
 
@@ -159,5 +154,31 @@ class InformationActivity : AppCompatActivity() {
         editor.apply()
         return balance
     }
+
+    private fun showDialogForLogout(title: String, message: String, btnText: String, btnNegativeText: String){
+        val dialogBuilder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.MaterialTheme))
+        // set message of alert dialog
+        dialogBuilder.setMessage(message)
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton(btnText) { dialog, _ ->
+                changedIsUserLoggedIntoFalse()
+                val intent = Intent(this, LoginActivity::class.java);
+                startActivity(intent)
+                dialog.dismiss()
+                finish()
+            }.setNegativeButton(btnNegativeText){ dialog, _ ->
+                dialog.dismiss()
+            }
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // set title for alert dialog box
+        alert.setTitle(title)
+        // show alert dialog
+        alert.show()
+    }
+
 
 }

@@ -64,16 +64,16 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         }
     }
 
-    fun calculateWalletBalance(){
+    private fun calculateWalletBalance(){
         totalCostOfItems = singletonProductDataHolder.lstProductsAddedToCart.map { it.ITEMRATE }
             .reduce { total, next -> total + next }
-        userBalance = 10
+        userBalance = getWalletBalance().toInt()
         if (userBalance < totalCostOfItems){
             balanceDifference = totalCostOfItems - userBalance
         }
     }
 
-    fun showDialog(title: String, message: String, btnText: String, btnNegativeText: String){
+    private fun showDialog(title: String, message: String, btnText: String, btnNegativeText: String){
         val dialogBuilder = AlertDialog.Builder(ContextThemeWrapper(activity!!, R.style.MaterialTheme))
 
         // set message of alert dialog
