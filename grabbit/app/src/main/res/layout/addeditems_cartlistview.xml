@@ -31,7 +31,7 @@
         <ImageView
             android:id="@+id/img_product"
             android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:text="Coke"
+                android:text="Kettle studio rock sea salt english vinegar"
                 android:textColor="@color/homeTxtProductHeading"
                 android:textSize="18sp"/>
 
@@ -63,25 +63,19 @@
                 android:fontFamily="@font/sofia_pro_regular"
                 android:textSize="18sp"/>
         </LinearLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <ImageButton
-                android:id="@+id/btn_remove"
-                android:padding="5dp"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_clear_black_24dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:background="@drawable/scan_qr_code_circle_btn_background">
-<!--                android:foreground="?android:attr/selectableItemBackground"-->
-            </ImageButton>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
     </LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_remove"
+        android:padding="5dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/ic_clear_black_24dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/scan_qr_code_circle_btn_background">
+<!--                android:foreground="?android:attr/selectableItemBackground"-->
+    </ImageButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

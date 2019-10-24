@@ -84,16 +84,12 @@ class ItemDispenseActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendDispenseDataInformation() {
-
-    }
-
     private fun clearDataInCart() {
         singletonProductDataHolder?.lstProductsAddedToCart?.clear()
     }
 
     private fun navigateToHomePage() {
-        var intent = Intent(this@ItemDispenseActivity, HomeBnActivity::class.java)
+        var intent = Intent(this@ItemDispenseActivity, ItemDispenseActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
