@@ -297,6 +297,11 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
     override fun onProductListClick(position: Int) {
         if (!singletonProductDataHolder.lstProductsAddedToCart.contains(items.elementAt(position)) && (singletonProductDataHolder.lstProductsAddedToCart.count() + 1) <= 5) {
             addItemToCart(items.elementAt(position))
+            Toast.makeText(
+                activity?.applicationContext,
+                "Item added to cart",
+                Toast.LENGTH_SHORT
+            ).show();
         } else if (singletonProductDataHolder.lstProductsAddedToCart.count() == 5) {
             //TODO: Show dialog
             Toast.makeText(
