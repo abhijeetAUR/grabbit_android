@@ -46,7 +46,7 @@
             android:theme="@style/MaterialTheme">
         </activity>
         <activity
-            android:name=".Signup.SignupActivity"
+            android:name=".signup.SignupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MaterialTheme"/>
         <activity

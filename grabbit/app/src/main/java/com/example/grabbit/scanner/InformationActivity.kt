@@ -3,6 +3,7 @@ package com.example.grabbit.scanner
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.grabbit.R
@@ -16,6 +17,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import androidx.appcompat.app.AlertDialog
+import android.widget.EditText
+
+
 
 
 class InformationActivity : AppCompatActivity() {
@@ -39,7 +44,7 @@ class InformationActivity : AppCompatActivity() {
             startActivity(Intent(this@InformationActivity, QrScannerActivity::class.java))
         }
         btn_add_balance.setOnClickListener {
-            startActivity(Intent(this@InformationActivity, TransactionPaytm::class.java))
+            buildCustomDialog()
         }
         txt_ia_logout_btn.setOnClickListener {
             changedIsUserLoggedIntoFalse()
@@ -49,8 +54,32 @@ class InformationActivity : AppCompatActivity() {
         }
     }
 
-    private fun changedIsUserLoggedIntoFalse(){
-        if(sharedPreferences != null){
+    private fun buildCustomDialog() {
+        val alert = AlertDialog.Builder(this)
+        val edittext = EditText(this)
+//        edittext.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL) //for decimal numbers
+        edittext.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED)
+        alert.setMessage("Enter amount to recharge")
+        alert.setTitle("Recharge wallet")
+
+        alert.setView(edittext)
+
+        alert.setPositiveButton(
+            "Continue"
+        ) { dialog, whichButton ->
+            val rechargeAmount = edittext.text.toString().toInt()
+            val intent = Intent(this@InformationActivity, TransactionPaytm::class.java)
+            intent.putExtra(BALANCE_DIFFERENCE, rechargeAmount)
+            startActivity(intent)
+            dialog.dismiss()
+        }.setNegativeButton("Cancel"){ dialog, _ ->
+            dialog.dismiss()
+        }
+        alert.show()
+    }
+
+    private fun changedIsUserLoggedIntoFalse() {
+        if (sharedPreferences != null) {
             val editor = sharedPreferences!!.edit()
             editor.putBoolean(isUserLoggedIn, false)
             editor.apply()

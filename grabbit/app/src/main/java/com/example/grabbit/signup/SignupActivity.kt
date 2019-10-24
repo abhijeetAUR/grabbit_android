@@ -1,4 +1,4 @@
-package com.example.grabbit.Signup
+package com.example.grabbit.signup
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,6 @@ import com.example.grabbit.R
 import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.utils.AlertDialogBox
 import com.example.grabbit.utils.ConnectionDetector
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.activity_signup.edit_text_username
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
-import java.util.regex.Pattern
 
 
 class SignupActivity : AppCompatActivity() {

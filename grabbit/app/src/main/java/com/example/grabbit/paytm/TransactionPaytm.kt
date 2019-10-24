@@ -10,10 +10,8 @@ import com.example.grabbit.constants.*
 import com.example.grabbit.paytm.contract.PaytmFactory
 import com.example.grabbit.paytm.contract.RechargeWalletFactory
 import com.example.grabbit.paytm.model.PaytmTransactionRequest
+import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
-import com.example.grabbit.utils.PREF_NAME
-import com.example.grabbit.utils.PRIVATE_MODE
-import com.example.grabbit.utils.mobileNumber
 import com.paytm.pgsdk.PaytmOrder
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
@@ -29,13 +27,13 @@ import kotlin.collections.HashMap
 class TransactionPaytm : AppCompatActivity() {
 
     companion object {
-        val amount = "11.00"
         private var paramMap: HashMap<String, String> = HashMap()
         val service = PaytmFactory.makePaytmService()
         val rechargeWalletService = RechargeWalletFactory.makeRechargeWalletService()
         var sharedPreferences: SharedPreferences? = null
     }
 
+    private var balanceDifference = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trasnaction_paytm)
@@ -43,6 +41,13 @@ class TransactionPaytm : AppCompatActivity() {
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         checkInternetConnection()
     }
+
+    override fun onStart() {
+        super.onStart()
+        balanceDifference = intent.getIntExtra(BALANCE_DIFFERENCE, 0)
+        print(balanceDifference)
+    }
+
 
     private fun checkInternetConnection() {
         ConnectionDetector(object : ConnectionDetector.Consumer {
@@ -71,7 +76,7 @@ class TransactionPaytm : AppCompatActivity() {
                     mid = M_ID,
                     orderId = orderId,
                     custId = customerId,
-                    txnAmount = amount,
+                    txnAmount = balanceDifference.toString(),
                     callbackUrl = CALLBACK_URL,
                     website = WEBSITE,
                     industryTypeId = INDUSTRY_TYPE_ID,
@@ -83,7 +88,7 @@ class TransactionPaytm : AppCompatActivity() {
                             //TODO: Update ui on response
                             print(response.CHECKSUMHASH)
                             val request = PaytmTransactionRequest(
-                                M_ID, orderId, customerId, CHANNEL_ID, amount,
+                                M_ID, orderId, customerId, CHANNEL_ID, balanceDifference.toString(),
                                 WEBSITE, CALLBACK_URL, INDUSTRY_TYPE_ID
                             )
                             initializePayment(response.CHECKSUMHASH, request)
