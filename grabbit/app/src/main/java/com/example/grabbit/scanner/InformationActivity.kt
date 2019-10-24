@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.grabbit.R
 import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.paytm.TransactionPaytm
+import com.example.grabbit.scanner.contract.BalanceWalletDetailsService
 import com.example.grabbit.utils.*
 import kotlinx.android.synthetic.main.activity_information.*
 import kotlinx.coroutines.CoroutineScope

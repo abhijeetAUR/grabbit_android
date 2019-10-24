@@ -1,4 +1,4 @@
-package com.example.grabbit.scanner
+package com.example.grabbit.scanner.model
 
 //{"Result":"SUCCESS","Balance":"380","KioskID":null,"UserID":null,"Fullname":null,
 // "Username":null,"userTypeID":null,"ClientID":null}

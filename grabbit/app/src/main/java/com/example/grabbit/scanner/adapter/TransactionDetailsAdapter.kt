@@ -1,4 +1,4 @@
-package com.example.grabbit.scanner.Adapter
+package com.example.grabbit.scanner.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
-import com.example.grabbit.scanner.Model.TransactionDetailsResponse
+import com.example.grabbit.scanner.model.TransactionDetailsResponse
 
 class TransactionDetailsAdapter(private val items : ArrayList<TransactionDetailsResponse>, private val context: Context): RecyclerView.Adapter<TransactionDetailsAdapter.CustomViewHolder>()  {
 

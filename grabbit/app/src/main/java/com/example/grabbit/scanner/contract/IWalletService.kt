@@ -1,7 +1,8 @@
-package com.example.grabbit.scanner
+package com.example.grabbit.scanner.contract
 
 import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints.Companion.balanceUser
+import com.example.grabbit.scanner.model.GetWalletAmountResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

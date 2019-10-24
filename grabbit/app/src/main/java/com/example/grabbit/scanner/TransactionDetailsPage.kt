@@ -7,9 +7,9 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
-import com.example.grabbit.scanner.Adapter.TransactionDetailsAdapter
-import com.example.grabbit.scanner.Model.TransactionDetailsResponse
-import com.example.grabbit.scanner.Service.TransactionDetailsService
+import com.example.grabbit.scanner.adapter.TransactionDetailsAdapter
+import com.example.grabbit.scanner.model.TransactionDetailsResponse
+import com.example.grabbit.scanner.service.TransactionDetailsService
 import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.activity_transaction_details_page.*

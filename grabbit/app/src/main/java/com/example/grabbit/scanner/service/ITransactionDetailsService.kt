@@ -1,8 +1,8 @@
-package com.example.grabbit.scanner.Service
+package com.example.grabbit.scanner.service
 
 import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints
-import com.example.grabbit.scanner.Model.TDetailResponse
+import com.example.grabbit.scanner.model.TDetailResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

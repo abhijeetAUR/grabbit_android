@@ -1,4 +1,4 @@
-package com.example.grabbit.scanner.Model
+package com.example.grabbit.scanner.model
 
 data class TDetailResponse(val Table1: List<TransactionDetailsResponse>)
 
