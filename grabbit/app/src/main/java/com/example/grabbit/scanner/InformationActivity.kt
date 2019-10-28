@@ -20,6 +20,8 @@ import java.io.IOException
 import androidx.appcompat.app.AlertDialog
 import android.widget.EditText
 import androidx.appcompat.view.ContextThemeWrapper
+import android.view.ViewGroup
+import android.widget.FrameLayout
 
 
 class InformationActivity : AppCompatActivity() {
@@ -52,22 +54,36 @@ class InformationActivity : AppCompatActivity() {
 
     private fun buildCustomDialog() {
         val alert = AlertDialog.Builder(this)
-        val edittext = EditText(this)
-        edittext.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+//        val edittext = EditText(this)
+//        edittext.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
+//        alert.setMessage("Enter amount to recharge")
+//        alert.setTitle("Recharge wallet")
+//
+//        alert.setView(edittext)
+
+        val input = EditText(this)
+        input.setSingleLine()
+        val container = FrameLayout(this)
+        val params = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        params.leftMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        params.rightMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        input.layoutParams = params
+        container.addView(input)
         alert.setMessage("Enter amount to recharge")
         alert.setTitle("Recharge wallet")
-
-        alert.setView(edittext)
-
+        alert.setView(container)
         alert.setPositiveButton(
             "Continue"
         ) { dialog, whichButton ->
-            val rechargeAmount = edittext.text.toString().toInt()
+            val rechargeAmount = input.text.toString().toInt()
             val intent = Intent(this@InformationActivity, TransactionPaytm::class.java)
             intent.putExtra(BALANCE_DIFFERENCE, rechargeAmount)
             startActivity(intent)
             dialog.dismiss()
-        }.setNegativeButton("Cancel"){ dialog, _ ->
+        }.setNegativeButton("Cancel") { dialog, _ ->
             dialog.dismiss()
         }
         alert.show()
@@ -155,7 +171,12 @@ class InformationActivity : AppCompatActivity() {
         return balance
     }
 
-    private fun showDialogForLogout(title: String, message: String, btnText: String, btnNegativeText: String){
+    private fun showDialogForLogout(
+        title: String,
+        message: String,
+        btnText: String,
+        btnNegativeText: String
+    ) {
         val dialogBuilder = AlertDialog.Builder(ContextThemeWrapper(this, R.style.MaterialTheme))
         // set message of alert dialog
         dialogBuilder.setMessage(message)
@@ -168,7 +189,7 @@ class InformationActivity : AppCompatActivity() {
                 startActivity(intent)
                 dialog.dismiss()
                 finish()
-            }.setNegativeButton(btnNegativeText){ dialog, _ ->
+            }.setNegativeButton(btnNegativeText) { dialog, _ ->
                 dialog.dismiss()
             }
 
