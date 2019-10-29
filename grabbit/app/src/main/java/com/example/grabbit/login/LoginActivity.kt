@@ -8,6 +8,7 @@ import android.view.View
 import com.example.grabbit.R
 import com.example.grabbit.signup.SignupActivity
 import com.example.grabbit.login.contract.LoginFactory
+import com.example.grabbit.operator.OperatorProductListing
 import com.example.grabbit.scanner.InformationActivity
 import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
@@ -22,6 +23,8 @@ class LoginActivity : AppCompatActivity() {
         val service = LoginFactory.makeLoginService()
         var sharedPreferences: SharedPreferences? = null
     }
+
+    private var isOperatorLogin = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,15 @@ class LoginActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         try {
                             if (response.isSuccessful) {
+                                //TODO: check if operator is logged in then jump to operator page
+
+                                if(isOperatorLogin){
+                                    val intent =
+                                        Intent(applicationContext, OperatorProductListing::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+
                                 if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
                                     putDataInSharedPrefrences(response.body()!!.first().Username)
                                     val intent =

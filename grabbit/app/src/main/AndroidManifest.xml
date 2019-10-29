@@ -20,35 +20,34 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         android:usesCleartextTraffic="true">
-
-    <activity android:name=".scanner.TransactionDetailsPage"
-            android:theme="@style/MaterialTheme">
-        </activity>
+        <activity android:name=".operator.OperatorProductListing"></activity>
+        <activity
+            android:name=".scanner.TransactionDetailsPage"
+            android:theme="@style/MaterialTheme"></activity>
         <activity
             android:name=".paytm.TransactionPaytm"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme"/>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".bluetooth.ItemDispenseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme"/>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".bluetooth.ScanBluetoothDevices"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme"/>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".scanner.InformationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme"/>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".bnhome.HomeBnActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme">
-        </activity>
+            android:theme="@style/MaterialTheme"></activity>
         <activity
             android:name=".signup.SignupActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme"/>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".splash_screen.SplashscreenActivity"
             android:screenOrientation="portrait"
@@ -62,11 +61,11 @@
         <activity
             android:name=".scanner.QrScannerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme"/>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme"/>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
