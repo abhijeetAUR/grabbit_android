@@ -13,5 +13,8 @@ class UrlEndpoints {
         const val chargeWallet = "/USERDETAILS.asmx/RECHARGEWALLET"
         const val balanceUser = "/USERDETAILS.asmx/BALANCE_USER"
         const val transactionDetails = "/Userdetails.asmx/TRANSACTIONDETAILS"
+
+        //OPERATOR
+        const val productlistForLoading = "/Userdetails.asmx/PRODUCTLISTFORLOADING"
     }
 }

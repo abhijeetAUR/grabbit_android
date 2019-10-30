@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
 import com.example.grabbit.utils.SingletonProductDataHolder
 
-class TrayListAdapter(private val opTrayList: Array<String>): RecyclerView.Adapter<TrayListAdapter.ViewHolder>() {
+class TrayListAdapter(private val opTrayList: ArrayList<String>): RecyclerView.Adapter<TrayListAdapter.ViewHolder>() {
     private val singletonProductDataHolder = SingletonProductDataHolder.instance
 
     private var mOnProductCategoryListener: OnProductCategoryListener? = null
