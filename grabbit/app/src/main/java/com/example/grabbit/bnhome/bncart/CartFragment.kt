@@ -57,24 +57,38 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         calculateWalletBalance()
         btnCheckout.setOnClickListener {
             if (userBalance < totalCostOfItems) {
-                showDialog("Low balance", "Please add Rs $balanceDifference to continue transaction", "Ok", "Cancel")
+                showDialog(
+                    "Low balance",
+                    "Please add Rs $balanceDifference to continue transaction",
+                    "Ok",
+                    "Cancel"
+                )
             } else {
                 checkInternetConnection()
             }
         }
     }
 
-    private fun calculateWalletBalance(){
-        totalCostOfItems = singletonProductDataHolder.lstProductsAddedToCart.map { it.ITEMRATE }
-            .reduce { total, next -> total + next }
+    private fun calculateWalletBalance() {
+        totalCostOfItems = if (singletonProductDataHolder.lstProductsAddedToCart.isNotEmpty())
+            singletonProductDataHolder.lstProductsAddedToCart.map { it.ITEMRATE }
+                .reduce { total, next -> total + next }
+        else
+            0
         userBalance = getWalletBalance().toInt()
-        if (userBalance < totalCostOfItems){
+        if (userBalance < totalCostOfItems) {
             balanceDifference = totalCostOfItems - userBalance
         }
     }
 
-    private fun showDialog(title: String, message: String, btnText: String, btnNegativeText: String){
-        val dialogBuilder = AlertDialog.Builder(ContextThemeWrapper(activity!!, R.style.MaterialTheme))
+    private fun showDialog(
+        title: String,
+        message: String,
+        btnText: String,
+        btnNegativeText: String
+    ) {
+        val dialogBuilder =
+            AlertDialog.Builder(ContextThemeWrapper(activity!!, R.style.MaterialTheme))
 
         // set message of alert dialog
         dialogBuilder.setMessage(message)
@@ -86,7 +100,7 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
                 intent.putExtra(BALANCE_DIFFERENCE, balanceDifference)
                 startActivity(intent)
                 dialog.dismiss()
-            }.setNegativeButton(btnNegativeText){ dialog, _ ->
+            }.setNegativeButton(btnNegativeText) { dialog, _ ->
                 dialog.dismiss()
             }
 
