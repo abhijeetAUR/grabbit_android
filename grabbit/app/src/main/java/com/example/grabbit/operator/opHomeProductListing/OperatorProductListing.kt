@@ -1,4 +1,4 @@
-package com.example.grabbit.operator
+package com.example.grabbit.operator.opHomeProductListing
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,12 +6,10 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.grabbit.R
-import com.example.grabbit.bnhome.bnhome.adapter.ItemsAdapter
-import com.example.grabbit.operator.adapter.OPProductListAdapter
-import com.example.grabbit.operator.adapter.TrayListAdapter
-import com.example.grabbit.operator.contract.OperatorProductListFactory
-import com.example.grabbit.operator.model.OPProductList
-import com.example.grabbit.operator.model.OPProductListResponse
+import com.example.grabbit.operator.opHomeProductListing.adapter.OPProductListAdapter
+import com.example.grabbit.operator.opHomeProductListing.adapter.TrayListAdapter
+import com.example.grabbit.operator.opHomeProductListing.contract.OperatorProductListFactory
+import com.example.grabbit.operator.opHomeProductListing.model.OPProductList
 import com.example.grabbit.utils.BtnNameAndStatus
 import com.example.grabbit.utils.ConnectionDetector
 import com.example.grabbit.utils.SingletonProductDataHolder

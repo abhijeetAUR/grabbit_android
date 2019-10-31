@@ -1,4 +1,4 @@
-package com.example.grabbit.operator.adapter
+package com.example.grabbit.operator.opHomeProductListing.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater

@@ -1,7 +1,7 @@
 package com.example.grabbit.utils
 
 import com.example.grabbit.bnhome.bnhome.model.HomeResponseList
-import com.example.grabbit.operator.model.OPProductList
+import com.example.grabbit.operator.opHomeProductListing.model.OPProductList
 
 class SingletonProductDataHolder{
     companion object{

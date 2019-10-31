@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".operator.opHomeBnActivity.OPHomeBnActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:background="@drawable/gradientbackgroundprofile">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:fontFamily="@font/sofia_pro_semi_bold"
+            android:textColor="@color/white"
+            android:textSize="24sp"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/op_bottom_navigation_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@drawable/navigation_item_selected"
+        app:itemTextColor="@drawable/navigation_item_selected"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        app:menu="@menu/bottom_navigation_menu_home"/>
+    <FrameLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/op_framelayout_bottomnavigation"
+        android:layout_above="@id/op_bottom_navigation_home"
+        android:layout_below="@id/toolbar_home">
+    </FrameLayout>
+
+</RelativeLayout>

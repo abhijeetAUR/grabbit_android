@@ -1,4 +1,4 @@
-package com.example.grabbit.operator.adapter
+package com.example.grabbit.operator.opHomeProductListing.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.grabbit.R
-import com.example.grabbit.operator.model.OPProductList
+import com.example.grabbit.operator.opHomeProductListing.model.OPProductList
 
 class OPProductListAdapter (private val items : ArrayList<OPProductList>, private val context: Context): RecyclerView.Adapter<OPProductListAdapter.CustomViewHolder>() {
     interface OnProductListClickListener {

@@ -1,8 +1,8 @@
-package com.example.grabbit.operator.contract
+package com.example.grabbit.operator.opHomeProductListing.contract
 
 import com.example.grabbit.network_layer.BASE_URL
 import com.example.grabbit.network_layer.UrlEndpoints.Companion.productlistForLoading
-import com.example.grabbit.operator.model.OPProductListResponse
+import com.example.grabbit.operator.opHomeProductListing.model.OPProductListResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory

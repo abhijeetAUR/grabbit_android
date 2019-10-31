@@ -1,4 +1,4 @@
-package com.example.grabbit.operator.model
+package com.example.grabbit.operator.opHomeProductListing.model
 
 data class OPProductListResponse(val Table1: List<OPProductList>)
 
