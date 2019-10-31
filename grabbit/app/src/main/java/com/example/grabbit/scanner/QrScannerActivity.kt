@@ -7,17 +7,25 @@ import com.example.grabbit.bnhome.HomeBnActivity
 import me.dm7.barcodescanner.zbar.Result
 import me.dm7.barcodescanner.zbar.ZBarScannerView
 import android.Manifest.permission.CAMERA
+import android.content.SharedPreferences
 
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import android.widget.Toast
+import com.example.grabbit.operator.opHomeBnActivity.OPHomeBnActivity
+import com.example.grabbit.utils.PREF_NAME
+import com.example.grabbit.utils.PRIVATE_MODE
+import com.example.grabbit.utils.isOperatorLoggedIn
+import com.example.grabbit.utils.isUserLoggedIn
 
 
 class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
 
     private val REQUEST_CODE_ASK_PERMISSIONS = 123
-
+    var sharedPreferences: SharedPreferences? = null
+    var hasUserLoggedIn = false
+    var hasOperatorLoggedIn = false
     companion object{
         private var mScannerView: ZBarScannerView? = null
     }
@@ -73,6 +81,10 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
 
     public override fun onResume() {
         super.onResume()
+        sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
+        hasUserLoggedIn = sharedPreferences!!.getBoolean(isUserLoggedIn, false)
+        hasOperatorLoggedIn= sharedPreferences!!.getBoolean(isOperatorLoggedIn, false)
+
         mScannerView!!.setResultHandler(this) // Register ourselves as a handler for scan results.
         mScannerView!!.startCamera()          // Start camera on resume
     }
@@ -84,8 +96,14 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
 
     override fun handleResult(rawResult: Result?) {
         val name = rawResult!!.barcodeFormat.name.toString()
-        val intent = Intent(this@QrScannerActivity, HomeBnActivity::class.java)
-        intent.putExtra("name", name)
-        startActivity(intent)
+        if (hasUserLoggedIn){
+            val intent = Intent(this@QrScannerActivity, HomeBnActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
+        } else if (hasOperatorLoggedIn){
+            val intent = Intent(this@QrScannerActivity, OPHomeBnActivity::class.java)
+            intent.putExtra("name", name)
+            startActivity(intent)
+        }
     }
 }
