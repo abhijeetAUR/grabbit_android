@@ -5,11 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login"
-    tools:context=".login.LoginActivity">
-
+    tools:context=".operator.opLogin.OpLoginActivity">
     <TextView
-        android:visibility="gone"
-        android:id="@+id/back_arrow"
+        android:id="@+id/op_txt_back_arrow"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -17,7 +15,8 @@
         android:layout_marginStart="15dp"
         android:drawableStart="@drawable/ic_keyboard_arrow_left_black_30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:clickable="true">
 
     </TextView>
     <TextView
@@ -25,15 +24,15 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginStart="30dp"
-        android:text="Welcome \nBack"
+        android:text="@string/welcomeOperator"
         android:fontFamily="@font/sofia_pro_semi_bold"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/back_arrow"
+        app:layout_constraintTop_toBottomOf="@id/op_txt_back_arrow"
         />
     <LinearLayout
-        android:id="@+id/ll_sign_up_operator_login"
+        android:id="@+id/op_ll_sign_up_operator_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -44,7 +43,7 @@
         >
         <TextView
 
-            android:id="@+id/txtViewSignUp"
+            android:id="@+id/op_txtViewSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign up"
@@ -54,26 +53,26 @@
             android:textSize="18sp"
             />
 
-        <TextView
-            android:id="@+id/txt_operator_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/operatorLogin"
-            android:contextClickable="true"
-            android:fontFamily="@font/sofia_pro_regular"
-            android:textColor="@color/colorDarkGray"
-            android:textSize="18sp"
-            android:layout_marginStart="20dp"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/txt_operator_login"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/operatorLogin"-->
+<!--            android:contextClickable="true"-->
+<!--            android:fontFamily="@font/sofia_pro_regular"-->
+<!--            android:textColor="@color/colorDarkGray"-->
+<!--            android:textSize="18sp"-->
+<!--            android:layout_marginStart="20dp"-->
+<!--            />-->
     </LinearLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintlyoutbottom"
+        android:id="@+id/op_constraintlyoutbottom"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@id/ll_sign_up_operator_login"
+        app:layout_constraintBottom_toTopOf="@id/op_ll_sign_up_operator_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -90,7 +89,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/btn_sign_in"
+            android:id="@+id/op_btn_sign_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
@@ -104,7 +103,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <EditText
-        app:layout_constraintBottom_toTopOf="@id/edit_text_password"
+        app:layout_constraintBottom_toTopOf="@id/op_edit_text_password"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_marginStart="30dp"
@@ -112,7 +111,7 @@
         android:inputType="number"
         android:ems="15"
         android:textSize="18sp"
-        android:id="@+id/edit_text_username"
+        android:id="@+id/op_edit_text_username"
         android:hint="Contact No"
         android:fontFamily="@font/sofia_pro_regular"
         android:layout_marginBottom="15dp"
@@ -124,14 +123,14 @@
         android:textColorHint="#999"/>
 
     <EditText
-        app:layout_constraintBottom_toTopOf="@id/constraintlyoutbottom"
+        app:layout_constraintBottom_toTopOf="@id/op_constraintlyoutbottom"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="15"
         android:layout_marginEnd="40dp"
-        android:id="@+id/edit_text_password"
+        android:id="@+id/op_edit_text_password"
         android:hint="Password"
         android:fontFamily="@font/sofia_pro_regular"
         android:textSize="18sp"
@@ -146,11 +145,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/progressBar"
+        android:id="@+id/op_progressBar"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

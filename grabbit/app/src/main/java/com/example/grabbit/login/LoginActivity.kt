@@ -9,6 +9,7 @@ import com.example.grabbit.R
 import com.example.grabbit.signup.SignupActivity
 import com.example.grabbit.login.contract.LoginFactory
 import com.example.grabbit.operator.opHomeProductListing.OperatorProductListing
+import com.example.grabbit.operator.opLogin.OpLoginActivity
 import com.example.grabbit.scanner.InformationActivity
 import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
@@ -38,6 +39,11 @@ class LoginActivity : AppCompatActivity() {
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         txtViewSignUp.setOnClickListener {
             val intent = Intent(applicationContext, SignupActivity::class.java)
+            startActivity(intent)
+        }
+
+        txt_operator_login.setOnClickListener {
+            val intent = Intent(applicationContext, OpLoginActivity::class.java)
             startActivity(intent)
         }
 

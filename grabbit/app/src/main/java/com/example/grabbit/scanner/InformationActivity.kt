@@ -31,13 +31,23 @@ class InformationActivity : AppCompatActivity() {
         var sharedPreferences: SharedPreferences? = null
     }
 
+    var isOperatorLogIn = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_information)
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
 
         progress_indicator.visibility = View.VISIBLE
-        checkInternetConnection()
+
+        isOperatorLogIn = sharedPreferences!!.getBoolean(isOperatorLoggedIn, false)
+
+        if (isOperatorLogIn) {
+            setupOperatorView()
+        } else {
+            checkInternetConnection()
+        }
+
         txt_transaction_details.setOnClickListener {
             startActivity(Intent(this@InformationActivity, TransactionDetailsPage::class.java))
         }
@@ -50,6 +60,17 @@ class InformationActivity : AppCompatActivity() {
         txt_ia_logout_btn.setOnClickListener {
             showDialogForLogout("Confirm", "Are you sure you want to logout?", "Yes", "Cancel")
         }
+    }
+
+    private fun setupOperatorView() {
+        val name = sharedPreferences!!.getString(username, "User")
+        runOnUiThread {
+            progress_indicator.visibility = View.GONE
+            linear_ly_1.visibility = View.GONE
+            linear_ly_2.visibility = View.GONE
+            txt_username.text = "Hi $name"
+        }
+
     }
 
     private fun buildCustomDialog() {
@@ -93,6 +114,7 @@ class InformationActivity : AppCompatActivity() {
         if (sharedPreferences != null) {
             val editor = sharedPreferences!!.edit()
             editor.putBoolean(isUserLoggedIn, false)
+            editor.putBoolean(isOperatorLoggedIn, false)
             editor.apply()
         }
     }

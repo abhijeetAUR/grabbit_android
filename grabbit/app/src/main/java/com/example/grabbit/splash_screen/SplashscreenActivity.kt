@@ -10,6 +10,7 @@ import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.scanner.InformationActivity
 import com.example.grabbit.utils.PREF_NAME
 import com.example.grabbit.utils.PRIVATE_MODE
+import com.example.grabbit.utils.isOperatorLoggedIn
 import com.example.grabbit.utils.isUserLoggedIn
 
 class SplashscreenActivity : AppCompatActivity() {
@@ -19,12 +20,14 @@ class SplashscreenActivity : AppCompatActivity() {
 
     }
     var hasUserLoggedIn = false
+    var hasOperatorLoggedIn = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splashscreen)
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         if(sharedPreferences != null){
             hasUserLoggedIn = sharedPreferences!!.getBoolean(isUserLoggedIn, false)
+            hasOperatorLoggedIn= sharedPreferences!!.getBoolean(isOperatorLoggedIn, false)
         }
 
         Handler().postDelayed({
@@ -32,7 +35,9 @@ class SplashscreenActivity : AppCompatActivity() {
             // Start your app main activity
             if (hasUserLoggedIn){
                 startActivity(Intent(this, InformationActivity::class.java))
-            } else{
+            } else if (hasOperatorLoggedIn){
+                startActivity(Intent(this, InformationActivity::class.java))
+            }else{
                 startActivity(Intent(this, LoginActivity::class.java))
             }
             finish()

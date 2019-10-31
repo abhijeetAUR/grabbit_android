@@ -40,9 +40,8 @@
     <string name="itemPurchasedQuantity">1</string>
     <string name="noTransactionsDone">No transactions done</string>
     <string name="logout">Logout</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="operatorLogin">Operator Login</string>
+    <string name="welcomeOperator">Welcome \nOperator</string>
 
 
 </resources>
