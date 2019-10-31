@@ -9,7 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class OPHomeBnActivity : AppCompatActivity() {
 
-    lateinit var opHomeProduct : OpHomeProduct
+    private lateinit var opHomeProduct : OpHomeProduct
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
