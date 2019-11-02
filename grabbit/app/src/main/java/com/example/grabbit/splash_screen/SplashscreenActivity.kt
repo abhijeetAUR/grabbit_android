@@ -8,6 +8,7 @@ import android.os.Handler
 import com.example.grabbit.R
 import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.scanner.InformationActivity
+import com.example.grabbit.scanner.QrScannerActivity
 import com.example.grabbit.utils.PREF_NAME
 import com.example.grabbit.utils.PRIVATE_MODE
 import com.example.grabbit.utils.isOperatorLoggedIn
@@ -36,7 +37,7 @@ class SplashscreenActivity : AppCompatActivity() {
             if (hasUserLoggedIn){
                 startActivity(Intent(this, InformationActivity::class.java))
             } else if (hasOperatorLoggedIn){
-                startActivity(Intent(this, InformationActivity::class.java))
+                startActivity(Intent(this, QrScannerActivity::class.java))
             }else{
                 startActivity(Intent(this, LoginActivity::class.java))
             }

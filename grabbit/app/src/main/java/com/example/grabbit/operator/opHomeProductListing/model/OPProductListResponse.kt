@@ -1,5 +1,7 @@
 package com.example.grabbit.operator.opHomeProductListing.model
 
+import java.io.Serializable
+
 data class OPProductListResponse(val Table1: List<OPProductList>)
 
 data class OPProductList(val COLNUMBER: Int,
@@ -17,5 +19,4 @@ data class OPProductList(val COLNUMBER: Int,
                                  val ITEMRATE: Int,
                                  val ITEMENABLED: Boolean,
                                  val ITEMIMAGE: String,
-                                 val CLIENTID: Int){
-}
+                                 val CLIENTID: Int): Serializable

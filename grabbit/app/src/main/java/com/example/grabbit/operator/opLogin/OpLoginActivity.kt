@@ -9,6 +9,7 @@ import com.bumptech.glide.load.HttpException
 import com.example.grabbit.R
 import com.example.grabbit.operator.opLogin.contract.OpLoginService
 import com.example.grabbit.scanner.InformationActivity
+import com.example.grabbit.scanner.QrScannerActivity
 import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.activity_op_login.*
@@ -68,11 +69,11 @@ class OpLoginActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         try {
                             if (response.isSuccessful) {
-                                //TODO: check if operator is logged in then jump to operator page
+                                //TODO: Send operator to direct scanner page
                                 if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
                                     putDataInSharedPreferences(response.body()!!.first().OPNAME)
                                     val intent =
-                                        Intent(applicationContext, InformationActivity::class.java)
+                                        Intent(applicationContext, QrScannerActivity::class.java)
                                     startActivity(intent)
                                     op_progressBar.visibility = View.GONE
                                     finish()

@@ -20,12 +20,14 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".operator.OperatorProductListing">
-
+        <activity android:name=".operator.opProductDetailPage.OpProductDetailPage"></activity>
+        <activity android:name=".operator.opLogin.OpLoginActivity" />
+        <activity android:name=".operator.opHomeBnActivity.OPHomeBnActivity" >
         </activity>
+        <activity android:name=".operator.opHomeProductListing.OperatorProductListing" />
         <activity
             android:name=".scanner.TransactionDetailsPage"
-            android:theme="@style/MaterialTheme"></activity>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".paytm.TransactionPaytm"
             android:screenOrientation="portrait"
@@ -45,13 +47,7 @@
         <activity
             android:name=".bnhome.HomeBnActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/MaterialTheme" />
         <activity
             android:name=".signup.SignupActivity"
             android:screenOrientation="portrait"
@@ -60,6 +56,11 @@
             android:name=".splash_screen.SplashscreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MaterialTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".scanner.QrScannerActivity"

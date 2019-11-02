@@ -1,6 +1,7 @@
 package com.example.grabbit.operator.opHomeProductListing
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import com.example.grabbit.operator.opHomeProductListing.adapter.OPProductListAd
 import com.example.grabbit.operator.opHomeProductListing.adapter.TrayListAdapter
 import com.example.grabbit.operator.opHomeProductListing.contract.OperatorProductListFactory
 import com.example.grabbit.operator.opHomeProductListing.model.OPProductList
+import com.example.grabbit.operator.opProductDetailPage.OpProductDetailPage
 import com.example.grabbit.utils.BtnNameAndStatus
 import com.example.grabbit.utils.ConnectionDetector
 import com.example.grabbit.utils.SingletonProductDataHolder
@@ -37,13 +39,12 @@ class OpHomeProduct : Fragment(), TrayListAdapter.OnProductCategoryListener,
     private val service = OperatorProductListFactory.makeOperatorProductList()
     private val btnNameAndStatus: ArrayList<String> = ArrayList()
     private var setFirstButtonSelected = true
-    val items: ArrayList<OPProductList> = ArrayList()
+    private val items: ArrayList<OPProductList> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_op_home_product, container, false)
     }
 
@@ -98,7 +99,6 @@ class OpHomeProduct : Fragment(), TrayListAdapter.OnProductCategoryListener,
                 if (response.isSuccessful) {
                     putDataInSingleton(response.body()!!.Table1)
                     pb_op_product_listing.visibility = View.GONE
-                    //TODO append data to tray id array
                 }
             }
         }
@@ -185,7 +185,7 @@ class OpHomeProduct : Fragment(), TrayListAdapter.OnProductCategoryListener,
         singletonProductDataHolder.lstBtnNameAndStatus.addAll(lst)
         items.clear()
         items.addAll(getSelectedCategory())
-        opProductListAdapter!!.notifyDataSetChanged()
+        trayListAdapter!!.notifyDataSetChanged()
         opProductListAdapter!!.notifyDataSetChanged()
     }
 
@@ -196,7 +196,10 @@ class OpHomeProduct : Fragment(), TrayListAdapter.OnProductCategoryListener,
     }
 
     override fun onProductListClick(position: Int) {
-        TODO("Create list addition page")
+        val intent = Intent(activity, OpProductDetailPage::class.java)
+        val product = items[position]
+        intent.putExtra("HomeProduct", product)
+        startActivity(intent)
     }
 
 

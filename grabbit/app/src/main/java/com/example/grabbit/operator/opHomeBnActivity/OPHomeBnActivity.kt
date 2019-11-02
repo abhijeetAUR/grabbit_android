@@ -9,27 +9,28 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class OPHomeBnActivity : AppCompatActivity() {
 
-    private lateinit var opHomeProduct : OpHomeProduct
+    private lateinit var opHomeProduct: OpHomeProduct
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ophome_bn)
 
-        val bottomNavigationHome : BottomNavigationView = findViewById(R.id.op_bottom_navigation_home)
+        val bottomNavigationHome: BottomNavigationView =
+            findViewById(R.id.op_bottom_navigation_home)
         opHomeProduct = OpHomeProduct()
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.op_framelayout_bottomnavigation, opHomeProduct )
+            .replace(R.id.op_framelayout_bottomnavigation, opHomeProduct)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
             .commit()
 
         bottomNavigationHome.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId){
+            when (item.itemId) {
                 R.id.home_bn -> {
                     opHomeProduct = OpHomeProduct()
                     supportFragmentManager
                         .beginTransaction()
-                        .replace(R.id.framelayout_bottomnavigation, opHomeProduct)
+                        .replace(R.id.op_framelayout_bottomnavigation, opHomeProduct)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit()
                 }

@@ -42,6 +42,12 @@
     <string name="logout">Logout</string>
     <string name="operatorLogin">Operator Login</string>
     <string name="welcomeOperator">Welcome \nOperator</string>
-
+    <string name="ProductHolder">Product name</string>
+    <string name="KioskId">Kiosk ID</string>
+    <string name="LoadData">Load Data\t</string>
+    <string name="ProductDetailPage">Product detail</string>
+    <string name="KioskIdTemplate">Kiosk Id %s</string>
+    <string name="ProductName">Product name : %s</string>
+<!--    ": $product!!.KioskID"-->
 
 </resources>
