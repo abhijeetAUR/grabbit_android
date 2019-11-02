@@ -17,5 +17,6 @@ class UrlEndpoints {
         //OPERATOR
         const val productlistForLoading = "/Userdetails.asmx/PRODUCTLISTFORLOADING"
         const val operatorLogin = "/Userdetails.asmx/OPERATOR_LOGIN"
+        const val operatorProductListLoadByOperator = "/USERDETAILS.asmx/PRODUCTLISTTOLOADBYOPERATOR"
     }
 }
