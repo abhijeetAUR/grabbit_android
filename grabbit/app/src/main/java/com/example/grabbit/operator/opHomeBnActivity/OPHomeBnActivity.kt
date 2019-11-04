@@ -10,10 +10,7 @@ import com.example.grabbit.R
 import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.operator.opAccount.OpAccount
 import com.example.grabbit.operator.opHomeProductListing.OpHomeProduct
-import com.example.grabbit.utils.PREF_NAME
-import com.example.grabbit.utils.PRIVATE_MODE
-import com.example.grabbit.utils.isOperatorLoggedIn
-import com.example.grabbit.utils.isUserLoggedIn
+import com.example.grabbit.utils.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class OPHomeBnActivity : AppCompatActivity(), OpAccount.BtnLogoutClicked {
@@ -21,7 +18,7 @@ class OPHomeBnActivity : AppCompatActivity(), OpAccount.BtnLogoutClicked {
     private lateinit var opHomeProduct: OpHomeProduct
     private lateinit var opAccount: OpAccount
     var sharedPreferences: SharedPreferences? = null
-    var qrCodeResult : String? = null
+    var qrCodeResult: String? = null
 
     override fun onAttachFragment(fragment: Fragment) {
         super.onAttachFragment(fragment)
@@ -34,7 +31,8 @@ class OPHomeBnActivity : AppCompatActivity(), OpAccount.BtnLogoutClicked {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ophome_bn)
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
-        qrCodeResult= intent.getStringExtra("name")
+        qrCodeResult = intent.getStringExtra("name")
+        putKioskIdInSharedPref()
 
         val bottomNavigationHome: BottomNavigationView =
             findViewById(R.id.op_bottom_navigation_home)
@@ -69,6 +67,14 @@ class OPHomeBnActivity : AppCompatActivity(), OpAccount.BtnLogoutClicked {
         }
     }
 
+    private fun putKioskIdInSharedPref() {
+        if (qrCodeResult != null && qrCodeResult!!.isNotEmpty()) {
+            val editor = sharedPreferences!!.edit()
+            editor.putString(machineKioskId, qrCodeResult!!)
+            editor.apply()
+        }
+    }
+
     override fun logoutApplication() {
         changedIsOperatorLoggedIntoFalse()
         val intent = Intent(this, LoginActivity::class.java);
@@ -77,8 +83,8 @@ class OPHomeBnActivity : AppCompatActivity(), OpAccount.BtnLogoutClicked {
     }
 
 
-    private fun changedIsOperatorLoggedIntoFalse(){
-        if(sharedPreferences != null){
+    private fun changedIsOperatorLoggedIntoFalse() {
+        if (sharedPreferences != null) {
             val editor = sharedPreferences!!.edit()
             editor.putBoolean(isOperatorLoggedIn, false)
             editor.apply()

@@ -2,6 +2,7 @@ package com.example.grabbit.operator.opHomeProductListing
 
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,9 +17,8 @@ import com.example.grabbit.operator.opHomeProductListing.adapter.TrayListAdapter
 import com.example.grabbit.operator.opHomeProductListing.contract.OperatorProductListFactory
 import com.example.grabbit.operator.opHomeProductListing.model.OPProductList
 import com.example.grabbit.operator.opProductDetailPage.OpProductDetailPage
-import com.example.grabbit.utils.BtnNameAndStatus
+import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
-import com.example.grabbit.utils.SingletonProductDataHolder
 import kotlinx.android.synthetic.main.fragment_op_home_product.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +40,7 @@ class OpHomeProduct : Fragment(), TrayListAdapter.OnProductCategoryListener,
     private val btnNameAndStatus: ArrayList<String> = ArrayList()
     private var setFirstButtonSelected = true
     private val items: ArrayList<OPProductList> = ArrayList()
+    var sharedPreferences: SharedPreferences? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +51,7 @@ class OpHomeProduct : Fragment(), TrayListAdapter.OnProductCategoryListener,
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        sharedPreferences = activity!!.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         setup()
     }
 
@@ -93,8 +95,9 @@ class OpHomeProduct : Fragment(), TrayListAdapter.OnProductCategoryListener,
     }
 
     private fun fetchProductListApi() {
+        val mobileNumber = sharedPreferences!!.getString(mobileNumber, "0000000000")
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getOperatorProductList("9890698284", "12345")
+            val response = service.getOperatorProductList(mobileNumber!!, "12345")
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     putDataInSingleton(response.body()!!.Table1)

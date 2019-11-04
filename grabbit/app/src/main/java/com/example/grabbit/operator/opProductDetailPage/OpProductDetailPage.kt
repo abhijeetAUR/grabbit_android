@@ -1,8 +1,11 @@
 package com.example.grabbit.operator.opProductDetailPage
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.grabbit.R
 import com.example.grabbit.operator.opHomeProductListing.model.OPProductList
@@ -81,7 +84,11 @@ class OpProductDetailPage : AppCompatActivity() {
                             pb_product_detail_page.visibility = View.GONE
                             print(response.body())
                             if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
-                                finish()
+                                showDialog(this@OpProductDetailPage,
+                                    title = "Success",
+                                    message = "Product details updated successfully.",
+                                    btnText = "Ok",
+                                    progressBar = pb_product_detail_page)
                             } else if (response.body()!!.first().Result.contentEquals("FAILED")) {
                                 AlertDialogBox.showDialog(
                                     this@OpProductDetailPage,
@@ -112,6 +119,28 @@ class OpProductDetailPage : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    fun showDialog(context: Context, title: String, message: String, btnText: String, progressBar: ProgressBar){
+        val dialogBuilder = AlertDialog.Builder(context)
+
+        // set message of alert dialog
+        dialogBuilder.setMessage(message)
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton(btnText) { dialog, _ ->
+                progressBar.visibility = View.GONE
+                dialog.dismiss()
+                finish()
+            }
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // set title for alert dialog box
+        alert.setTitle(title)
+        // show alert dialog
+        alert.show()
     }
 }
 

@@ -77,6 +77,7 @@ class InformationActivity : AppCompatActivity() {
         val alert = AlertDialog.Builder(this)
 
         val input = EditText(this)
+        input.inputType = InputType.TYPE_CLASS_NUMBER
         input.setSingleLine()
         val container = FrameLayout(this)
         val params = FrameLayout.LayoutParams(
