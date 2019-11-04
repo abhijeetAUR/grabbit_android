@@ -178,8 +178,10 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
 
     override fun onBtnRemoveClick(position: Int) {
         removeItemFromListOfCart(index = position)
-        totalCostOfItems = singletonProductDataHolder.lstProductsAddedToCart.map { it.ITEMRATE }
-            .reduce { total, next -> total + next }
+        if (singletonProductDataHolder.lstProductsAddedToCart.isNotEmpty()){
+            totalCostOfItems = singletonProductDataHolder.lstProductsAddedToCart.map { it.ITEMRATE }
+                .reduce { total, next -> total + next }
+        }
     }
 
     //Helper functions
