@@ -154,9 +154,6 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
                                     )
                                 )
                             }
-
-
-
                             countToMatchLstProductDispensed += 1
                             if (countToMatchLstProductDispensed == singletonProductDataHolder.lstProductsAddedToCart.count()) {
                                 navigateToBluetoothPage()
