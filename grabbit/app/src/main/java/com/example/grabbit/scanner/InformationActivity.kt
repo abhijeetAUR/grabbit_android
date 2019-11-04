@@ -75,12 +75,6 @@ class InformationActivity : AppCompatActivity() {
 
     private fun buildCustomDialog() {
         val alert = AlertDialog.Builder(this)
-//        val edittext = EditText(this)
-//        edittext.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_SIGNED
-//        alert.setMessage("Enter amount to recharge")
-//        alert.setTitle("Recharge wallet")
-//
-//        alert.setView(edittext)
 
         val input = EditText(this)
         input.setSingleLine()

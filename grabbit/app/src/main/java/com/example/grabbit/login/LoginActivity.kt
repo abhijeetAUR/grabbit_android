@@ -61,15 +61,6 @@ class LoginActivity : AppCompatActivity() {
                     withContext(Dispatchers.Main) {
                         try {
                             if (response.isSuccessful) {
-                                //TODO: check if operator is logged in then jump to operator page
-
-                                if(isOperatorLogin){
-                                    val intent =
-                                        Intent(applicationContext, OperatorProductListing::class.java)
-                                    startActivity(intent)
-                                    finish()
-                                }
-
                                 if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
                                     putDataInSharedPrefrences(response.body()!!.first().Username)
                                     val intent =

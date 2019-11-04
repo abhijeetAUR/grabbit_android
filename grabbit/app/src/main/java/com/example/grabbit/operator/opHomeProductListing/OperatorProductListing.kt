@@ -84,7 +84,6 @@ class OperatorProductListing : AppCompatActivity(), TrayListAdapter.OnProductCat
                 if (response.isSuccessful) {
                     putDataInSingleton(response.body()!!.Table1)
                     pb_op_product_listing.visibility = View.GONE
-                    //TODO append data to tray id array
                 }
             }
         }
@@ -110,6 +109,8 @@ class OperatorProductListing : AppCompatActivity(), TrayListAdapter.OnProductCat
     }
 
     private fun createBtnNameAndStatus(lstResponseProducts: List<OPProductList>) {
+        //TODO Check with komal which field should be used to show data according to tray id
+
         val categories = lstResponseProducts.map { it.TYPE }.toSet().toList()
         if (singletonProductDataHolder.lstBtnNameAndStatus.isEmpty()) {
             for (category in categories) {

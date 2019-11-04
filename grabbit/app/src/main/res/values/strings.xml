@@ -48,6 +48,9 @@
     <string name="ProductDetailPage">Product detail</string>
     <string name="KioskIdTemplate">Kiosk Id %s</string>
     <string name="ProductName">Product name : %s</string>
-<!--    ": $product!!.KioskID"-->
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    ": $product!!.KioskID"-->
 
 </resources>

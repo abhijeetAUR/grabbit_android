@@ -34,12 +34,10 @@ class SplashscreenActivity : AppCompatActivity() {
         Handler().postDelayed({
             // This method will be executed once the timer is over
             // Start your app main activity
-            if (hasUserLoggedIn){
-                startActivity(Intent(this, InformationActivity::class.java))
-            } else if (hasOperatorLoggedIn){
-                startActivity(Intent(this, QrScannerActivity::class.java))
-            }else{
-                startActivity(Intent(this, LoginActivity::class.java))
+            when {
+                hasUserLoggedIn -> startActivity(Intent(this, InformationActivity::class.java))
+                hasOperatorLoggedIn -> startActivity(Intent(this, InformationActivity::class.java))
+                else -> startActivity(Intent(this, LoginActivity::class.java))
             }
             finish()
         }, SPLASH_DELAY)

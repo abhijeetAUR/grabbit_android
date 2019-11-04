@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/login"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".operator.opAccount.OpAccount">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txt_op_username_display"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:layout_marginStart="30dp"
+            android:text="Graham \nBell"
+            android:fontFamily="@font/sofia_pro_semi_bold"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/userimage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="70dp">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/txt_op_contact_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_op_username_display"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginTop="150dp"
+            android:text="Contact us"
+            android:fontFamily="@font/sofia_pro_regular"
+            android:textSize="20sp"
+            android:layout_marginStart="30dp"
+            android:drawableStart="@drawable/ic_perm_phone_msg_black_24dp"
+            android:drawableTint="@color/colorDarkGray"
+            android:drawablePadding="15dp"
+            />
+        <TextView
+            android:id="@+id/txt_op_about_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_op_contact_us"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginTop="20dp"
+            android:text="About us"
+            android:fontFamily="@font/sofia_pro_regular"
+            android:textSize="20sp"
+            android:layout_marginStart="30dp"
+            android:drawableStart="@drawable/ic_info_black_24dp"
+            android:drawableTint="@color/colorDarkGray"
+            android:drawablePadding="15dp"
+            />
+        <TextView
+            android:id="@+id/txt_op_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_op_about_us"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginTop="20dp"
+            android:text="Setting"
+            android:fontFamily="@font/sofia_pro_regular"
+            android:textSize="20sp"
+            android:layout_marginStart="30dp"
+            android:drawableStart="@drawable/ic_settings_black_24dp"
+            android:drawableTint="@color/colorDarkGray"
+            android:drawablePadding="15dp"
+            />
+        <TextView
+            android:id="@+id/txt_op_logout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_op_setting"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginTop="20dp"
+            android:text="Logout"
+            android:fontFamily="@font/sofia_pro_regular"
+            android:textSize="22sp"
+            android:layout_marginStart="30dp"
+            android:drawableStart="@drawable/ic_exit"
+            android:drawablePadding="10dp"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</FrameLayout>

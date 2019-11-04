@@ -30,6 +30,12 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
         private var mScannerView: ZBarScannerView? = null
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (hasOperatorLoggedIn){
+            finish()
+        }
+    }
     private fun requestPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -83,7 +89,7 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
         super.onResume()
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         hasUserLoggedIn = sharedPreferences!!.getBoolean(isUserLoggedIn, false)
-        hasOperatorLoggedIn= sharedPreferences!!.getBoolean(isOperatorLoggedIn, false)
+        hasOperatorLoggedIn = sharedPreferences!!.getBoolean(isOperatorLoggedIn, false)
 
         mScannerView!!.setResultHandler(this) // Register ourselves as a handler for scan results.
         mScannerView!!.startCamera()          // Start camera on resume

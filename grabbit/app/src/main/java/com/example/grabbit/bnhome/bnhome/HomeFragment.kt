@@ -222,8 +222,6 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
             withContext(Dispatchers.Main) {
                 try {
                     if (response.isSuccessful) {
-                        //TODO: Update ui on response
-                        //Add to singleton class
                         putDataInSingleton(response.body()!!.Table1)
                         progressBar.visibility = View.GONE
                     } else {
@@ -303,7 +301,6 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
                 Toast.LENGTH_SHORT
             ).show();
         } else if (singletonProductDataHolder.lstProductsAddedToCart.count() == 5) {
-            //TODO: Show dialog
             Toast.makeText(
                 activity?.applicationContext,
                 "Maximum 5 items can be added to cart",
