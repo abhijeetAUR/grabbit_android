@@ -26,16 +26,18 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
     var sharedPreferences: SharedPreferences? = null
     var hasUserLoggedIn = false
     var hasOperatorLoggedIn = false
-    companion object{
+
+    companion object {
         private var mScannerView: ZBarScannerView? = null
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        if (hasOperatorLoggedIn){
+        if (hasOperatorLoggedIn) {
             finish()
         }
     }
+
     private fun requestPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -49,7 +51,7 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
                     arrayOf(CAMERA),
                     REQUEST_CODE_ASK_PERMISSIONS
                 )
-        } else{
+        } else {
             mScannerView = ZBarScannerView(this)   // Programmatically initialize the scan
             setContentView(mScannerView)// ner view
         }
@@ -90,23 +92,26 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
         sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         hasUserLoggedIn = sharedPreferences!!.getBoolean(isUserLoggedIn, false)
         hasOperatorLoggedIn = sharedPreferences!!.getBoolean(isOperatorLoggedIn, false)
-
-        mScannerView!!.setResultHandler(this) // Register ourselves as a handler for scan results.
-        mScannerView!!.startCamera()          // Start camera on resume
+        if (mScannerView != null) {
+            mScannerView!!.setResultHandler(this) // Register ourselves as a handler for scan results.
+            mScannerView!!.startCamera()          // Start camera on resume
+        }
     }
 
     public override fun onPause() {
         super.onPause()
-        mScannerView!!.stopCamera()           // Stop camera on pause
+        if(mScannerView != null){
+            mScannerView!!.stopCamera()    // Stop camera on pause
+        }
     }
 
     override fun handleResult(rawResult: Result?) {
         val name = rawResult!!.barcodeFormat.name.toString()
-        if (hasUserLoggedIn){
+        if (hasUserLoggedIn) {
             val intent = Intent(this@QrScannerActivity, HomeBnActivity::class.java)
             intent.putExtra("name", name)
             startActivity(intent)
-        } else if (hasOperatorLoggedIn){
+        } else if (hasOperatorLoggedIn) {
             val intent = Intent(this@QrScannerActivity, OPHomeBnActivity::class.java)
             intent.putExtra("name", name)
             startActivity(intent)

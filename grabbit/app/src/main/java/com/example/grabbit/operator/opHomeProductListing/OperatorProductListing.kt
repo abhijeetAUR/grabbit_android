@@ -29,7 +29,7 @@ class OperatorProductListing : AppCompatActivity(), TrayListAdapter.OnProductCat
     private val service = OperatorProductListFactory.makeOperatorProductList()
     private val btnNameAndStatus: ArrayList<String> = ArrayList()
     private var setFirstButtonSelected = true
-    val items: ArrayList<OPProductList> = ArrayList()
+    private val items: ArrayList<OPProductList> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
