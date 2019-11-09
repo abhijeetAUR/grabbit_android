@@ -8,7 +8,6 @@ import android.view.View
 import com.example.grabbit.R
 import com.example.grabbit.signup.SignupActivity
 import com.example.grabbit.login.contract.LoginFactory
-import com.example.grabbit.operator.opHomeProductListing.OperatorProductListing
 import com.example.grabbit.operator.opLogin.OpLoginActivity
 import com.example.grabbit.scanner.InformationActivity
 import com.example.grabbit.utils.*

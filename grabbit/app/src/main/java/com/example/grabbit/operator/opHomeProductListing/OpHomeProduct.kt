@@ -97,7 +97,7 @@ class OpHomeProduct : Fragment(), TrayListAdapter.OnProductCategoryListener,
     private fun fetchProductListApi() {
         val mobileNumber = sharedPreferences!!.getString(mobileNumber, "0000000000")
         CoroutineScope(Dispatchers.IO).launch {
-            val response = service.getOperatorProductList(mobileNumber!!, "12345")
+            val response = service.getOperatorProductList(mobileNumber!!)
             withContext(Dispatchers.Main) {
                 if (response.isSuccessful) {
                     putDataInSingleton(response.body()!!.Table1)

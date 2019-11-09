@@ -10,14 +10,19 @@ import retrofit2.http.*
 interface ICreateInvoiceService {
     @FormUrlEncoded
     @POST(UrlEndpoints.createInvoice)
+//    suspend fun getCreateInvoice(
+//        @Field("mobileno") mobileno: String,
+//        @Field("Kioskid") kioskid: String,
+//        @Field("itemname") itemname: String,
+//        @Field("itemid") itemid: String,
+//        @Field("amount") amount: String,
+//        @Field("trayid") trayid: String,
+//        @Field("COLNUMBER") colnumber: String
+//    ): Response<List<CreateInvoiceResponse>>
     suspend fun getCreateInvoice(
         @Field("mobileno") mobileno: String,
         @Field("Kioskid") kioskid: String,
-        @Field("itemname") itemname: String,
-        @Field("itemid") itemid: String,
-        @Field("amount") amount: String,
-        @Field("trayid") trayid: String,
-        @Field("COLNUMBER") colnumber: String
+        @Field("itemid") itemid: String
     ): Response<List<CreateInvoiceResponse>>
 }
 

@@ -14,8 +14,8 @@ interface IOperatorProductList {
     @FormUrlEncoded
     @POST(productlistForLoading)
     suspend fun getOperatorProductList(
-        @Field("MOBILENO") mobileNo: String,
-        @Field("PASSWORD") PASSWORD: String
+        @Field("MOBILENO") mobileNo: String
+//        @Field("PASSWORD") PASSWORD: String
     ): Response<OPProductListResponse>
 }
 

@@ -56,16 +56,17 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         pb_cart.visibility = View.GONE
         calculateWalletBalance()
         btnCheckout.setOnClickListener {
-            if (userBalance < totalCostOfItems) {
-                showDialog(
-                    "Low balance",
-                    "Please add Rs $balanceDifference to continue transaction",
-                    "Ok",
-                    "Cancel"
-                )
-            } else {
-                checkInternetConnection()
-            }
+            checkInternetConnection()
+//            if (userBalance < totalCostOfItems) {
+//                showDialog(
+//                    "Low balance",
+//                    "Please add Rs $balanceDifference to continue transaction",
+//                    "Ok",
+//                    "Cancel"
+//                )
+//            } else {
+//                checkInternetConnection()
+//            }
         }
     }
 
@@ -129,16 +130,19 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
 
     private fun sendCreateInvoiceDataInRecursiveCall() {
         val itemAddedToCart = singletonProductDataHolder.lstProductsAddedToCart
+        val itemIds =
+            singletonProductDataHolder.lstProductsAddedToCart.map { "${it.ITEMID}" }.toList()
+                .toString().removePrefix("[").removeSuffix("]")
         val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
         if (itemAddedToCart.count() > 0) {
             CoroutineScope(Dispatchers.IO).async {
                 val response = requestCreateInvoice.getCreateInvoice(
                     kioskid = itemAddedToCart[countToMatchLstProductDispensed].KioskID,
-                    itemname = itemAddedToCart[countToMatchLstProductDispensed].ITEMNAME,
-                    itemid = itemAddedToCart[countToMatchLstProductDispensed].ITEMID.toString(),
-                    amount = itemAddedToCart[countToMatchLstProductDispensed].ITEMRATE.toString(),
-                    trayid = itemAddedToCart[countToMatchLstProductDispensed].TRAYID.toString(),
-                    colnumber = itemAddedToCart[countToMatchLstProductDispensed].COLNUMBER.toString(),
+//                    itemname = itemAddedToCart[countToMatchLstProductDispensed].ITEMNAME,
+                    itemid = itemIds,
+//                    amount = itemAddedToCart[countToMatchLstProductDispensed].ITEMRATE.toString(),
+//                    trayid = itemAddedToCart[countToMatchLstProductDispensed].TRAYID.toString(),
+//                    colnumber = itemAddedToCart[countToMatchLstProductDispensed].COLNUMBER.toString(),
                     mobileno = mobileNo.toString()
                 )
                 withContext(Dispatchers.Main) {
@@ -146,15 +150,19 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
                         if (response.isSuccessful) {
                             //Append invoice id to singleton dispensed item data
                             if (response.body() != null && response.body()!!.first().Invoiceidfull.isNotEmpty()) {
-                                singletonProductDataHolder.lstOfProductDispensed.add(
-                                    DispensedItemData(
-                                        itemAddedToCart[countToMatchLstProductDispensed],
-                                        false,
-                                        response.body()!!.first().Invoiceidfull
+
+                                val result = response.body()!!.first().Invoiceidfull.split(",")
+                                result.forEach {
+                                    singletonProductDataHolder.lstOfProductDispensed.add(
+                                        DispensedItemData(
+                                            itemAddedToCart[countToMatchLstProductDispensed],
+                                            false,
+                                            it
+                                        )
                                     )
-                                )
+                                    countToMatchLstProductDispensed += 1
+                                }
                             }
-                            countToMatchLstProductDispensed += 1
                             if (countToMatchLstProductDispensed == singletonProductDataHolder.lstProductsAddedToCart.count()) {
                                 navigateToBluetoothPage()
                             } else {
@@ -178,7 +186,7 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
 
     override fun onBtnRemoveClick(position: Int) {
         removeItemFromListOfCart(index = position)
-        if (singletonProductDataHolder.lstProductsAddedToCart.isNotEmpty()){
+        if (singletonProductDataHolder.lstProductsAddedToCart.isNotEmpty()) {
             totalCostOfItems = singletonProductDataHolder.lstProductsAddedToCart.map { it.ITEMRATE }
                 .reduce { total, next -> total + next }
         }

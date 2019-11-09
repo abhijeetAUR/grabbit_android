@@ -24,7 +24,6 @@
         <activity android:name=".operator.opLogin.OpLoginActivity" />
         <activity android:name=".operator.opHomeBnActivity.OPHomeBnActivity" >
         </activity>
-        <activity android:name=".operator.opHomeProductListing.OperatorProductListing" />
         <activity
             android:name=".scanner.TransactionDetailsPage"
             android:theme="@style/MaterialTheme" />
