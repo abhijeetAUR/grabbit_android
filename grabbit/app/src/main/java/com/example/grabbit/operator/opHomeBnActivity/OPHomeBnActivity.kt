@@ -19,7 +19,7 @@ class OPHomeBnActivity : AppCompatActivity(), OpAccount.BtnLogoutClicked {
     private lateinit var opAccount: OpAccount
     var sharedPreferences: SharedPreferences? = null
     var qrCodeResult: String? = null
-
+    val singletonProductDataHolder = SingletonProductDataHolder.instance
     override fun onAttachFragment(fragment: Fragment) {
         super.onAttachFragment(fragment)
         if (fragment is OpAccount) {
@@ -77,10 +77,19 @@ class OPHomeBnActivity : AppCompatActivity(), OpAccount.BtnLogoutClicked {
 
     override fun logoutApplication() {
         changedIsOperatorLoggedIntoFalse()
+        clearDataSource()
         val intent = Intent(this, LoginActivity::class.java);
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
+    }
+
+    private fun clearDataSource() {
+        singletonProductDataHolder.lstProductsAddedToCart.clear()
+        singletonProductDataHolder.homeProductDictionary.clear()
+        singletonProductDataHolder.lstBtnNameAndStatus.clear()
+        singletonProductDataHolder.lstOfProductDispensed.clear()
+        singletonProductDataHolder.opProductDictionary.clear()
     }
 
 

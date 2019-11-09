@@ -7,17 +7,16 @@ import com.example.grabbit.bnhome.HomeBnActivity
 import me.dm7.barcodescanner.zbar.Result
 import me.dm7.barcodescanner.zbar.ZBarScannerView
 import android.Manifest.permission.CAMERA
+import android.content.Context
 import android.content.SharedPreferences
 
 import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.example.grabbit.operator.opHomeBnActivity.OPHomeBnActivity
-import com.example.grabbit.utils.PREF_NAME
-import com.example.grabbit.utils.PRIVATE_MODE
-import com.example.grabbit.utils.isOperatorLoggedIn
-import com.example.grabbit.utils.isUserLoggedIn
+import com.example.grabbit.utils.*
 
 
 class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
@@ -106,15 +105,40 @@ class QrScannerActivity : AppCompatActivity(), ZBarScannerView.ResultHandler {
     }
 
     override fun handleResult(rawResult: Result?) {
-        val name = rawResult!!.barcodeFormat.name.toString()
-        if (hasUserLoggedIn) {
-            val intent = Intent(this@QrScannerActivity, HomeBnActivity::class.java)
-            intent.putExtra("name", name)
-            startActivity(intent)
-        } else if (hasOperatorLoggedIn) {
-            val intent = Intent(this@QrScannerActivity, OPHomeBnActivity::class.java)
-            intent.putExtra("name", name)
-            startActivity(intent)
+        val name = rawResult!!.contents.toString()
+        if (name.contains("GRA")){
+            if (hasUserLoggedIn) {
+                val intent = Intent(this@QrScannerActivity, HomeBnActivity::class.java)
+                intent.putExtra("name", name)
+                startActivity(intent)
+            } else if (hasOperatorLoggedIn) {
+                val intent = Intent(this@QrScannerActivity, OPHomeBnActivity::class.java)
+                intent.putExtra("name", name)
+                startActivity(intent)
+            }
+        } else {
+            showDialogQRCode(this, "Invalid qr code", "Please rescan qr code", "Ok")
         }
+    }
+
+    fun showDialogQRCode(context: Context, title: String, message: String, btnText: String){
+        val dialogBuilder = AlertDialog.Builder(context)
+
+        // set message of alert dialog
+        dialogBuilder.setMessage(message)
+            // if the dialog is cancelable
+            .setCancelable(false)
+            // positive button text and action
+            .setPositiveButton(btnText) { dialog, _ ->
+                dialog.dismiss()
+                finish()
+            }
+
+        // create dialog box
+        val alert = dialogBuilder.create()
+        // set title for alert dialog box
+        alert.setTitle(title)
+        // show alert dialog
+        alert.show()
     }
 }

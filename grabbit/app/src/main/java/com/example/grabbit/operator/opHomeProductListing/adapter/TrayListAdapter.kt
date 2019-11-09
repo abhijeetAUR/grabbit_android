@@ -32,13 +32,15 @@ class TrayListAdapter(private val opTrayList: ArrayList<String>): RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.categoryName.text = opTrayList[position].toLowerCase().capitalize()
-        if (singletonProductDataHolder.lstBtnNameAndStatus[position].status){
-            holder.selectedCategoryArrow.visibility = View.VISIBLE
-            holder.categoryName.setTextColor(Color.parseColor("#252729"))
-        } else{
-            holder.selectedCategoryArrow.visibility = View.GONE
-            holder.categoryName.setTextColor(Color.parseColor("#9d968d"))
-        }
+       if (singletonProductDataHolder.lstBtnNameAndStatus.isNotEmpty()){
+           if (singletonProductDataHolder.lstBtnNameAndStatus[position].status){
+               holder.selectedCategoryArrow.visibility = View.VISIBLE
+               holder.categoryName.setTextColor(Color.parseColor("#252729"))
+           } else{
+               holder.selectedCategoryArrow.visibility = View.GONE
+               holder.categoryName.setTextColor(Color.parseColor("#9d968d"))
+           }
+       }
     }
 
     inner class ViewHolder(itemView: View,  onProductCategoryListener: OnProductCategoryListener?) : RecyclerView.ViewHolder(itemView){

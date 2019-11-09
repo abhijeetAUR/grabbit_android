@@ -32,6 +32,7 @@ class InformationActivity : AppCompatActivity() {
     }
 
     var isOperatorLogIn = false
+    val singletonProductDataHolder = SingletonProductDataHolder.instance
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -202,6 +203,7 @@ class InformationActivity : AppCompatActivity() {
             // positive button text and action
             .setPositiveButton(btnText) { dialog, _ ->
                 changedIsUserLoggedIntoFalse()
+                clearDataSource()
                 val intent = Intent(this, LoginActivity::class.java);
                 startActivity(intent)
                 dialog.dismiss()
@@ -216,6 +218,15 @@ class InformationActivity : AppCompatActivity() {
         alert.setTitle(title)
         // show alert dialog
         alert.show()
+    }
+
+
+    private fun clearDataSource() {
+        singletonProductDataHolder.lstProductsAddedToCart.clear()
+        singletonProductDataHolder.homeProductDictionary.clear()
+        singletonProductDataHolder.lstBtnNameAndStatus.clear()
+        singletonProductDataHolder.lstOfProductDispensed.clear()
+        singletonProductDataHolder.opProductDictionary.clear()
     }
 
 

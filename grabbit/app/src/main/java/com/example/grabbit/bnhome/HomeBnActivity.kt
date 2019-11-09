@@ -15,6 +15,7 @@ import com.example.grabbit.bnhome.bnhome.HomeFragment
 import com.example.grabbit.login.LoginActivity
 import com.example.grabbit.utils.PREF_NAME
 import com.example.grabbit.utils.PRIVATE_MODE
+import com.example.grabbit.utils.SingletonProductDataHolder
 import com.example.grabbit.utils.isUserLoggedIn
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_home_bn.*
@@ -22,13 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
 
-    override fun logoutApplication() {
-        changedIsUserLoggedIntoFalse()
-        val intent = Intent(this, LoginActivity::class.java);
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
-    }
+    val singletonProductDataHolder = SingletonProductDataHolder.instance
 
     companion object {
         var qrCodeResult : String? = null
@@ -103,5 +98,22 @@ class HomeBnActivity : AppCompatActivity(), AccountFragment.BtnLogoutClicked {
             }
             true
         }
+    }
+
+    private fun clearDataSource() {
+        singletonProductDataHolder.lstProductsAddedToCart.clear()
+        singletonProductDataHolder.homeProductDictionary.clear()
+        singletonProductDataHolder.lstBtnNameAndStatus.clear()
+        singletonProductDataHolder.lstOfProductDispensed.clear()
+        singletonProductDataHolder.opProductDictionary.clear()
+    }
+
+    override fun logoutApplication() {
+        changedIsUserLoggedIntoFalse()
+        clearDataSource()
+        val intent = Intent(this, LoginActivity::class.java);
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }
