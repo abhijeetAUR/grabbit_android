@@ -14,7 +14,7 @@ interface IProductLoadFactory {
     @FormUrlEncoded
     @POST(UrlEndpoints.operatorProductListLoadByOperator)
     suspend fun loadProductService(@Field("MOBILENO") mobileNo: String,
-                                   @Field("PASSWORD") password: String,
+//                                   @Field("PASSWORD") password: String,
                                    @Field("kioskid") kioskId: String,
                                    @Field("COLNUMBER") colNumber: String,
                                    @Field("TRAYID") trayId: String,

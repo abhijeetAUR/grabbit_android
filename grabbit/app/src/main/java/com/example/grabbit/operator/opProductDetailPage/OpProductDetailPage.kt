@@ -1,6 +1,7 @@
 package com.example.grabbit.operator.opProductDetailPage
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.grabbit.R
 import com.example.grabbit.operator.opHomeProductListing.model.OPProductList
 import com.example.grabbit.operator.opProductDetailPage.contract.ProductLoadFactory
-import com.example.grabbit.utils.AlertDialogBox
+import com.example.grabbit.utils.*
 import com.example.grabbit.utils.ConnectionDetector
 import kotlinx.android.synthetic.main.activity_op_product_detail_page.*
 import kotlinx.coroutines.CoroutineScope
@@ -22,10 +23,12 @@ import retrofit2.HttpException
 class OpProductDetailPage : AppCompatActivity() {
     private var product: OPProductList? = null
     private val service = ProductLoadFactory.makeLoadService()
+    var sharedPreferences: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_op_product_detail_page)
+        sharedPreferences = this.getSharedPreferences(PREF_NAME, PRIVATE_MODE)
         product = intent.getSerializableExtra("HomeProduct") as OPProductList
         setupValues()
         btn_load_data.setOnClickListener {
@@ -64,13 +67,13 @@ class OpProductDetailPage : AppCompatActivity() {
         })
     }
 
-    //TODO: Check api fail
     private fun productListLoadByOperator() {
+        val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
         if (product != null) {
             CoroutineScope(Dispatchers.IO).launch {
                 val response = service.loadProductService(
-                    "9890698284",
-                    "12345",
+                    mobileNo.toString(),
+//                    "12345",
                     "00001",//TODO: Append KioskId in product object
 //                        product!!.KioskID,
                     colNumber = ed_column_number.text.toString(),

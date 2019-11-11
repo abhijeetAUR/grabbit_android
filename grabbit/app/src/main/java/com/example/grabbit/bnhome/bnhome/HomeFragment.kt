@@ -33,7 +33,6 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
     companion object {
         val service = HomeFactory.makeHomeService()
         val singletonProductDataHolder = SingletonProductDataHolder.instance
-        var setFirstButtonSelected = true
         var menuAdapter: MenuAdapter? = null
         var itemsAdapter: ItemsAdapter? = null
         val requestUpdateInvoice = UpdateInvoiceService.makeInvoiceService()
@@ -41,6 +40,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
         val btnNameAndStatus: ArrayList<String> = ArrayList()
         val items: ArrayList<HomeResponseList> = ArrayList()
     }
+    var setFirstButtonSelected = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -114,14 +114,14 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
             DispensedItemData(
                 obj1,
                 true,
-                invoiceId = "1000010000105"
+                invoiceId = "000010000174"
             )
         )
         singletonProductDataHolder.lstOfProductDispensed.add(
             DispensedItemData(
                 obj2,
                 true,
-                invoiceId = "1000010000106"
+                invoiceId = "000010000173"
             )
         )
     }
@@ -136,12 +136,9 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
             CoroutineScope(Dispatchers.IO).async {
                 val response = requestUpdateInvoice.updateCreateInvoice(
                     invoiceIdNew = dispensedItems[itemInvoiceUpdatedCount].invoiceId,
-                    itemName = dispensedItems[itemInvoiceUpdatedCount].data.ITEMNAME,
-                    itemId = dispensedItems[itemInvoiceUpdatedCount].data.ITEMID.toString(),
-                    qty = "1",//TODO:Change this
-                    amount = dispensedItems[itemInvoiceUpdatedCount].data.ITEMRATE.toString(),
-                    trayId = dispensedItems[itemInvoiceUpdatedCount].data.TRAYID.toString(),
-                    colnumber = dispensedItems[itemInvoiceUpdatedCount].data.COLNUMBER.toString(),
+                    transactionStauts = "SENSOR DETECTED",
+                    feedbackSensor = "GOT CONFIRMATION",
+                    feedbackSpiral = "GOT CONFIRMATION",
                     dispensed = dispensedStatus
                 )
                 withContext(Dispatchers.Main) {
@@ -149,6 +146,7 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
                         if (response.isSuccessful) {
                             itemInvoiceUpdatedCount += 1
                             if (itemInvoiceUpdatedCount == singletonProductDataHolder!!.lstOfProductDispensed.count()) {
+                                singletonProductDataHolder!!.lstOfProductDispensed.clear()
                                 checkInternetConnection()
                             } else {
                                 sendUpdateInvoiceDataInRecursiveCall()
@@ -261,6 +259,15 @@ class HomeFragment : Fragment(), MenuAdapter.OnProductCategoryListener,
                         )
                     )
                 }
+            }
+        } else {
+            for (category in categories) {
+                singletonProductDataHolder.lstBtnNameAndStatus.add(
+                    BtnNameAndStatus(
+                        name = category,
+                        status = false
+                    )
+                )
             }
         }
         btnNameAndStatus.clear()

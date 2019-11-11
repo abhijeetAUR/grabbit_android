@@ -128,6 +128,7 @@ class CartFragment : Fragment(), CartItemListAdapter.OnBtnRemoveClickListener {
         })
     }
 
+    //TODO: Call this api from bluetooth dispense activity
     private fun sendCreateInvoiceDataInRecursiveCall() {
         val itemAddedToCart = singletonProductDataHolder.lstProductsAddedToCart
         val itemIds =

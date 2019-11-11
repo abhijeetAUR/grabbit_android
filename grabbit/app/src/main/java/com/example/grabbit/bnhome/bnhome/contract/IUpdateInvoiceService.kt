@@ -13,12 +13,15 @@ interface IUpdateInvoiceService {
     @POST(UrlEndpoints.updateInvoice)
     suspend fun updateCreateInvoice(
         @Field("invoiceidnew") invoiceIdNew: String,
-        @Field("itemname") itemName: String,
-        @Field("itemid") itemId: String,
-        @Field("qty") qty: String,
-        @Field("amount") amount: String,
-        @Field("trayid") trayId: String,
-        @Field("COLNUMBER") colnumber: String,
+        @Field("TransactionStauts") transactionStauts: String,
+        @Field("FEEDBACKSPIRAL") feedbackSpiral: String,
+        @Field("FEEDBACKSENSOR") feedbackSensor: String,
+//        @Field("itemname") itemName: String,
+//        @Field("itemid") itemId: String,
+//        @Field("qty") qty: String,
+//        @Field("amount") amount: String,
+//        @Field("trayid") trayId: String,
+//        @Field("COLNUMBER") colnumber: String,
         @Field("DISPENSED") dispensed: String
     ): Response<List<UpdateInvoiceResponse>>
 }
