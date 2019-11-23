@@ -23,6 +23,11 @@
         <activity android:name=".operator.opProductDetailPage.OpProductDetailPage"></activity>
         <activity android:name=".operator.opLogin.OpLoginActivity" />
         <activity android:name=".operator.opHomeBnActivity.OPHomeBnActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".scanner.TransactionDetailsPage"
@@ -55,11 +60,7 @@
             android:name=".splash_screen.SplashscreenActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MaterialTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".scanner.QrScannerActivity"

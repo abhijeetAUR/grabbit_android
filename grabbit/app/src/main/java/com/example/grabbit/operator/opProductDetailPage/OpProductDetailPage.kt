@@ -67,60 +67,76 @@ class OpProductDetailPage : AppCompatActivity() {
         })
     }
 
+    private fun validateTextBox(): Boolean =
+        ed_column_number.text.toString().isNotEmpty() && ed_tray_id.text.toString().isNotEmpty()
+
     private fun productListLoadByOperator() {
-        val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
-        if (product != null) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val response = service.loadProductService(
-                    mobileNo.toString(),
+        if (validateTextBox()) {
+            val mobileNo = sharedPreferences!!.getString(mobileNumber, "0000000000")
+            if (product != null) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val response = service.loadProductService(
+                        mobileNo.toString(),
 //                    "12345",
-                    "00001",//TODO: Append KioskId in product object
+                        "00001",//TODO: Append KioskId in product object
 //                        product!!.KioskID,
-                    colNumber = ed_column_number.text.toString(),
-                    trayId = ed_tray_id.text.toString(),
-                    itemId = product!!.ITEMID.toString()
-                )
-                withContext(Dispatchers.Main) {
-                    try {
-                        if (response.isSuccessful) {
-                            //TODO: Update ui on response
-                            pb_product_detail_page.visibility = View.GONE
-                            print(response.body())
-                            if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
-                                showDialog(this@OpProductDetailPage,
-                                    title = "Success",
-                                    message = "Product details updated successfully.",
-                                    btnText = "Ok",
-                                    progressBar = pb_product_detail_page)
-                            } else if (response.body()!!.first().Result.contentEquals("FAILED")) {
+                        colNumber = ed_column_number.text.toString().trim(),
+                        trayId = ed_tray_id.text.toString().trim(),
+                        itemId = product!!.ITEMID.toString().trim(),
+                        quantity = ed_quantity_id.text.toString().trim()
+                    )
+                    withContext(Dispatchers.Main) {
+                        try {
+                            if (response.isSuccessful) {
+                                //TODO: Update ui on response
+                                pb_product_detail_page.visibility = View.GONE
+                                print(response.body())
+                                if (response.body()!!.first().Result.contentEquals("SUCCESS")) {
+                                    showDialog(
+                                        this@OpProductDetailPage,
+                                        title = "Success",
+                                        message = "Product details updated successfully.",
+                                        btnText = "Ok",
+                                        progressBar = pb_product_detail_page
+                                    )
+                                } else if (response.body()!!.first().Result.contentEquals("FAILED")) {
+                                    AlertDialogBox.showDialog(
+                                        this@OpProductDetailPage,
+                                        title = "Failure",
+                                        message = "Values not updated at server",
+                                        btnText = "Ok",
+                                        progressBar = pb_product_detail_page
+                                    )
+                                }
+                                //Do something with response e.g show to the UI.
+                            } else {
                                 AlertDialogBox.showDialog(
                                     this@OpProductDetailPage,
-                                    title = "Validation failed",
-                                    message = "Invalid tray id or column number",
+                                    title = "Failure",
+                                    message = "Failed to upload product detail",
                                     btnText = "Ok",
                                     progressBar = pb_product_detail_page
                                 )
                             }
-                            //Do something with response e.g show to the UI.
-                        } else {
-                            AlertDialogBox.showDialog(
-                                this@OpProductDetailPage,
-                                title = "Failure",
-                                message = "Failed to upload product detail",
-                                btnText = "Ok",
-                                progressBar = pb_product_detail_page
-                            )
+                            runOnUiThread {
+                                pb_product_detail_page.visibility = View.GONE
+                            }
+                        } catch (e: HttpException) {
+                            e.printStackTrace()
+                        } catch (e: Throwable) {
+                            e.printStackTrace()
                         }
-                        runOnUiThread {
-                            pb_product_detail_page.visibility = View.GONE
-                        }
-                    } catch (e: HttpException) {
-                        e.printStackTrace()
-                    } catch (e: Throwable) {
-                        e.printStackTrace()
                     }
                 }
             }
+        }else {
+            AlertDialogBox.showDialog(
+                this@OpProductDetailPage,
+                title = "Failure",
+                message = "Please enter tray id and column id",
+                btnText = "Ok",
+                progressBar = pb_product_detail_page
+            )
         }
     }
 

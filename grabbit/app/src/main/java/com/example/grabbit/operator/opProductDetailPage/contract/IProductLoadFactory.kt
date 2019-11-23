@@ -18,7 +18,8 @@ interface IProductLoadFactory {
                                    @Field("kioskid") kioskId: String,
                                    @Field("COLNUMBER") colNumber: String,
                                    @Field("TRAYID") trayId: String,
-                                   @Field("ITEMID") itemId: String): Response<List<ProductLoadResponse>>
+                                   @Field("ITEMID") itemId: String,
+                                   @Field("QTY") quantity: String): Response<List<ProductLoadResponse>>
 }
 
 object ProductLoadFactory {

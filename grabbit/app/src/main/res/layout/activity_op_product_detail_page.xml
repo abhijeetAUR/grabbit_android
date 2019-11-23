@@ -86,7 +86,6 @@
         android:ems="15"
         android:fontFamily="@font/sofia_pro_regular"
         android:hint="Enter Column number"
-        android:inputType="number"
         android:paddingLeft="5dp"
         android:textColor="@color/colorDarkGray"
         android:textColorHint="#999"
@@ -114,6 +113,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_column_number" />
+    <EditText
+        android:id="@+id/ed_quantity_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="20dp"
+        android:drawablePadding="5dp"
+        android:ems="15"
+        android:fontFamily="@font/sofia_pro_regular"
+        android:hint="Enter quantity"
+        android:paddingLeft="5dp"
+        android:textColor="@color/colorDarkGray"
+        android:textColorHint="#999"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ed_tray_id" />
 
     <TextView
         android:id="@+id/btn_load_data"
@@ -130,7 +147,7 @@
         android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ed_tray_id" />
+        app:layout_constraintTop_toBottomOf="@id/ed_quantity_id" />
 
     <ProgressBar
         android:id="@+id/pb_product_detail_page"
